@@ -15,6 +15,7 @@ NULL
 
 
 #' @noRd
+#' @include zzz.R
 .get_hfp <- function(
     x,
     rundir = tempdir(),
@@ -52,4 +53,12 @@ NULL
   data["year"] <- substring(data[["filename"]], 4, 7) |> as.numeric()
   data[data[["year"]] %in% years, ]
 }
+
+.register(list(
+  name = "humanfootprint",
+  type = "raster",
+  source = "https://figshare.com/articles/figure/An_annual_global_terrestrial_Human_Footprint_dataset_from_2000_to_2018/16571064",
+  fun = .get_hfp,
+  arguments = list()),
+  "resource")
 

@@ -1,4 +1,5 @@
 #' @noRd
+#' @include zzz.R
 .calc_hfp <- function(
     x,
     humanfootprint,
@@ -23,3 +24,14 @@
   result[["year"]] <- substring(names(humanfootprint), 4, 7)
   result
 }
+
+.register(list(
+  name = "humanfootprint",
+  resources = list(humanfootprint = "raster"),
+  fun = .calc_hfp,
+  arguments = list(
+    engine = "extract",
+    stats_hfp = "mean"
+  ),
+  processing_mode = "asset"),
+  "indicator")

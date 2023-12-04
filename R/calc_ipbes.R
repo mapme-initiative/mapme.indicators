@@ -1,3 +1,4 @@
+#' @include zzz.R
 .calc_ipbes_biome <- function(
     x,
     ipbes_biome,
@@ -25,6 +26,15 @@
   results
 }
 
+.register(list(
+  name = "ipbes_biome",
+  resources = list(ipbes_biome = "raster"),
+  fun = .calc_ipbes_biome,
+  arguments = list(),
+  processing_mode = "portfolio"),
+  "indicator")
+
+#' @include zzz.R
 .calc_ipbes_anthrome <- function(
     x,
     ipbes_anthrome,
@@ -39,7 +49,6 @@
 
   results <- lapply(1:nrow(x), function(i) {
     exactextractr::exact_extract(ipbes_anthrome, x[i, ], fun = function(data, anthrome){
-      browser()
 
       data[["coverage_area"]] <- data[["coverage_area"]] / 10000
       result <- lapply(anthrome, function(a){
@@ -59,5 +68,13 @@
   })
   results
 }
+
+.register(list(
+  name = "ipbes_anthrome",
+  resources = list(ipbes_anthrome = "raster"),
+  fun = .calc_ipbes_anthrome,
+  arguments = list(anthrome = "both"),
+  processing_mode = "portfolio"),
+  "indicator")
 
 

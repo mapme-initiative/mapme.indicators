@@ -6,4 +6,5 @@
 #' @import mapme.biodiversity sf terra
 #' @noRd
 #' @keywords internal
+#' @include zzz.R
 NULL

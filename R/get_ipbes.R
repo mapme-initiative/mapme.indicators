@@ -20,10 +20,11 @@
 #' @source \url{https://zenodo.org/records/3975694}
 NULL
 
+#' @include zzz.R
 .get_ipbes_biome <- function(x,
-                      rundir = tempdir(),
-                      verbose = TRUE,
-                      ...) {
+                             rundir = tempdir(),
+                             verbose = TRUE,
+                             ...) {
 
   biome_url <- "/vsicurl/https://zenodo.org/records/3975694/files/IPBES_UoA_biomes_JK.tif"
   filename <- file.path(rundir, basename(biome_url))
@@ -33,6 +34,14 @@ NULL
   writeRaster(biome, filename)
   filename
 }
+
+.register(list(
+  name = "ipbes_biome",
+  type = "raster",
+  source = "https://zenodo.org/records/3975694",
+  fun = .get_ipbes_biome,
+  arguments = list()),
+  "resource")
 
 #' Terrestrial Anthromes
 #'
@@ -56,10 +65,11 @@ NULL
 #' @source \url{https://zenodo.org/records/3975694}
 NULL
 
+#' @include zzz.R
 .get_ipbes_anthrome <- function(x,
-                         rundir = tempdir(),
-                         verbose = TRUE,
-                         ...) {
+                                rundir = tempdir(),
+                                verbose = TRUE,
+                                ...) {
 
   anthrome_url <- "/vsicurl/https://zenodo.org/records/3975694/files/IPBES_UoA_anthrome.tif"
   filenames <- file.path(rundir, paste0(c("urban_areas", "cultivated_areas"), "_", basename(anthrome_url)))
@@ -88,4 +98,12 @@ ipbes_biome_classes <- data.frame(
            "shelf ecosystems",
            "open ocean pelagic systems")
 )
+
+.register(list(
+    name = "ipbes_anthrome",
+    type = "raster",
+    source = "https://zenodo.org/records/3975694",
+    fun = .get_ipbes_anthrome,
+    arguments = list()),
+    "resource")
 

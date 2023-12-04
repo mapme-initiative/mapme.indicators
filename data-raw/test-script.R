@@ -1,4 +1,5 @@
-devtools::load_all()
+library(LLFindicators)
+library(sf)
 library(progressr)
 library(future)
 
@@ -41,3 +42,37 @@ anthromes$ipbes_anthrome
 
 
 port <- get_resources(port, c("irr_carbon", "vul_carbon", "man_carbon"))
+
+plan(multisession, workers = 8)
+timing <- system.time(with_progress({
+  irr_carbon <- calc_indicators(port, "irr_carbon",
+                                engine = "exactextract",
+                                which_carbon = "all",
+                                stats_carbon = c("sum"))
+}))
+plan(sequential)
+irr_carbon$irr_carbon
+
+
+plan(multisession, workers = 8)
+timing <- system.time(with_progress({
+  man_carbon <- calc_indicators(port, "man_carbon",
+                                engine = "exactextract",
+                                which_carbon = "all",
+                                stats_carbon = c("sum"))
+}))
+plan(sequential)
+man_carbon$man_carbon
+
+plan(multisession, workers = 8)
+timing <- system.time(with_progress({
+  vul_carbon <- calc_indicators(port, "vul_carbon",
+                                engine = "exactextract",
+                                which_carbon = "all",
+                                stats_carbon = c("sum"))
+}))
+plan(sequential)
+vul_carbon$vul_carbon
+
+
+

@@ -5,7 +5,7 @@ library(sf)
 aoi <- st_read(system.file("shape/nc.shp", package="sf")) |>
   st_transform("EPSG:4326") |>
   st_cast("POLYGON") |>
-  init_portfolio(years = c(2000:2020), outdir = "./data-raw/") |>
+  init_portfolio(years = c(2000:2020), outdir = "../data/") |>
   get_resources(c("ipbes_anthrome", "ipbes_biome"))
 
 tindex_biome <- attr(aoi, "resources")["ipbes_biome"] |> st_read()

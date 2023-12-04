@@ -11,3 +11,11 @@ Imports: exactextractr, httr2, sf, purrr, terra, tibble
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+Collate: 
+    'zzz.R'
+    'LLFindicators.R'
+    'calc_hfp.R'
+    'calc_ipbes.R'
+    'get_carbon.R'
+    'get_hfp.R'
+    'get_ipbes.R'

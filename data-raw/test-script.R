@@ -2,12 +2,14 @@ devtools::load_all()
 library(progressr)
 library(future)
 
+names(available_resources())
+names(available_indicators())
+
 aoi <- st_read(system.file("shape/nc.shp", package="sf")) |>
   st_transform("EPSG:4326") |>
   st_cast("POLYGON")
 
 port <- init_portfolio(aoi, years = 2010:2015, outdir = "data-raw/", add_resources = FALSE)
-
 
 port <- get_resources(port, "humanfootprint")
 
@@ -36,3 +38,6 @@ timing <- system.time(with_progress({
 }))
 plan(sequential)
 anthromes$ipbes_anthrome
+
+
+port <- get_resources(port, c("irr_carbon", "vul_carbon", "man_carbon"))

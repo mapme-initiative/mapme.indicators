@@ -2,4 +2,7 @@
 data-raw/humanfootprint
 data-raw/ipbes_anthrome
 data-raw/ipbes_biome
+data-raw/irr_carbon
+data-raw/vul_carbon
+data-raw/man_carbon
 *.gpkg$

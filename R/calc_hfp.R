@@ -8,6 +8,14 @@
 #' The required resources for this indicator are:
 #'  - [humanfootprint]
 #'
+#' \describe{
+#'   \item{engine}{The preferred processing functions from either one of "zonal",
+#'   "extract" or "exactextract" as character.}
+#'   \item{stats_hfp}{Function to be applied to compute statistics for polygons either
+#'   one or multiple inputs as character. Supported statistics are: "mean",
+#'   "median", "sd", "min", "max", "sum" "var".}
+#' }
+#'
 #' @name humanfootprint_stats
 #' @docType data
 #' @keywords indicator
@@ -38,7 +46,7 @@ NULL
     name = "humanfootprint",
     mode = "asset"
   )
-  result[["year"]] <- substring(names(humanfootprint), 4, 7)
+  result[["year"]] <- as.numeric(substring(names(humanfootprint), 4, 7))
   result
 }
 

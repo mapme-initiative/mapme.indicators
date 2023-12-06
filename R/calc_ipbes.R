@@ -42,7 +42,7 @@ NULL
 }
 
 .register(list(
-  name = "ipbes_biomes_stats",
+  name = "ipbes_biome_stats",
   resources = list(ipbes_biome = "raster"),
   fun = .calc_ipbes_biome,
   arguments = list(),
@@ -109,7 +109,7 @@ NULL
 }
 
 .register(list(
-  name = "ibpes_anthrome_stats",
+  name = "ipbes_anthrome_stats",
   resources = list(ipbes_anthrome = "raster"),
   fun = .calc_ipbes_anthrome,
   arguments = list(anthrome = "both"),

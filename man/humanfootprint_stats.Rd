@@ -19,5 +19,13 @@ The required resources for this indicator are:
 \itemize{
 \item \link{humanfootprint}
 }
+
+\describe{
+\item{engine}{The preferred processing functions from either one of "zonal",
+"extract" or "exactextract" as character.}
+\item{stats_hfp}{Function to be applied to compute statistics for polygons either
+one or multiple inputs as character. Supported statistics are: "mean",
+"median", "sd", "min", "max", "sum" "var".}
+}
 }
 \keyword{indicator}

@@ -18,7 +18,7 @@
 #'   "extract" or "exactextract" as character.}
 #' }
 #'
-#' @name irr_carbon
+#' @name irr_carbon_stats
 #' @docType data
 #' @keywords indicator
 #' @format A tibble with a column for each statistic and rows for every year
@@ -49,7 +49,7 @@ NULL
 }
 
 .register(list(
-  name = "irr_carbon",
+  name = "irr_carbon_stats",
   resources = list(irr_carbon = "raster"),
   fun = .calc_irr_carbon,
   arguments = list(
@@ -82,7 +82,7 @@ NULL
 #'   "extract" or "exactextract" as character.}
 #' }
 #'
-#' @name man_carbon
+#' @name man_carbon_stats
 #' @docType data
 #' @keywords indicator
 #' @format A tibble with a column for each statistic and rows for every year
@@ -113,7 +113,7 @@ NULL
 
 
 .register(list(
-  name = "man_carbon",
+  name = "man_carbon_stats",
   resources = list(man_carbon = "raster"),
   fun = .calc_man_carbon,
   arguments = list(
@@ -146,7 +146,7 @@ NULL
 #'   "extract" or "exactextract" as character.}
 #' }
 #'
-#' @name vul_carbon
+#' @name vul_carbon_stats
 #' @docType data
 #' @keywords indicator
 #' @format A tibble with a column for each statistic and rows for every year
@@ -177,7 +177,7 @@ NULL
 
 
 .register(list(
-  name = "vul_carbon",
+  name = "vul_carbon_stats",
   resources = list(vul_carbon = "raster"),
   fun = .calc_vul_carbon,
   arguments = list(

@@ -8,7 +8,7 @@
 #' The required resources for this indicator are:
 #'  - [humanfootprint]
 #'
-#' @name humanfootprint
+#' @name humanfootprint_stats
 #' @docType data
 #' @keywords indicator
 #' @format A tibble with a column for each statistic and a row for every
@@ -43,7 +43,7 @@ NULL
 }
 
 .register(list(
-  name = "humanfootprint",
+  name = "humanfootprint_stats",
   resources = list(humanfootprint = "raster"),
   fun = .calc_hfp,
   arguments = list(

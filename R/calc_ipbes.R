@@ -6,7 +6,7 @@
 #' The required resources for this indicator are:
 #'  - [ipbes_biome]
 #'
-#' @name ipbes_biome
+#' @name ipbes_biome_stats
 #' @docType data
 #' @keywords indicator
 #' @format A tibble with columns for the class name, its absolute and relative
@@ -42,7 +42,7 @@ NULL
 }
 
 .register(list(
-  name = "ipbes_biome",
+  name = "ipbes_biomes_stats",
   resources = list(ipbes_biome = "raster"),
   fun = .calc_ipbes_biome,
   arguments = list(),
@@ -65,7 +65,7 @@ NULL
 #'     for which data layer the areal statistics are calculated.}
 #' }
 #'
-#' @name ipbes_anthrome
+#' @name ipbes_anthrome_stats
 #' @docType data
 #' @keywords indicator
 #' @format A tibble with columns for the respective anthrome name, the affected
@@ -109,7 +109,7 @@ NULL
 }
 
 .register(list(
-  name = "ipbes_anthrome",
+  name = "ibpes_anthrome_stats",
   resources = list(ipbes_anthrome = "raster"),
   fun = .calc_ipbes_anthrome,
   arguments = list(anthrome = "both"),

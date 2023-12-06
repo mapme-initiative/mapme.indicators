@@ -1,3 +1,20 @@
+#' Calculate human footprint statistics
+#'
+#' Human footprint data measures the pressure imposed on the natural environment
+#' by different dimensions of human actions. The theoretical maximum value,
+#' representing the highest level of human pressure, is 50. This routine allows
+#' to extract zonal statistics of the human footprint data.
+#'
+#' The required resources for this indicator are:
+#'  - [humanfootprint]
+#'
+#' @name humanfootprint
+#' @docType data
+#' @keywords indicator
+#' @format A tibble with a column for each statistic and a row for every
+#'   requested year.
+NULL
+
 #' @noRd
 #' @include zzz.R
 .calc_hfp <- function(

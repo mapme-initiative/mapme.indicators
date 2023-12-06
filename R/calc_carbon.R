@@ -1,3 +1,30 @@
+#' Calculate irrecoverable carbon statistics
+#'
+#' Irrecoverable carbon is the amount of carbon that, if lost today, could not
+#' be recovered until 2050. It can be calculated for above- and below-ground
+#' carbon, the total amount of carbon, or for all layers.
+#'
+#' The required resources for this indicator are:
+#'  - [irr_carbon]
+#'
+#' The following argument can be set:
+#' \describe{
+#'   \item{which_carbon}{One of "total", "soil", "biomass", "all". Determines
+#'     for which data layer the statistics are calculated.}
+#'  \item{stats_carbon}{Function to be applied to compute statistics for polygons either
+#'   one or multiple inputs as character. Supported statistics are: "mean",
+#'   "median", "sd", "min", "max", "sum" "var".}
+#'  \item{engine}{The preferred processing functions from either one of "zonal",
+#'   "extract" or "exactextract" as character.}
+#' }
+#'
+#' @name irr_carbon
+#' @docType data
+#' @keywords indicator
+#' @format A tibble with a column for each statistic and rows for every year
+#'   and type of carbon.
+NULL
+
 #' @include zzz.R
 .calc_irr_carbon <- function(
     x,
@@ -34,6 +61,34 @@
   "indicator")
 
 
+#' Calculate manageable carbon statistics
+#'
+#' Manageable carbon is the amount of carbon that, in principle, is manageable
+#' by human activities, e.g. its release to the atmosphere can be prevented.
+#' It can be calculated for above- and below-ground carbon, the total amount
+#' of carbon, or for all layers.
+#'
+#' The required resources for this indicator are:
+#'  - [man_carbon]
+#'
+#' The following argument can be set:
+#' \describe{
+#'   \item{which_carbon}{One of "total", "soil", "biomass", "all". Determines
+#'     for which data layer the statistics are calculated.}
+#'  \item{stats_carbon}{Function to be applied to compute statistics for polygons either
+#'   one or multiple inputs as character. Supported statistics are: "mean",
+#'   "median", "sd", "min", "max", "sum" "var".}
+#'  \item{engine}{The preferred processing functions from either one of "zonal",
+#'   "extract" or "exactextract" as character.}
+#' }
+#'
+#' @name man_carbon
+#' @docType data
+#' @keywords indicator
+#' @format A tibble with a column for each statistic and rows for every year
+#'   and type of carbon.
+NULL
+
 #' @include zzz.R
 .calc_man_carbon <- function(
     x,
@@ -68,6 +123,35 @@
   ),
   processing_mode = "asset"),
   "indicator")
+
+
+#' Vulnerable manageable carbon statistics
+#'
+#' Vulnerable carbon is the amount of carbon that would be released in a typical
+#' land conversion activity.
+#' It can be calculated for above- and below-ground carbon, the total amount
+#' of carbon, or for all layers.
+#'
+#' The required resources for this indicator are:
+#'  - [vul_carbon]
+#'
+#' The following argument can be set:
+#' \describe{
+#'   \item{which_carbon}{One of "total", "soil", "biomass", "all". Determines
+#'     for which data layer the statistics are calculated.}
+#'  \item{stats_carbon}{Function to be applied to compute statistics for polygons either
+#'   one or multiple inputs as character. Supported statistics are: "mean",
+#'   "median", "sd", "min", "max", "sum" "var".}
+#'  \item{engine}{The preferred processing functions from either one of "zonal",
+#'   "extract" or "exactextract" as character.}
+#' }
+#'
+#' @name vul_carbon
+#' @docType data
+#' @keywords indicator
+#' @format A tibble with a column for each statistic and rows for every year
+#'   and type of carbon.
+NULL
 
 #' @include zzz.R
 .calc_vul_carbon <- function(

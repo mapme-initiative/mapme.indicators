@@ -1,3 +1,18 @@
+#' Calculate areal statistics for IBPES Biomes
+#'
+#' This indicator calculates the areal distribution of different biome classes
+#' within an asset based on the IBPES biomes dataset.
+#'
+#' The required resources for this indicator are:
+#'  - [ipbes_biome]
+#'
+#' @name ipbes_biome
+#' @docType data
+#' @keywords indicator
+#' @format A tibble with columns for the class name, its absolute and relative
+#'   coverage within an asset.
+NULL
+
 #' @include zzz.R
 .calc_ipbes_biome <- function(
     x,
@@ -33,6 +48,30 @@
   arguments = list(),
   processing_mode = "portfolio"),
   "indicator")
+
+
+#' Calculate areal statistics for IBPES Anthromes
+#'
+#' This indicator calculates the areal distribution of the two different anthrome
+#' classes within an asset based on the IBPES anthrome dataset. You can select
+#' to only include areal statistics for built-up areas, cultivated areas, or both.
+#'
+#' The required resources for this indicator are:
+#'  - [ipbes_anthrome]
+#'
+#' The following argument can be set:
+#' \describe{
+#'   \item{anthrome}{One of "urban_areas", "cultivated_areas", "both". Determines
+#'     for which data layer the areal statistics are calculated.}
+#' }
+#'
+#' @name ipbes_anthrome
+#' @docType data
+#' @keywords indicator
+#' @format A tibble with columns for the respective anthrome name, the affected
+#'   area, the percentage of the affected area in relation to the total area,
+#'   and the total area (all expressed in ha).
+NULL
 
 #' @include zzz.R
 .calc_ipbes_anthrome <- function(

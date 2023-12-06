@@ -10,7 +10,7 @@ aoi <- st_read(system.file("shape/nc.shp", package="sf")) |>
   st_transform("EPSG:4326") |>
   st_cast("POLYGON")
 
-port <- init_portfolio(aoi, years = 2010:2015, outdir = "../data", add_resources = FALSE)
+port <- init_portfolio(aoi, years = 2010:2015, outdir = "../data")
 
 port <- get_resources(port, "humanfootprint")
 

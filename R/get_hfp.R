@@ -2,6 +2,17 @@
 #'
 #' This resource is part of the publication by Mu et al. (2022) "A global
 #' record of annual terrestrial Human Footprint dataset from 2000 to 2018".
+#' It is calculated based on 8 variables representing human pressures on
+#' natural ecosystems collected at a yearly cadence between 2000 and 2020
+#' sampled at a 1km spatial resolution. The variables are used are
+#' the expansion of built environments (expressed as percentage of built-up
+#' areas within a grid cell), population density (aggregated at the gridd cell),
+#' nighttime lights, crop and pasture lands, roads and railways (excluding trails
+#' and minor roads), and navigable waterways (compares waterways with nighttime
+#' lights dataset). The human footprint was then calculated based on a weighting
+#' scheme proposed by Venter et al. (2016), assigning each pixel a value between
+#' 0 and 50, with 50 representing the theoretical value of the highest human
+#' pressure.
 #'
 #' @name humanfootprint
 #' @docType data

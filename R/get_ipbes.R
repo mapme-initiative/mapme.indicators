@@ -1,7 +1,28 @@
 #' Terrestrial and Aquatic Biomes
 #'
 #' This resource is part of the Global Assessment Report on Biodiversity and
-#' Ecosystem Services.
+#' Ecosystem Services and represents a division of the Earth's surface
+#' into several subcategories. The classification differentiates between
+#' biomes and anthromes. Biomes are differentiated between terrestrial and aquatic
+#' biomes.
+#'
+#' Terrestrial biomes include:
+#' - Tropical and subtropical dry and humid forests
+#' - Temperate and boreal forests and woodlands
+#' - Mediterranean forests, woodlands and scrub
+#' - Tundra and High Mountain habitats
+#' - Tropical and subtropical savannas and grasslands
+#' - Temperate Grasslands
+#' - Deserts and xeric shrublands
+#' - Wetlands – peatlands, mires, bogs
+#'
+#' Aquatic biomes include:
+#' - Cryosphere
+#' - Aquaculture areas
+#' - Inland surface waters and water bodies/freshwater
+#' - Shelf ecosystems (neritic and intertidal/littoral zone)
+#' - Open ocean pelagic systems (euphotic zone)
+#'
 #'
 #' @name ipbes_biome
 #' @docType data
@@ -46,7 +67,11 @@ NULL
 #' Terrestrial Anthromes
 #'
 #' This resource is part of the Global Assessment Report on Biodiversity and
-#' Ecosystem Services.
+#' Ecosystem Services and represents a division of the Earth's surface
+#' into several subcategories. The classification differentiates between
+#' biomes and anthromes. Anthromes are differentiated between two classes,
+#' which are built-up (urbanized) areas and cultivated areas.
+#'
 #'
 #' @name ipbes_anthrome
 #' @docType data
@@ -80,6 +105,14 @@ NULL
   filenames
 }
 
+.register(list(
+  name = "ipbes_anthrome",
+  type = "raster",
+  source = "https://zenodo.org/records/3975694",
+  fun = .get_ipbes_anthrome,
+  arguments = list()),
+  "resource")
+
 ipbes_biome_classes <- data.frame(
   class = c(1:15),
   name = c("tropical and subtropical dry and humid forests",
@@ -99,11 +132,5 @@ ipbes_biome_classes <- data.frame(
            "open ocean pelagic systems")
 )
 
-.register(list(
-    name = "ipbes_anthrome",
-    type = "raster",
-    source = "https://zenodo.org/records/3975694",
-    fun = .get_ipbes_anthrome,
-    arguments = list()),
-    "resource")
+
 

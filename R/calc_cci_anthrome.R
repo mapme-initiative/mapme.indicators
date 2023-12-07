@@ -33,14 +33,14 @@
   exactextractr::exact_extract(cci_anthrome, x, fun = function(data, cci_names, classes) {
 
     coverage_area <- data[["coverage_area"]] / 10000
+    total <- sum(coverage_area)
     data <- as.data.frame(data[,-ncol(data)])
     names(data) <- cci_names
 
-    results <- purrr:::imap_dfr(data, function(x, name, coverage, classes){
+    results <- purrr:::imap_dfr(data, function(x, name, coverage, total, classes){
       year <- as.numeric(strsplit(name, "-")[[1]][8])
 
       stats <- by(coverage, x, sum)
-      total <- sum(stats)
 
       stats <- tibble::tibble(
         affected = as.numeric(stats),
@@ -53,7 +53,7 @@
       stats[["total"]] <- total
       stats <- stats[stats[["class"]] != "other", ]
       stats[c("year", "class", "affected", "percentage", "total")]
-    }, coverage = coverage_area, classes = class_df)
+    }, coverage = coverage_area, total = total, classes = class_df)
 
     tibble::as_tibble(results)
   }, cci_names = layer_names, coverage_area = TRUE, summarize_df = TRUE)

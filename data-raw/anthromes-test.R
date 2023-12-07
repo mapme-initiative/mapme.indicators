@@ -12,7 +12,7 @@ cci <- get_resources(aoi, "cci")
 
 plan(multisession, workers = 6)
 with_progress({
-  cci <- calc_indicators(cci, "cci_anthromes", anthrome_values = c(10, 20, 30, 40, 190))
+  timing <- system.time(cci <- calc_indicators(cci, "cci_anthromes", anthrome_values = c(10, 20, 30, 40, 190)))
 })
 plan(sequential)
 

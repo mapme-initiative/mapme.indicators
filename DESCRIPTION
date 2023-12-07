@@ -7,7 +7,7 @@ Description: Delivers a number of indicators used by the Legecy Landscape Fund
   to analyse target protected areas read to use with the mapme.biodiversity package.
 License: MIT + file LICENSE
 Depends: mapme.biodiversity
-Imports: exactextractr, httr2, sf, purrr, terra, tibble
+Imports: exactextractr, httr2, sf, purrr, terra, tibble, RCurl
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
@@ -15,9 +15,11 @@ Collate:
     'zzz.R'
     'LLFindicators.R'
     'calc_carbon.R'
+    'calc_cci_anthrome.R'
     'calc_hfp.R'
     'calc_ipbes.R'
     'get_carbon.R'
+    'get_cci.R'
     'get_hfp.R'
     'get_ipbes.R'
 Suggests: 

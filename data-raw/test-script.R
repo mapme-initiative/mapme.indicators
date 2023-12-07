@@ -27,18 +27,18 @@ port <- get_resources(port, c("ipbes_biome", "ipbes_anthrome"))
 
 plan(multisession, workers = 8)
 timing <- system.time(with_progress({
-  biomes <- calc_indicators(port, "ipbes_biome")
+  biomes <- calc_indicators(port, "ipbes_biome_stats")
 }))
 plan(sequential)
 
-biomes$ipbes_biome
+biomes$ipbes_biome_stats
 
 plan(multisession, workers = 8)
 timing <- system.time(with_progress({
-  anthromes <- calc_indicators(port, "ipbes_anthrome")
+  anthromes <- calc_indicators(port, "ipbes_anthrome_stats")
 }))
 plan(sequential)
-anthromes$ipbes_anthrome
+anthromes$ipbes_anthrome_stats
 
 
 port <- get_resources(port, c("irr_carbon", "vul_carbon", "man_carbon"))

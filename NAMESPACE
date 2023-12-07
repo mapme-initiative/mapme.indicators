@@ -3,6 +3,7 @@
 import(mapme.biodiversity)
 import(sf)
 import(terra)
+importFrom(RCurl,getURL)
 importFrom(httr2,req_perform)
 importFrom(httr2,request)
 importFrom(httr2,resp_body_json)

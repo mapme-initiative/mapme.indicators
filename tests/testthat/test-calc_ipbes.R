@@ -3,7 +3,7 @@ test_that("calc_ipbes_biomes works", {
   aoi <- read_sf(system.file("shape/nc.shp", package="sf")) |>
     st_transform("EPSG:4326")
   aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
-  outdir <- system.file("resources", package = "LLFindicators")
+  outdir <- system.file("resources", package = "mapme.indicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
   expect_message(aoi <- get_resources(aoi, "ipbes_biome"),
                  "Starting process to download resource 'ipbes_biome'")
@@ -22,7 +22,7 @@ test_that("calc_ipbes_anthrome works", {
     st_transform("EPSG:4326")
   aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
 
-  outdir <- system.file("resources", package = "LLFindicators")
+  outdir <- system.file("resources", package = "mapme.indicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
   expect_message(aoi <- get_resources(aoi, "ipbes_anthrome"),
                  "Starting process to download resource 'ipbes_anthrome'")

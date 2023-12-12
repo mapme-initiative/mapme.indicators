@@ -15,7 +15,7 @@ Currently, this package is compatible with the dev version of `{mapme.biodiversi
 Please run the following code to install the packages:
 
 ```        
-remotes::install_github("mapme-initiative/mapme.biodiversity")
+remotes::install_github("mapme-initiative/mapme.biodiversity", ref = "virtualize-tileindex")
 remotes::install_github("mapme-initiative/mapme.indicators")
 ```
 

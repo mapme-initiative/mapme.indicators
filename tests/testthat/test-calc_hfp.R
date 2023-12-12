@@ -4,7 +4,7 @@ test_that("calc_hfp works", {
     st_transform("EPSG:4326")
   aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
 
-  outdir <- system.file("resources", package = "LLFindicators")
+  outdir <- system.file("resources", package = "mapme.indicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
   expect_message(aoi <- get_resources(aoi, "humanfootprint"),
                  "Starting process to download resource 'humanfootprint'")

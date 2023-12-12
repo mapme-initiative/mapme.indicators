@@ -4,7 +4,7 @@ test_that("calc_irr_carbon works", {
     st_transform("EPSG:4326")
   aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
 
-  outdir <- system.file("resources", package = "LLFindicators")
+  outdir <- system.file("resources", package = "mapme.indicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
   expect_message(aoi <- get_resources(aoi, "irr_carbon"),
                  "Starting process to download resource 'irr_carbon'")
@@ -32,7 +32,7 @@ test_that("calc_vul_carbon works", {
     st_transform("EPSG:4326")
   aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
 
-  outdir <- system.file("resources", package = "LLFindicators")
+  outdir <- system.file("resources", package = "mapme.indicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
   expect_message(aoi <- get_resources(aoi, "vul_carbon"),
                  "Starting process to download resource 'vul_carbon'")
@@ -59,7 +59,7 @@ test_that("calc_man_carbon works", {
     st_transform("EPSG:4326")
   aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
 
-  outdir <- system.file("resources", package = "LLFindicators")
+  outdir <- system.file("resources", package = "mapme.indicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
   expect_message(aoi <- get_resources(aoi, "man_carbon"),
                  "Starting process to download resource 'man_carbon'")

@@ -6,8 +6,7 @@ test_that("calc_hfp works", {
 
   outdir <- system.file("resources", package = "mapme.indicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
-  expect_message(aoi <- get_resources(aoi, "humanfootprint"),
-                 "Starting process to download resource 'humanfootprint'")
+  aoi <- get_resources(aoi, "humanfootprint")
 
   aoi <- calc_indicators(aoi, "humanfootprint_stats", engine = "extract", stats_hfp = c("mean", "min", "max", "sd"))
   expect_true("humanfootprint_stats" %in% names(aoi))

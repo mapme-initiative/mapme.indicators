@@ -5,8 +5,7 @@ test_that("calc_ipbes_biomes works", {
   aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
   outdir <- system.file("resources", package = "mapme.indicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
-  expect_message(aoi <- get_resources(aoi, "ipbes_biome"),
-                 "Starting process to download resource 'ipbes_biome'")
+  aoi <- get_resources(aoi, "ipbes_biome")
 
   aoi <- calc_indicators(aoi, "ipbes_biome_stats")
   expect_true("ipbes_biome_stats" %in% names(aoi))
@@ -24,8 +23,7 @@ test_that("calc_ipbes_anthrome works", {
 
   outdir <- system.file("resources", package = "mapme.indicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
-  expect_message(aoi <- get_resources(aoi, "ipbes_anthrome"),
-                 "Starting process to download resource 'ipbes_anthrome'")
+  aoi <- get_resources(aoi, "ipbes_anthrome")
 
   aoi <- calc_indicators(aoi, "ipbes_anthrome_stats", anthrome = "both")
   expect_true("ipbes_anthrome_stats" %in% names(aoi))

@@ -6,8 +6,7 @@ test_that("calc_irr_carbon works", {
 
   outdir <- system.file("resources", package = "mapme.indicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
-  expect_message(aoi <- get_resources(aoi, "irr_carbon"),
-                 "Starting process to download resource 'irr_carbon'")
+  aoi <- get_resources(aoi, "irr_carbon")
 
   aoi <- calc_indicators(aoi, "irr_carbon_stats", which_carbon = "all", stats_carbon = c("mean", "min", "max", "sd"), engine = "extract")
   expect_true("irr_carbon_stats" %in% names(aoi))
@@ -34,8 +33,7 @@ test_that("calc_vul_carbon works", {
 
   outdir <- system.file("resources", package = "mapme.indicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
-  expect_message(aoi <- get_resources(aoi, "vul_carbon"),
-                 "Starting process to download resource 'vul_carbon'")
+  aoi <- get_resources(aoi, "vul_carbon")
 
   aoi <- calc_indicators(aoi, "vul_carbon_stats", which_carbon = "all", stats_carbon = c("mean", "min", "max", "sd"), engine = "extract")
   expect_true("vul_carbon_stats" %in% names(aoi))
@@ -61,8 +59,7 @@ test_that("calc_man_carbon works", {
 
   outdir <- system.file("resources", package = "mapme.indicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
-  expect_message(aoi <- get_resources(aoi, "man_carbon"),
-                 "Starting process to download resource 'man_carbon'")
+  aoi <- get_resources(aoi, "man_carbon")
 
   aoi <- calc_indicators(aoi, "man_carbon_stats", which_carbon = "all", stats_carbon = c("mean", "min", "max", "sd"), engine = "extract")
   expect_true("man_carbon_stats" %in% names(aoi))

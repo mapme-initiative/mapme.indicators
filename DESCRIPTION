@@ -1,5 +1,5 @@
-Package: LLFindicators
-Title: Implementation of Biodiversity Indicators of the Legacy Landscape Fund
+Package: mapme.indicators
+Title: Extension resources and indicators for mapme.biodiversity
 Version: 0.0.1
 Authors@R: 
     person("Darius A.", "Görgen", , "info@dariusgoergen.com", role = c("aut", "cre"))
@@ -13,7 +13,6 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Collate: 
     'zzz.R'
-    'LLFindicators.R'
     'calc_carbon.R'
     'calc_cci_anthrome.R'
     'calc_hfp.R'
@@ -22,6 +21,7 @@ Collate:
     'get_cci.R'
     'get_hfp.R'
     'get_ipbes.R'
+    'mapme.indicators.R'
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

@@ -1,11 +1,22 @@
-# LLFindicators
+# mapme.indicators
+
+## Introduction
+
+This package is work-in-progress. The aim is to support biodiversity related
+indicators from the publication of [Voskamp et al. (2023)](https://www.cell.com/one-earth/fulltext/S2590-3322(23)00387-1)
+to support enhanced targeting of conservation efforts.
+At the same time it serves as an technical example how the core MAPME package
+can be extended by third-parties.
+
 
 ## Installation
 
-To install the package run:
+Currently, this package is compatible with the dev version of `{mapme.biodiversity}` only.
+Please run the following code to install the packages:
 
-```         
-remotes::install_github("mapme-initiative/LLFindicators")
+```        
+remotes::install_github("mapme-initiative/mapme.biodiversity")
+remotes::install_github("mapme-initiative/mapme.indicators")
 ```
 
 ## Usage
@@ -13,12 +24,12 @@ remotes::install_github("mapme-initiative/LLFindicators")
 The package adds a number of indicators used by the Legacy Landscape Fund to analyse protected areas. It is ready-to-use in a workflow based on\
 `{mapme.biodiversity}`.
 
-Once the package is loaded in your R session via `library(LLFindicators)`, the new resources and associated indicators are registered and available for your workflows.
+Once the package is loaded in your R session via `library(mapme.indicators)`, the new resources and associated indicators are registered and available for your workflows.
 
 ## Indicators
 
 | Name                                     | Description                                                                                                             | Original Implementation                                                                                  | New Implementation                                                                | Data Source                                                                                                                                                                                                                                                  | Implemented |
-|------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+|-----------|-----------|-----------|-----------|---------------------|-----------|
 | Manageable carbon                        | carbon stock that is primarily affected by human activities that either maintain, increase, or decrease its size        | aggregated to tons per grid cell, then mean per PA                                                       | mean per PA                                                                       | [Zenodo](https://zenodo.org/records/4091029)                                                                                                                                                                                                                 | Yes         |
 | Vulnearble carbon                        | amount of manageable carbon that is likely to be released through typical land conversion in an ecosystem               | aggregated to tons per grid cell, then mean per PA                                                       | mean per PA                                                                       | [Zenodo](https://zenodo.org/records/4091029)                                                                                                                                                                                                                 | Yes         |
 | Irrecoverable carbon                     | amount of the vulnerable carbon which if it is lost through typical land conversion actions cannot be recovered by 2050 | aggregated to tons per grid cell, then mean per PA                                                       | mean per PA                                                                       | [Zenodo](https://zenodo.org/records/4091029)                                                                                                                                                                                                                 | Yes         |

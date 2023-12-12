@@ -1,8 +1,8 @@
 test_that("calc_hfp works", {
 
-  aoi <- st_read(system.file("shape/nc.shp", package="sf")) |>
-    st_transform("EPSG:4326") |>
-    st_cast("POLYGON")
+  aoi <- read_sf(system.file("shape/nc.shp", package="sf")) |>
+    st_transform("EPSG:4326")
+  aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
 
   outdir <- system.file("resources", package = "LLFindicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)

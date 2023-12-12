@@ -16,7 +16,7 @@ port <- get_resources(port, "humanfootprint")
 
 plan(multisession, workers = 8)
 timing <- system.time(with_progress({
-hfp <- calc_indicators(port, "humanfootprint", engine = "extract", stats_hfp = c("mean", "sd", "max", "min"))
+hfp <- calc_indicators(port, "humanfootprint_stats", engine = "extract", stats_hfp = c("mean", "sd", "max", "min"))
 }))
 plan(sequential)
 
@@ -45,7 +45,7 @@ port <- get_resources(port, c("irr_carbon", "vul_carbon", "man_carbon"))
 
 plan(multisession, workers = 8)
 timing <- system.time(with_progress({
-  irr_carbon <- calc_indicators(port, "irr_carbon",
+  irr_carbon <- calc_indicators(port, "irr_carbon_stats",
                                 engine = "exactextract",
                                 which_carbon = "all",
                                 stats_carbon = c("sum"))
@@ -56,7 +56,7 @@ irr_carbon$irr_carbon
 
 plan(multisession, workers = 8)
 timing <- system.time(with_progress({
-  man_carbon <- calc_indicators(port, "man_carbon",
+  man_carbon <- calc_indicators(port, "man_carbon_stats",
                                 engine = "exactextract",
                                 which_carbon = "all",
                                 stats_carbon = c("sum"))

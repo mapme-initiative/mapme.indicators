@@ -1,5 +1,6 @@
 #' @noRd
 #' @include zzz.R
+#' @importFrom utils capture.output
 .calc_cci_anthromes <- function(
     x,
     cci,

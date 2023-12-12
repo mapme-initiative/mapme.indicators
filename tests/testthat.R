@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(LLFindicators)
+library(mapme.indicators)
 
-test_check("LLFindicators")
+test_check("mapme.indicators")

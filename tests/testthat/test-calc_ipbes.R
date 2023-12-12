@@ -1,9 +1,8 @@
 test_that("calc_ipbes_biomes works", {
 
-  aoi <- st_read(system.file("shape/nc.shp", package="sf")) |>
-    st_transform("EPSG:4326") |>
-    st_cast("POLYGON")
-
+  aoi <- read_sf(system.file("shape/nc.shp", package="sf")) |>
+    st_transform("EPSG:4326")
+  aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
   outdir <- system.file("resources", package = "LLFindicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
   expect_message(aoi <- get_resources(aoi, "ipbes_biome"),
@@ -19,9 +18,9 @@ test_that("calc_ipbes_biomes works", {
 
 test_that("calc_ipbes_anthrome works", {
 
-  aoi <- st_read(system.file("shape/nc.shp", package="sf")) |>
-    st_transform("EPSG:4326") |>
-    st_cast("POLYGON")
+  aoi <- read_sf(system.file("shape/nc.shp", package="sf")) |>
+    st_transform("EPSG:4326")
+  aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
 
   outdir <- system.file("resources", package = "LLFindicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)

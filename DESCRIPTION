@@ -1,24 +1,22 @@
 Package: mapme.indicators
 Title: Extension resources and indicators for mapme.biodiversity
-Version: 0.0.1
+Version: 0.0.1.9000
 Authors@R: 
     person("Darius A.", "Görgen", , "info@dariusgoergen.com", role = c("aut", "cre"))
 Description: Delivers a number of indicators used by the Legecy Landscape Fund
   to analyse target protected areas read to use with the mapme.biodiversity package.
 License: MIT + file LICENSE
-Depends: mapme.biodiversity
-Imports: exactextractr, httr2, sf, purrr, terra, tibble, RCurl
+Depends: mapme.biodiversity (>= 0.5.0)
+Imports: exactextractr, httr2, sf, purrr, terra, tibble
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Collate: 
     'zzz.R'
     'calc_carbon.R'
-    'calc_cci_anthrome.R'
     'calc_hfp.R'
     'calc_ipbes.R'
     'get_carbon.R'
-    'get_cci.R'
     'get_hfp.R'
     'get_ipbes.R'
     'mapme.indicators.R'

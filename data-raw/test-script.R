@@ -1,4 +1,4 @@
-library(LLFindicators)
+library(mapme.indicators)
 library(sf)
 library(progressr)
 library(future)
@@ -16,11 +16,11 @@ port <- get_resources(port, "humanfootprint")
 
 plan(multisession, workers = 8)
 timing <- system.time(with_progress({
-hfp <- calc_indicators(port, "humanfootprint_stats", engine = "extract", stats_hfp = c("mean", "sd", "max", "min"))
+hfp <- calc_indicators(port, "hfp", engine = "extract", stats_hfp = c("mean", "sd", "max", "min"))
 }))
 plan(sequential)
 
-hfp$humanfootprint
+hfp$hfp
 
 
 port <- get_resources(port, c("ipbes_biome", "ipbes_anthrome"))

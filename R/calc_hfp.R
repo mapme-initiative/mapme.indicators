@@ -16,7 +16,7 @@
 #'   "median", "sd", "min", "max", "sum" "var".}
 #' }
 #'
-#' @name humanfootprint_stats
+#' @name hfp
 #' @docType data
 #' @keywords indicator
 #' @format A tibble with a column for each statistic and a row for every
@@ -51,7 +51,7 @@ NULL
 }
 
 .register(list(
-  name = "humanfootprint_stats",
+  name = "hfp",
   resources = list(humanfootprint = "raster"),
   fun = .calc_hfp,
   arguments = list(

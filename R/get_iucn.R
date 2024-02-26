@@ -38,7 +38,7 @@ NULL
   dst <- gsub("zip", "gpkg", path)
   src <- paste0("/vsizip/", path)
   if(!file.exists(dst)) .iucn_to_gpkg(src, dst)
-
+  dst
 }
 
 
@@ -91,7 +91,7 @@ NULL
   dst <- gsub("zip", "gpkg", path)
   src <- paste0("/vsizip/", path)
   if(!file.exists(dst)) .iucn_to_gpkg(src, dst)
-
+  dst
 }
 
 
@@ -144,7 +144,7 @@ NULL
   dst <- gsub("zip", "gpkg", path)
   src <- paste0("/vsizip/", path)
   if(!file.exists(dst)) .iucn_to_gpkg(src, dst)
-
+  dst
 }
 
 
@@ -159,10 +159,10 @@ NULL
   "resource")
 
 
-#' Birdlife International Species Ranges
+#' BirdLife International Species Ranges
 #'
 #' This resource is part of the spatial data set of bird ranges
-#' released by Birdlife International The data are made available including
+#' released by BirdLife International The data are made available including
 #' taxonomic information,
 #' distribution status, IUCN Red List Category, sources and other details. This
 #' resource is free to use under a non-commercial licence. For commercial uses,
@@ -174,9 +174,10 @@ NULL
 #' @docType data
 #' @keywords resource
 #' @format A global vector data set indicating species ranges
-#' @references IUCN (2024). The IUCN Red List of Threatened Species. https://www.iucnredlist.org.
-#' https://doi.org/10.1038/s41597-022-01284-8
-#' @source \url{https://www.iucnredlist.org/resources/spatial-data-download}
+#' @references BirdLife International and Handbook of the Birds of the World (2022).
+#'   Bird species distribution maps of the world. Version 2022.2. Available at
+#'   http://datazone.birdlife.org/species/requestdis
+#' @source \url{http://datazone.birdlife.org/species/requestdis}
 NULL
 
 
@@ -198,6 +199,7 @@ NULL
 
   dst <- gsub("gdb", "gpkg", path)
   if(!file.exists(dst)) .iucn_to_gpkg(path, dst)
+  dst
 
 }
 
@@ -205,7 +207,7 @@ NULL
 .register(list(
   name = "birdlife",
   type = "vector",
-  source = "https://www.iucnredlist.org/resources/spatial-data-download",
+  source = "http://datazone.birdlife.org/species/requestdis",
   fun = .get_birdlife,
   arguments = list(
     path = NULL
@@ -213,11 +215,13 @@ NULL
   "resource")
 
 
-.iucn_to_gpkg <- function(src, dst){
-
+.iucn_to_gpkg <- function(src, dst) {
   org <- Sys.getenv("OGR_ORGANIZE_POLYGONS")
   Sys.setenv(OGR_ORGANIZE_POLYGONS = "SKIP")
   on.exit(Sys.setenv(OGR_ORGANIZE_POLYGONS = org))
   sf::gdal_utils("vectortranslate", src, dst, options = c("-nlt", "PROMOTE_TO_MULTI", "-skipfailures"))
-
+  data <- read_sf(dst)
+  data <- st_make_valid(data)
+  data <- data[st_is_valid(data), ]
+  st_write(data, dst, delete_dsn = TRUE)
 }

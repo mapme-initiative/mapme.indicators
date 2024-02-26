@@ -103,10 +103,9 @@ NULL
   processing_mode = "asset"),
   "indicator")
 
-#' Species richness - Mammals
+#' Species richness - Birds
 #'
-#' Species richness counts the number of species intersecting with a polygon
-#' grouped by the IUCN threat categorization.
+#' Species richness counts the number of species intersecting with a polygon.
 #'
 #' The required resources for this indicator are:
 #'  - [birdlife]
@@ -114,8 +113,8 @@ NULL
 #' @name sr_birds
 #' @docType data
 #' @keywords indicator
-#' @format A tibble with columns for the code and full-text category as well
-#'   as the count of the number of respective species.
+#' @format A tibble with a column for the number of bird species which ranges
+#'   intersect with a given polygon.
 NULL
 
 #' @noRd
@@ -127,7 +126,10 @@ NULL
     ...) {
 
   if(is.null(birdlife)) return(NA)
-  .calc_sr(table(birdlife[["category"]]), "sr_birds")
+  tibble::tibble(
+    variable = "sr_birds",
+    count = nrow(birdlife)
+  )
 }
 
 .register(list(

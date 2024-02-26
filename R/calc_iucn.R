@@ -21,6 +21,7 @@ NULL
     verbose = TRUE,
     ...) {
 
+  iucn_mammals <- iucn_mammals[[1]]
   if(is.null(iucn_mammals)) return(NA)
   .calc_sr(table(iucn_mammals[["category"]]), "sr_mammals")
 }
@@ -56,6 +57,7 @@ NULL
     verbose = TRUE,
     ...) {
 
+  iucn_reptiles <- iucn_reptiles[[1]]
   if(is.null(iucn_reptiles)) return(NA)
   .calc_sr(table(iucn_reptiles[["category"]]), "sr_reptiles")
 }
@@ -91,6 +93,8 @@ NULL
     verbose = TRUE,
     ...) {
 
+
+  iucn_amphibians <- iucn_amphibians[[1]]
   if(is.null(iucn_amphibians)) return(NA)
   .calc_sr(table(iucn_amphibians[["category"]]), "sr_mammals")
 }
@@ -125,6 +129,8 @@ NULL
     verbose = TRUE,
     ...) {
 
+
+  birdlife <- birdlife[[1]]
   if(is.null(birdlife)) return(NA)
   tibble::tibble(
     variable = "sr_birds",

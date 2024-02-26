@@ -16,9 +16,11 @@ Collate:
     'calc_carbon.R'
     'calc_hfp.R'
     'calc_ipbes.R'
+    'calc_iucn.R'
     'get_carbon.R'
     'get_hfp.R'
     'get_ipbes.R'
+    'get_iucn.R'
     'mapme.indicators.R'
 Suggests: 
     testthat (>= 3.0.0)

@@ -203,7 +203,6 @@ NULL
 
 }
 
-
 .register(list(
   name = "birdlife",
   type = "vector",
@@ -216,12 +215,21 @@ NULL
 
 
 .iucn_to_gpkg <- function(src, dst) {
-  org <- Sys.getenv("OGR_ORGANIZE_POLYGONS")
-  Sys.setenv(OGR_ORGANIZE_POLYGONS = "SKIP")
-  on.exit(Sys.setenv(OGR_ORGANIZE_POLYGONS = org))
-  sf::gdal_utils("vectortranslate", src, dst, options = c("-nlt", "PROMOTE_TO_MULTI", "-skipfailures"))
-  data <- read_sf(dst)
-  data <- st_make_valid(data)
-  data <- data[st_is_valid(data), ]
-  st_write(data, dst, delete_dsn = TRUE)
+  dTolerance <- 1000
+  data <- read_sf(src)
+  is_valid <- st_is_valid(data)
+
+  valid <- data[is_valid, ]
+  valid <- st_simplify(valid, preserveTopology = TRUE, dTolerance = dTolerance)
+
+  if(sum(!is_valid) > 0) {
+    try_valid <- data[!is_valid, ]
+    try_valid <- st_make_valid(try_valid)
+    is_valid <- st_is_valid(try_valid)
+    try_valid <- try_valid[is_valid, ]
+    try_valid <- st_simplify(try_valid, preserveTopology = TRUE, dTolerance = dTolerance)
+    valid <- rbind(valid, try_valid)
+  }
+
+  st_write(valid, dst, delete_dsn = TRUE)
 }

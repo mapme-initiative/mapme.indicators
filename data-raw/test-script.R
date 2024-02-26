@@ -76,3 +76,12 @@ vul_carbon$vul_carbon
 
 
 
+port <- get_resources(port, "iucn_mammals", path = "../data/iucn_mammals/MAMMALS.zip")
+
+plan(multisession, workers = 8)
+timing <- system.time(with_progress({
+  mammals <- calc_indicators(port, "sr_mammals")
+}))
+plan(sequential)
+
+mammals$sr_mammals

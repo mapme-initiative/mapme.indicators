@@ -5,6 +5,7 @@
 #' distribution status, IUCN Red List Category, sources and other details. This
 #' resource is free to use under a non-commercial licence. For commercial uses,
 #' a request has to be sent to Integrated Biodiversity Assessment Tool (IBAT).
+#'
 #' To use this data in mapme workflows, you will have to manually download the
 #' global data set and point towards the file path on your local machine.
 #'
@@ -35,9 +36,9 @@ NULL
   }
 
 
-  dst <- gsub("zip", "gpkg", path)
+  dst <- gsub("zip", "fgb", path)
   src <- paste0("/vsizip/", path)
-  if(!file.exists(dst)) .iucn_to_gpkg(src, dst)
+  if(!file.exists(dst)) .prep_iucn(src, dst, verbose)
   dst
 }
 
@@ -59,6 +60,7 @@ NULL
 #' distribution status, IUCN Red List Category, sources and other details. This
 #' resource is free to use under a non-commercial licence. For commercial uses,
 #' a request has to be sent to Integrated Biodiversity Assessment Tool (IBAT).
+#'
 #' To use this data in mapme workflows, you will have to manually download the
 #' global data set and point towards the file path on your local machine.
 #'
@@ -88,9 +90,9 @@ NULL
     stop("Expecting path to point towards a file called: 'REPTILES.zip'.")
   }
 
-  dst <- gsub("zip", "gpkg", path)
+  dst <- gsub("zip", "fgb", path)
   src <- paste0("/vsizip/", path)
-  if(!file.exists(dst)) .iucn_to_gpkg(src, dst)
+  if(!file.exists(dst)) .prep_iucn(src, dst, verbose)
   dst
 }
 
@@ -112,6 +114,7 @@ NULL
 #' distribution status, IUCN Red List Category, sources and other details. This
 #' resource is free to use under a non-commercial licence. For commercial uses,
 #' a request has to be sent to Integrated Biodiversity Assessment Tool (IBAT).
+#'
 #' To use this data in mapme workflows, you will have to manually download the
 #' global data set and point towards the file path on your local machine.
 #'
@@ -141,9 +144,9 @@ NULL
     stop("Expecting path to point towards a file called: 'AMPHIBIANS.zip'.")
   }
 
-  dst <- gsub("zip", "gpkg", path)
+  dst <- gsub("zip", "fgb", path)
   src <- paste0("/vsizip/", path)
-  if(!file.exists(dst)) .iucn_to_gpkg(src, dst)
+  if(!file.exists(dst)) .prep_iucn(src, dst, verbose)
   dst
 }
 
@@ -162,11 +165,10 @@ NULL
 #' BirdLife International Species Ranges
 #'
 #' This resource is part of the spatial data set of bird ranges
-#' released by BirdLife International The data are made available including
-#' taxonomic information,
-#' distribution status, IUCN Red List Category, sources and other details. This
-#' resource is free to use under a non-commercial licence. For commercial uses,
-#' a request has to be sent to Integrated Biodiversity Assessment Tool (IBAT).
+#' released by BirdLife International. This resource is free to use under a
+#' non-commercial licence. For commercial uses, a request has to be sent to
+#' BirdLife International.
+#'
 #' To use this data in mapme workflows, you will have to manually download the
 #' global data set and point towards the file path on your local machine.
 #'
@@ -197,8 +199,8 @@ NULL
     stop("Expecting path to point towards a file called: 'BOTW.gdb'.")
   }
 
-  dst <- gsub("gdb", "gpkg", path)
-  if(!file.exists(dst)) .iucn_to_gpkg(path, dst)
+  dst <- gsub("gdb", "fgb", path)
+  if(!file.exists(dst)) .prep_iucn(path, dst, verbose)
   dst
 
 }
@@ -214,22 +216,20 @@ NULL
   "resource")
 
 
-.iucn_to_gpkg <- function(src, dst) {
-  dTolerance <- 1000
-  data <- read_sf(src)
-  is_valid <- st_is_valid(data)
+.prep_iucn <- function(src, dst, verbose = TRUE) {
 
-  valid <- data[is_valid, ]
-  valid <- st_simplify(valid, preserveTopology = TRUE, dTolerance = dTolerance)
+  opts <- c(
+    "-makevalid",
+    "-skipfailures",
+    "-simplify", "0.01",
+    "-nlt", "PROMOTE_TO_MULTI")
 
-  if(sum(!is_valid) > 0) {
-    try_valid <- data[!is_valid, ]
-    try_valid <- st_make_valid(try_valid)
-    is_valid <- st_is_valid(try_valid)
-    try_valid <- try_valid[is_valid, ]
-    try_valid <- st_simplify(try_valid, preserveTopology = TRUE, dTolerance = dTolerance)
-    valid <- rbind(valid, try_valid)
-  }
+  if(verbose) opts <- c(opts, "-progress")
 
-  st_write(valid, dst, delete_dsn = TRUE)
+  sf::gdal_utils(
+    "vectortranslate",
+    source = src,
+    destination = dst,
+    quiet = FALSE,
+    options = opts)
 }

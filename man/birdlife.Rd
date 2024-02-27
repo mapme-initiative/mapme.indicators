@@ -12,11 +12,11 @@ A global vector data set indicating species ranges
 }
 \description{
 This resource is part of the spatial data set of bird ranges
-released by BirdLife International The data are made available including
-taxonomic information,
-distribution status, IUCN Red List Category, sources and other details. This
-resource is free to use under a non-commercial licence. For commercial uses,
-a request has to be sent to Integrated Biodiversity Assessment Tool (IBAT).
+released by BirdLife International. This resource is free to use under a
+non-commercial licence. For commercial uses, a request has to be sent to
+BirdLife International.
+}
+\details{
 To use this data in mapme workflows, you will have to manually download the
 global data set and point towards the file path on your local machine.
 }

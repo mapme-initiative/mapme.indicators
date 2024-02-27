@@ -35,8 +35,7 @@ NULL
     stop("Expecting path to point towards a file called: 'MAMMALS.zip'.")
   }
 
-
-  dst <- gsub("zip", "fgb", path)
+  dst <- file.path(rundir, gsub("zip", "fgb", basename(path)))
   src <- paste0("/vsizip/", path)
   if(!file.exists(dst)) .prep_iucn(src, dst, verbose)
   dst
@@ -90,7 +89,7 @@ NULL
     stop("Expecting path to point towards a file called: 'REPTILES.zip'.")
   }
 
-  dst <- gsub("zip", "fgb", path)
+  dst <-  file.path(rundir, gsub("zip", "fgb", basename(path)))
   src <- paste0("/vsizip/", path)
   if(!file.exists(dst)) .prep_iucn(src, dst, verbose)
   dst
@@ -144,7 +143,7 @@ NULL
     stop("Expecting path to point towards a file called: 'AMPHIBIANS.zip'.")
   }
 
-  dst <- gsub("zip", "fgb", path)
+  dst <- file.path(rundir, gsub("zip", "fgb", basename(path)))
   src <- paste0("/vsizip/", path)
   if(!file.exists(dst)) .prep_iucn(src, dst, verbose)
   dst
@@ -199,7 +198,7 @@ NULL
     stop("Expecting path to point towards a file called: 'BOTW.gdb'.")
   }
 
-  dst <- gsub("gdb", "fgb", path)
+  dst <- file.path(rundir, gsub("zip", "fgb", basename(path)))
   if(!file.exists(dst)) .prep_iucn(path, dst, verbose)
   dst
 

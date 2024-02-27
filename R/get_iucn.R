@@ -198,7 +198,7 @@ NULL
     stop("Expecting path to point towards a file called: 'BOTW.gdb'.")
   }
 
-  dst <- file.path(rundir, gsub("zip", "fgb", basename(path)))
+  dst <- file.path(rundir, gsub("gdb", "fgb", basename(path)))
   if(!file.exists(dst)) .prep_iucn(path, dst, verbose)
   dst
 

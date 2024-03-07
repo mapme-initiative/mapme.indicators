@@ -40,6 +40,7 @@ NULL
 
   urls_df <- .get_hfp_url(target_years)
   filenames <- file.path(rundir, urls_df[["filename"]])
+  if(attributes(x)[["testing"]]) return(filenames)
 
   aria_bin <- attributes(x)$aria_bin
   zips <- mapme.biodiversity:::.download_or_skip(

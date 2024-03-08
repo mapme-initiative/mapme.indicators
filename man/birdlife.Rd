@@ -19,6 +19,9 @@ BirdLife International.
 \details{
 To use this data in mapme workflows, you will have to manually download the
 global data set and point towards the file path on your local machine.
+
+Note, that we are simplifying the species ranges polygons for better computational
+efficiency.
 }
 \references{
 BirdLife International and Handbook of the Birds of the World (2022).

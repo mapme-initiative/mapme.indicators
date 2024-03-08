@@ -132,10 +132,9 @@ NULL
 
   birdlife <- birdlife[[1]]
   if(is.null(birdlife)) return(NA)
-  tibble::tibble(
-    variable = "sr_birds",
-    count = nrow(birdlife)
-  )
+  col_index <- grep("IUCN_Red_List_Category", names(birdlife))
+  names(birdlife)[col_index] <- "category"
+  .calc_sr(table(birdlife[["category"]]), "sr_birds")
 }
 
 .register(list(

@@ -9,6 +9,9 @@
 #' To use this data in mapme workflows, you will have to manually download the
 #' global data set and point towards the file path on your local machine.
 #'
+#' Note, that we are simplifying the species ranges polygons for better computational
+#' efficiency.
+#'
 #' @name iucn_mammals
 #' @docType data
 #' @keywords resource
@@ -37,7 +40,7 @@ NULL
 
   dst <- file.path(rundir, gsub("zip", "fgb", basename(path)))
   src <- paste0("/vsizip/", path)
-  if(!file.exists(dst)) .prep_iucn(src, dst, verbose)
+  if(!file.exists(dst)) .prep_iucn(src, dst, verbose = verbose)
   dst
 }
 
@@ -62,6 +65,9 @@ NULL
 #'
 #' To use this data in mapme workflows, you will have to manually download the
 #' global data set and point towards the file path on your local machine.
+#'
+#' Note, that we are simplifying the species ranges polygons for better computational
+#' efficiency.
 #'
 #' @name iucn_reptiles
 #' @docType data
@@ -91,7 +97,7 @@ NULL
 
   dst <-  file.path(rundir, gsub("zip", "fgb", basename(path)))
   src <- paste0("/vsizip/", path)
-  if(!file.exists(dst)) .prep_iucn(src, dst, verbose)
+  if(!file.exists(dst)) .prep_iucn(src, dst, verbose = verbose)
   dst
 }
 
@@ -116,6 +122,9 @@ NULL
 #'
 #' To use this data in mapme workflows, you will have to manually download the
 #' global data set and point towards the file path on your local machine.
+#'
+#' Note, that we are simplifying the species ranges polygons for better computational
+#' efficiency.
 #'
 #' @name iucn_amphibians
 #' @docType data
@@ -145,7 +154,7 @@ NULL
 
   dst <- file.path(rundir, gsub("zip", "fgb", basename(path)))
   src <- paste0("/vsizip/", path)
-  if(!file.exists(dst)) .prep_iucn(src, dst, verbose)
+  if(!file.exists(dst)) .prep_iucn(src, dst, verbose = verbose)
   dst
 }
 
@@ -170,6 +179,9 @@ NULL
 #'
 #' To use this data in mapme workflows, you will have to manually download the
 #' global data set and point towards the file path on your local machine.
+#'
+#' Note, that we are simplifying the species ranges polygons for better computational
+#' efficiency.
 #'
 #' @name birdlife
 #' @docType data
@@ -198,8 +210,16 @@ NULL
     stop("Expecting path to point towards a file called: 'BOTW.gdb'.")
   }
 
+  layers <- st_layers(path)
+  polys_layer <- grep("Species", layers$name, value = TRUE)
+  meta_layer <- grep("Species", layers$name, value = TRUE, invert = TRUE)
+  if (length(polys_layer) != 1 || length(meta_layer) != 1) {
+    stop("Expected 'birdlife' to have exactly two layers. Please raise an issue.")
+  }
+  sql <- sprintf("select * from %s inner join %s on %s.sisid=%s.sisid;",
+                 polys_layer, meta_layer, polys_layer, meta_layer)
   dst <- file.path(rundir, gsub("gdb", "fgb", basename(path)))
-  if(!file.exists(dst)) .prep_iucn(path, dst, verbose)
+  if(!file.exists(dst)) .prep_iucn(path, dst, sql, verbose)
   dst
 
 }
@@ -215,14 +235,14 @@ NULL
   "resource")
 
 
-.prep_iucn <- function(src, dst, verbose = TRUE) {
+.prep_iucn <- function(src, dst, sql = NULL, verbose = TRUE) {
 
   opts <- c(
     "-makevalid",
     "-skipfailures",
     "-simplify", "0.01",
     "-nlt", "PROMOTE_TO_MULTI")
-
+  if(!is.null(sql)) opts <- c(opts, "-dialect", "sqlite", "-sql", sql)
   if(verbose) opts <- c(opts, "-progress")
 
   sf::gdal_utils(

@@ -20,6 +20,9 @@ a request has to be sent to Integrated Biodiversity Assessment Tool (IBAT).
 \details{
 To use this data in mapme workflows, you will have to manually download the
 global data set and point towards the file path on your local machine.
+
+Note, that we are simplifying the species ranges polygons for better computational
+efficiency.
 }
 \references{
 IUCN (2024). The IUCN Red List of Threatened Species. https://www.iucnredlist.org.

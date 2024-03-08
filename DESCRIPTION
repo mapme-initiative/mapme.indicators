@@ -10,7 +10,7 @@ Depends: mapme.biodiversity (>= 0.5.0)
 Imports: exactextractr, httr2, sf, purrr, terra, tibble
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Collate: 
     'zzz.R'
     'calc_carbon.R'

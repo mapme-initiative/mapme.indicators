@@ -79,7 +79,7 @@ NULL
 
       urls [idx] <- sprintf(
         "%syearlyClassification%s/yearlyClassification%s%s%s.tif",
-        baseurl, year, year, separator, ids
+        baseurl, year, year, separator, tile_url_id
       )
       idx <- idx + 1
     }

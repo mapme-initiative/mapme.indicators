@@ -112,10 +112,11 @@ NULL
   return(tile_id)
 }
 
-register_resource(
-  name = "gsw_time_series",
-  type = "raster",
-  source = "https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GSWE/YearlyClassification/LATEST/tiles/",
-  fun = .get_gsw_time_series,
-  arguments <- list(vers_gsw_time_series = "LATEST")
-)
+.register(list(
+    name = "gsw_time_series",
+    type = "raster",
+    source = "https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GSWE/YearlyClassification/LATEST/tiles/",
+    fun = .get_gsw_time_series,
+    arguments = list(vers_gsw_time_series = "LATEST")
+  ),
+  "resource")

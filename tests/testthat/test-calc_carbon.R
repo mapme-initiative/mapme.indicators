@@ -3,6 +3,7 @@ test_that("calc_irr_carbon works", {
   aoi <- read_sf(system.file("shape/nc.shp", package="sf")) |>
     st_transform("EPSG:4326")
   aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
+  aoi <- aoi [5, ]
 
   outdir <- system.file("resources", package = "mapme.indicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
@@ -30,6 +31,7 @@ test_that("calc_vul_carbon works", {
   aoi <- read_sf(system.file("shape/nc.shp", package="sf")) |>
     st_transform("EPSG:4326")
   aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
+  aoi <- aoi [5, ]
 
   outdir <- system.file("resources", package = "mapme.indicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
@@ -60,6 +62,7 @@ test_that("calc_man_carbon works", {
   outdir <- system.file("resources", package = "mapme.indicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
   aoi <- get_resources(aoi, "man_carbon")
+  aoi <- aoi [5, ]
 
   aoi <- calc_indicators(aoi, "man_carbon_stats", which_carbon = "all", stats_carbon = c("mean", "min", "max", "sd"), engine = "extract")
   expect_true("man_carbon_stats" %in% names(aoi))

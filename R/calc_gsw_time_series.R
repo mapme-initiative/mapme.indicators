@@ -32,6 +32,11 @@ NULL
     return(NA)
   }
 
+  gsw_time_series <- terra::crop(
+    gsw_time_series,
+    x
+  )
+
   gsw_time_series <- terra::mask(
     gsw_time_series,
     x

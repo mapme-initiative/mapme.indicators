@@ -1,4 +1,4 @@
-library(LLFindicators)
+library(mapme.indicators)
 library(terra)
 library(sf)
 
@@ -14,7 +14,7 @@ irr_carbon <- crop(irr_carbon, aoi)
 
 outdir <- "inst/resources/irr_carbon"
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
-writeRaster(irr_carbon, file.path(outdir, basename(tindex_irr[["location"]])))
+writeRaster(irr_carbon, file.path(outdir, basename(tindex_irr[["location"]])), datatype = "INT2U", overwrite = TRUE, wopt= list(gdal=c("COMPRESS=LZW")))
 file.create(file.path(outdir, paste0("Irrecoverable_Carbon_", c(2010, 2018), ".zip")))
 
 tindex_vul <- attr(aoi, "resources")[["vul_carbon"]]
@@ -23,7 +23,7 @@ vul_carbon <- crop(vul_carbon, aoi)
 
 outdir <- "inst/resources/vul_carbon"
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
-writeRaster(vul_carbon, file.path(outdir, basename(tindex_vul[["location"]])))
+writeRaster(vul_carbon, file.path(outdir, basename(tindex_vul[["location"]])), datatype = "INT2U", overwrite = TRUE, wopt= list(gdal=c("COMPRESS=LZW")))
 file.create(file.path(outdir, paste0("Vulnerable_Carbon_", c(2010, 2018), ".zip")))
 
 tindex_man <- attr(aoi, "resources")[["man_carbon"]]
@@ -32,6 +32,6 @@ man_carbon <- crop(man_carbon, aoi)
 
 outdir <- "inst/resources/man_carbon"
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
-writeRaster(man_carbon, file.path(outdir, basename(tindex_man[["location"]])))
+writeRaster(man_carbon, file.path(outdir, basename(tindex_man[["location"]])), datatype = "INT2U", overwrite = TRUE, wopt= list(gdal=c("COMPRESS=LZW")))
 file.create(file.path(outdir, paste0("Manageable_Carbon_", c(2010, 2018), ".zip")))
 

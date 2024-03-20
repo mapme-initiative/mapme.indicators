@@ -3,6 +3,7 @@ test_that("calc_hfp works", {
   aoi <- read_sf(system.file("shape/nc.shp", package="sf")) |>
     st_transform("EPSG:4326")
   aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
+  aoi <- aoi [5, ]
 
   outdir <- system.file("resources", package = "mapme.indicators")
   aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)

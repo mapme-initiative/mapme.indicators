@@ -2,13 +2,13 @@ library(LLFindicators)
 library(terra)
 library(sf)
 
-aoi <- st_read(system.file("shape/nc.shp", package="sf")) |>
-  st_transform("EPSG:4326") |>
-  st_cast("POLYGON") |>
-  init_portfolio(years = c(2000:2020), outdir = "../data") |>
+aoi <- st_read(system.file("shape/nc.shp", package="sf")) %>%
+  st_transform("EPSG:4326") %>%
+  st_cast("POLYGON") %>%
+  init_portfolio(years = c(2000:2020), outdir = "../data") %>%
   get_resources("humanfootprint")
 
-tindex <- attr(aoi, "resources")["humanfootprint"] |> st_read()
+tindex <- st_read(attr(aoi, "resources")["humanfootprint"])
 hfp <- rast(tindex[["location"]])
 hfp <- crop(hfp, st_transform(aoi, crs(hfp)))
 

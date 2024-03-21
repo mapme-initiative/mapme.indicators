@@ -1,6 +1,6 @@
 test_that("calc_ipbes_biomes works", {
 
-  aoi <- read_sf(system.file("shape/nc.shp", package="sf")) |>
+  aoi <- read_sf(system.file("shape/nc.shp", package="sf")) %>%
     st_transform("EPSG:4326")
   aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
   aoi <- aoi [5, ]
@@ -18,7 +18,7 @@ test_that("calc_ipbes_biomes works", {
 
 test_that("calc_ipbes_anthrome works", {
 
-  aoi <- read_sf(system.file("shape/nc.shp", package="sf")) |>
+  aoi <- read_sf(system.file("shape/nc.shp", package="sf")) %>%
     st_transform("EPSG:4326")
   aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
   aoi <- aoi [5, ]

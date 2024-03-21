@@ -153,7 +153,11 @@ NULL
 
 .get_goldstein_url <- function(layer){
   baseurl <- "https://zenodo.org/api/records/4091029"
-  cnt <- request(baseurl) |> req_perform() |> resp_body_json()
+  cnt <- resp_body_json(
+      req_perform (
+        request(baseurl)
+      )
+    )
   files_df <- lapply(cnt[["files"]], function(x) data.frame(filename = x[["key"]], url = x[["links"]][["self"]]))
   files_df <- do.call(rbind, files_df)
   files_df[grep(layer, files_df[["filename"]]), ]

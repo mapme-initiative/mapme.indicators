@@ -1,12 +1,11 @@
 library(sf)
 
-aoi <- st_read(system.file("shape/nc.shp", package="sf")) |>
-  st_transform("EPSG:4326") |>
-  st_cast("POLYGON") |>
-  dplyr::nth(5) |>
-  init_portfolio(years = c(2010:2011), outdir = "../data") |>
-  get_resources("gsw_time_series")
-
+aoi <- st_read(system.file("shape/nc.shp", package="sf"))
+aoi <- st_transform(aoi, "EPSG:4326")
+aoi <- st_cast(aoi, "POLYGON")
+aoi <- aoi [5, ]
+aoi <- init_portfolio(aoi, years = c(2010:2011), outdir = "../data")
+aoi <- get_resources(aoi, "gsw_time_series")
 
 tiles <- attr(aoi, "resources")[["gsw_time_series"]][["location"]]
 for (tile_uri in tiles) {

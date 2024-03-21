@@ -2,13 +2,13 @@ library(mapme.indicators)
 library(terra)
 library(sf)
 
-aoi <- st_read(system.file("shape/nc.shp", package="sf")) |>
-  st_transform("EPSG:4326") |>
+aoi <- st_read(system.file("shape/nc.shp", package="sf")) %>%
+  st_transform("EPSG:4326") %>%
   st_cast("POLYGON")
 aoi <- aoi[5, ]
 
-aoi <- aoi |>
-init_portfolio(years = c(2000:2020), outdir = "../data/") |>
+aoi <- aoi %>%
+init_portfolio(years = c(2000:2020), outdir = "../data/") %>%
   get_resources(c("irr_carbon", "vul_carbon", "man_carbon"))
 
 tindex_irr <- attr(aoi, "resources")[["irr_carbon"]]

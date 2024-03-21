@@ -58,11 +58,11 @@ NULL
 #' @importFrom httr2 request req_perform resp_body_json
 .get_hfp_url <- function(years) {
   baseurl <- "https://api.figshare.com/v2/articles/16571064/files"
-  cnt <- request(baseurl) |> req_perform() |> resp_body_json()
+  cnt <- resp_body_json(req_perform(request(baseurl)))
   data <- lapply(cnt, function(x) data.frame(filename = x[["name"]], url = x[["download_url"]]))
   data <- do.call(rbind, data)
   data <- data[grep("zip", data[["filename"]]), ]
-  data["year"] <- substring(data[["filename"]], 4, 7) |> as.numeric()
+  data["year"] <- as.numeric(substring(data[["filename"]], 4, 7))
   data[data[["year"]] %in% years, ]
 }
 

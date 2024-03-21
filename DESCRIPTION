@@ -14,10 +14,12 @@ RoxygenNote: 7.3.1
 Collate: 
     'zzz.R'
     'calc_carbon.R'
+    'calc_gsw_time_series.R'
     'calc_hfp.R'
     'calc_ipbes.R'
     'calc_iucn.R'
     'get_carbon.R'
+    'get_gsw_time_series.R'
     'get_hfp.R'
     'get_ipbes.R'
     'get_iucn.R'

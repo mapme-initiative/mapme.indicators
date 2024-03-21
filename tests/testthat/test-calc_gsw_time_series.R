@@ -24,4 +24,12 @@ test_that("calc_gsw_time_series works", {
 
   expect_equal(aoi[[indicator_colname]][[1]][["year"]],
                c(2010, 2011))
+  expect_equal(aoi[[indicator_colname]][[1]][["gsw_no_observations_ha"]],
+               c(3427.065, 3427.376), tolerance = 1e-3)
+  expect_equal(aoi[[indicator_colname]][[1]][["gsw_not_water_ha"]],
+               c(66.9, 70.8), tolerance = 1e-3)
+  expect_equal(aoi[[indicator_colname]][[1]][["gsw_seasonal_water_ha"]],
+               c(344, 328), tolerance = 1e-3)
+  expect_equal(aoi[[indicator_colname]][[1]][["gsw_permanent_water_ha"]],
+               c(1346, 1358), tolerance = 1e-3)
 })

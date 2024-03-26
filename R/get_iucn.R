@@ -95,9 +95,13 @@ NULL
     stop("Expecting path to point towards a file called: 'REPTILES.zip'.")
   }
 
-  dst <-  file.path(rundir, gsub("zip", "fgb", basename(path)))
+  dst <-  file.path(rundir, gsub("zip", "gpkg", basename(path)))
   src <- paste0("/vsizip/", path)
-  if(!file.exists(dst)) .prep_iucn(src, dst, verbose = verbose)
+  layers <- st_layers(src)[["name"]]
+  if(length(layers) != 2) {
+    stop("Expected REPTILES.zip to have two layers.")
+  }
+  if(!file.exists(dst)) .prep_iucn(src, dst, layers, verbose = verbose)
   dst
 }
 
@@ -154,6 +158,10 @@ NULL
 
   dst <- file.path(rundir, gsub("zip", "fgb", basename(path)))
   src <- paste0("/vsizip/", path)
+  layers <- st_layers(src)[["name"]]
+  if(length(layers) != 2) {
+    stop("Expected AMPHIBIANS.zip to have two layers.")
+  }
   if(!file.exists(dst)) .prep_iucn(src, dst, verbose = verbose)
   dst
 }
@@ -235,20 +243,31 @@ NULL
   "resource")
 
 
-.prep_iucn <- function(src, dst, sql = NULL, verbose = TRUE) {
+.prep_iucn <- function(src, dst, layers = NULL, sql = NULL, verbose = TRUE) {
 
+  if(verbose) opts <- "-progress"
+  if(!is.null(sql)) opts <- c(opts, "-dialect", "sqlite", "-sql", sql)
+  if(is.null(layers)) layers <- st_layers(src)[["name"]]
+  nln <- basename(dst)
   opts <- c(
+    opts,
+    "-append",
     "-makevalid",
     "-skipfailures",
     "-simplify", "0.01",
+    "-nln", nln,
     "-nlt", "PROMOTE_TO_MULTI")
-  if(!is.null(sql)) opts <- c(opts, "-dialect", "sqlite", "-sql", sql)
-  if(verbose) opts <- c(opts, "-progress")
 
-  sf::gdal_utils(
-    "vectortranslate",
-    source = src,
-    destination = dst,
-    quiet = FALSE,
-    options = opts)
+  for (layer in layers) {
+
+    opt_tmp <- c(opts, layer)
+
+    sf::gdal_utils(
+      "vectortranslate",
+      source = src,
+      destination = dst,
+      quiet = FALSE,
+      options = opt_tmp)
+
+  }
 }

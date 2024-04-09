@@ -7,59 +7,51 @@
 #' The required resources for this indicator are:
 #'  - [irr_carbon]
 #'
-#' The following argument can be set:
-#' \describe{
-#'   \item{which_carbon}{One of "total", "soil", "biomass", "all". Determines
-#'     for which data layer the statistics are calculated.}
-#'  \item{stats_carbon}{Function to be applied to compute statistics for polygons either
-#'   one or multiple inputs as character. Supported statistics are: "mean",
-#'   "median", "sd", "min", "max", "sum" "var".}
-#'  \item{engine}{The preferred processing functions from either one of "zonal",
-#'   "extract" or "exactextract" as character.}
-#' }
-#'
 #' @name irr_carbon_stats
-#' @docType data
+#' @param type One of "total", "soil", "biomass", "all". Determines
+#'     for which data layer the statistics are calculated.
+#' @param engine The preferred processing functions from either one of "zonal",
+#'   "extract" or "exactextract" as character.
+#' @param stats Function to be applied to compute statistics for polygons either
+#'   one or multiple inputs as character. Supported statistics are: "mean",
+#'   "median", "sd", "min", "max", "sum" "var".
 #' @keywords indicator
-#' @format A tibble with a column for each statistic and rows for every year
-#'   and type of carbon.
-NULL
+#' @returns A function that returns a tibble with a column for each statistic
+#'   and rows for every year and type of carbon.
+#' @importFrom mapme.biodiversity check_engine check_stats
+#' @export
+calc_irr_carbon <- function(type = c("total", "soil", "biomass", "all"),
+                            engine = "extract",
+                            stats = "mean") {
 
-#' @include zzz.R
-.calc_irr_carbon <- function(
+  type <- match.arg(type)
+  engine <- check_engine(engine)
+  stats <- check_stats(stats)
+
+  function(
     x,
     irr_carbon,
-    which_carbon = c("total", "soil", "biomass", "all"),
-    stats_carbon = "mean",
-    engine = "extract",
-    verbose = TRUE) {
+    name = "irr_carbon_stats",
+    mode = "asset",
+    verbose = mapme_options()[["verbose"]]) {
 
-  which_carbon <- match.arg(which_carbon)
-
-  .calc_carbon_stats(
-    x,
-    layer = irr_carbon,
-    which_layer = which_carbon,
-    stats = stats_carbon,
-    engine = engine,
-    name = "irr_carbon",
-    mode = "asset"
-  )
-
+    .calc_carbon_stats(
+      x,
+      layer = irr_carbon,
+      which_layer = type,
+      stats = stats,
+      engine = engine,
+      name = "irr_carbon_stats",
+      mode = "asset"
+    )
+  }
 }
 
-.register(list(
+register_indicator(
   name = "irr_carbon_stats",
-  resources = list(irr_carbon = "raster"),
-  fun = .calc_irr_carbon,
-  arguments = list(
-    which_carbon = "total",
-    stats_carbon = "mean",
-    engine = "extract"
-  ),
-  processing_mode = "asset"),
-  "indicator")
-
+  description = "Statistics of irrecoverable carbon per polygon.",
+  resources = "irr_carbon"
+)
 
 #' Calculate manageable carbon statistics
 #'
@@ -71,61 +63,44 @@ NULL
 #' The required resources for this indicator are:
 #'  - [man_carbon]
 #'
-#' The following argument can be set:
-#' \describe{
-#'   \item{which_carbon}{One of "total", "soil", "biomass", "all". Determines
-#'     for which data layer the statistics are calculated.}
-#'  \item{stats_carbon}{Function to be applied to compute statistics for polygons either
-#'   one or multiple inputs as character. Supported statistics are: "mean",
-#'   "median", "sd", "min", "max", "sum" "var".}
-#'  \item{engine}{The preferred processing functions from either one of "zonal",
-#'   "extract" or "exactextract" as character.}
-#' }
-#'
 #' @name man_carbon_stats
-#' @docType data
 #' @keywords indicator
-#' @format A tibble with a column for each statistic and rows for every year
-#'   and type of carbon.
-NULL
+#' @inherit irr_carbon_stats
+#' @export
+calc_man_carbon <- function(type = c("total", "soil", "biomass", "all"),
+                            engine = "extract",
+                            stats = "mean") {
 
-#' @include zzz.R
-.calc_man_carbon <- function(
+  type <- match.arg(type)
+  engine <- check_engine(engine)
+  stats <- check_stats(stats)
+
+  function(
     x,
     man_carbon,
-    which_carbon = c("total", "soil", "biomass", "all"),
-    stats_carbon = "mean",
-    engine = "extract",
-    verbose = TRUE) {
+    name = "man_carbon_stats",
+    mode = "asset",
+    verbose = mapme_options()[["verbose"]]) {
 
-  which_carbon <- match.arg(which_carbon)
-
-  .calc_carbon_stats(
-    x,
-    layer = man_carbon,
-    which_layer = which_carbon,
-    stats = stats_carbon,
-    engine = engine,
-    name = "man_carbon",
-    mode = "asset"
-  )
+    .calc_carbon_stats(
+      x,
+      layer = man_carbon,
+      which_layer = type,
+      stats = stats,
+      engine = engine,
+      name = "man_carbon_stats",
+      mode = "asset"
+    )
+  }
 }
 
-
-.register(list(
+register_indicator(
   name = "man_carbon_stats",
-  resources = list(man_carbon = "raster"),
-  fun = .calc_man_carbon,
-  arguments = list(
-    which_carbon = "total",
-    stats_carbon = "mean",
-    engine = "extract"
-  ),
-  processing_mode = "asset"),
-  "indicator")
+  description = "Statistics of manageable carbon per polygon.",
+  resources = "man_carbon"
+)
 
-
-#' Vulnerable manageable carbon statistics
+#' Calculate vulnerable carbon statistics
 #'
 #' Vulnerable carbon is the amount of carbon that would be released in a typical
 #' land conversion activity.
@@ -135,59 +110,45 @@ NULL
 #' The required resources for this indicator are:
 #'  - [vul_carbon]
 #'
-#' The following argument can be set:
-#' \describe{
-#'   \item{which_carbon}{One of "total", "soil", "biomass", "all". Determines
-#'     for which data layer the statistics are calculated.}
-#'  \item{stats_carbon}{Function to be applied to compute statistics for polygons either
-#'   one or multiple inputs as character. Supported statistics are: "mean",
-#'   "median", "sd", "min", "max", "sum" "var".}
-#'  \item{engine}{The preferred processing functions from either one of "zonal",
-#'   "extract" or "exactextract" as character.}
-#' }
-#'
 #' @name vul_carbon_stats
-#' @docType data
 #' @keywords indicator
-#' @format A tibble with a column for each statistic and rows for every year
-#'   and type of carbon.
-NULL
+#' @inherit irr_carbon_stats
+#' @export
+calc_vul_carbon <- function(type = c("total", "soil", "biomass", "all"),
+                            engine = "extract",
+                            stats = "mean") {
 
-#' @include zzz.R
-.calc_vul_carbon <- function(
+  type <- match.arg(type)
+  engine <- check_engine(engine)
+  stats <- check_stats(stats)
+
+  function(
     x,
     vul_carbon,
-    which_carbon = c("total", "soil", "biomass", "all"),
-    stats_carbon = "mean",
-    engine = "extract",
-    verbose = TRUE) {
+    name = "vul_carbon_stats",
+    mode = "asset",
+    verbose = mapme_options()[["verbose"]]) {
 
-  which_carbon <- match.arg(which_carbon)
-
-  .calc_carbon_stats(
-    x,
-    layer = vul_carbon,
-    which_layer = which_carbon,
-    stats = stats_carbon,
-    engine = engine,
-    name = "vul_carbon",
-    mode = "asset"
-  )
+    .calc_carbon_stats(
+      x,
+      layer = vul_carbon,
+      which_layer = type,
+      stats = stats,
+      engine = engine,
+      name = "vul_carbon_stats",
+      mode = "asset"
+    )
+  }
 }
 
-
-.register(list(
+register_indicator(
   name = "vul_carbon_stats",
-  resources = list(vul_carbon = "raster"),
-  fun = .calc_vul_carbon,
-  arguments = list(
-    which_carbon = "total",
-    stats_carbon = "mean",
-    engine = "extract"
-  ),
-  processing_mode = "asset"),
-  "indicator")
+  description = "Statistics of vulnerable carbon per polygon.",
+  resources = "vul_carbon"
+)
 
+
+#' @importFrom mapme.biodiversity select_engine
 .calc_carbon_stats <- function(
     x,
     layer,
@@ -203,7 +164,7 @@ NULL
   names(layer) <- tolower(names(layer))
   layer <- layer[[grep(paste(which_layer, collapse = "|"), names(layer))]]
 
-  result <- mapme.biodiversity:::.select_engine(
+  result <- select_engine(
     x = x,
     raster = layer,
     stats = stats,

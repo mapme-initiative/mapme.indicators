@@ -11,42 +11,43 @@
 #' the publication date).
 #'
 #' @name irr_carbon
-#' @docType data
 #' @keywords resource
-#' @format A global tiled raster resource available for all land areas.
+#' @returns A function that returns a character vector of file paths.
 #' @references Noon, M.L., Goldstein, A., Ledezma, J.C. et al. Mapping the
 #'   irrecoverable carbon in Earth’s ecosystems. Nat Sustain 5, 37–46 (2022).
 #'   https://doi.org/10.1038/s41893-021-00803-6
 #' @source \url{https://zenodo.org/records/4091029}
-NULL
+#' @importFrom mapme.biodiversity download_or_skip unzip_and_remove
+#' @export
+get_irr_carbon <- function() {
 
-#' @noRd
-#' @include zzz.R
-.get_irr_carbon <- function(
+  function(
     x,
-    rundir = tempdir(),
-    verbose = TRUE) {
+    name = "irr_carbon",
+    type = "raster",
+    outdir = mapme_options()[["outdir"]],
+    verbose = mapme_options()[["verbose"]],
+    testing = mapme_options()[["testing"]]) {
 
-  files_df <- .get_goldstein_url("^Irrecoverable_Carbon_\\d{4}\\.zip$")
-  filenames <- file.path(rundir, files_df[["filename"]])
-  filenames <- mapme.biodiversity:::.download_or_skip(
-    urls = files_df[["url"]],
-    filenames = filenames,
-    verbose = verbose,
-    check_existence = FALSE)
+    files_df <- .get_goldstein_url("^Irrecoverable_Carbon_\\d{4}\\.zip$")
+    filenames <- file.path(outdir, files_df[["filename"]])
+    filenames <- download_or_skip(
+      urls = files_df[["url"]],
+      filenames = filenames,
+      check_existence = FALSE)
 
-  purrr::walk(filenames, function(x) mapme.biodiversity:::.unzip_and_remove(x, rundir = rundir, remove = FALSE))
-  list.files(rundir, pattern = "*.tif$", recursive = TRUE, full.names = TRUE)
-
+    purrr::walk(filenames, function(x) unzip_and_remove(x, dir = outdir, remove = FALSE))
+    list.files(outdir, pattern = "*.tif$", recursive = TRUE, full.names = TRUE)
+  }
 }
 
-.register(list(
+register_resource(
   name = "irr_carbon",
-  type = "raster",
+  description = "Amount of carbon irrecoverably lost by a typical land use conversion event until mid-century.",
+  licence = "CC NC 4.0",
   source = "https://zenodo.org/records/4091029",
-  fun = .get_irr_carbon,
-  arguments = list()),
-  "resource")
+  type = "raster"
+)
 
 #' Vulnerable Carbon Layer
 #'
@@ -61,42 +62,42 @@ NULL
 #' of the probability of such an event to be actually occurring).
 #'
 #' @name vul_carbon
-#' @docType data
 #' @keywords resource
-#' @format A global tiled raster resource available for all land areas.
+#' @returns A function that returns a character vector of file paths.
 #' @references Noon, M.L., Goldstein, A., Ledezma, J.C. et al. Mapping the
 #'   irrecoverable carbon in Earth’s ecosystems. Nat Sustain 5, 37–46 (2022).
 #'   https://doi.org/10.1038/s41893-021-00803-6
 #' @source \url{https://zenodo.org/records/4091029}
-NULL
-
-#' @noRd
-#' @include zzz.R
-.get_vul_carbon <- function(
+#' @importFrom mapme.biodiversity download_or_skip unzip_and_remove
+#' @export
+get_vul_carbon <- function() {
+  function(
     x,
-    rundir = tempdir(),
-    verbose = TRUE) {
+    name = "vul_carbon",
+    type = "raster",
+    outdir = mapme_options()[["outdir"]],
+    verbose = mapme_options()[["verbose"]],
+    testing = mapme_options()[["testing"]]) {
 
-  files_df <- .get_goldstein_url("^Vulnerable_Carbon_\\d{4}\\.zip$")
-  filenames <- file.path(rundir, files_df[["filename"]])
-  filenames <- mapme.biodiversity:::.download_or_skip(
-    urls = files_df[["url"]],
-    filenames = filenames,
-    verbose = verbose,
-    check_existence = FALSE)
+    files_df <- .get_goldstein_url("^Vulnerable_Carbon_\\d{4}\\.zip$")
+    filenames <- file.path(outdir, files_df[["filename"]])
+    filenames <- download_or_skip(
+      urls = files_df[["url"]],
+      filenames = filenames,
+      check_existence = FALSE)
 
-  purrr::walk(filenames, function(x) mapme.biodiversity:::.unzip_and_remove(x, rundir = rundir, remove = FALSE))
-  list.files(rundir, pattern = "*.tif$", recursive = TRUE, full.names = TRUE)
-
+    purrr::walk(filenames, function(x) unzip_and_remove(x, dir = outdir, remove = FALSE))
+    list.files(outdir, pattern = "*.tif$", recursive = TRUE, full.names = TRUE)
+  }
 }
 
-.register(list(
+register_resource(
   name = "vul_carbon",
-  type = "raster",
+  description = "Amount of carbon that is vulnerable to a typical land use conversion event.",
+  licence = "CC NC 4.0",
   source = "https://zenodo.org/records/4091029",
-  fun = .get_vul_carbon,
-  arguments = list()),
-  "resource")
+  type = "raster"
+)
 
 
 #' Manageable Carbon Layer
@@ -113,42 +114,42 @@ NULL
 #' mitigated through adaptive management.
 #'
 #' @name man_carbon
-#' @docType data
 #' @keywords resource
-#' @format A global tiled raster resource available for all land areas.
+#' @returns A function that returns a character vector of file paths.
 #' @references Noon, M.L., Goldstein, A., Ledezma, J.C. et al. Mapping the
 #'   irrecoverable carbon in Earth’s ecosystems. Nat Sustain 5, 37–46 (2022).
 #'   https://doi.org/10.1038/s41893-021-00803-6
 #' @source \url{https://zenodo.org/records/4091029}
-NULL
-
-#' @noRd
-#' @include zzz.R
-.get_man_carbon <- function(
+#' @importFrom mapme.biodiversity download_or_skip unzip_and_remove
+#' @export
+get_man_carbon <- function() {
+  function(
     x,
-    rundir = tempdir(),
-    verbose = TRUE) {
+    name = "man_carbon",
+    type = "raster",
+    outdir = mapme_options()[["outdir"]],
+    verbose = mapme_options()[["verbose"]],
+    testing = mapme_options()[["testing"]]) {
 
-  files_df <- .get_goldstein_url("^Manageable_Carbon_\\d{4}\\.zip$")
-  filenames <- file.path(rundir, files_df[["filename"]])
-  filenames <- mapme.biodiversity:::.download_or_skip(
-    urls = files_df[["url"]],
-    filenames = filenames,
-    verbose = verbose,
-    check_existence = FALSE)
+    files_df <- .get_goldstein_url("^Manageable_Carbon_\\d{4}\\.zip$")
+    filenames <- file.path(outdir, files_df[["filename"]])
+    filenames <- download_or_skip(
+      urls = files_df[["url"]],
+      filenames = filenames,
+      check_existence = FALSE)
 
-  purrr::walk(filenames, function(x) mapme.biodiversity:::.unzip_and_remove(x, rundir = rundir, remove = FALSE))
-  list.files(rundir, pattern = "*.tif$", recursive = TRUE, full.names = TRUE)
-
+    purrr::walk(filenames, function(x) unzip_and_remove(x, dir = outdir, remove = FALSE))
+    list.files(outdir, pattern = "*.tif$", recursive = TRUE, full.names = TRUE)
+  }
 }
 
-.register(list(
+register_resource(
   name = "man_carbon",
-  type = "raster",
+  description = "Amount of carbon that is manageable by humans.",
+  licence = "CC NC 4.0",
   source = "https://zenodo.org/records/4091029",
-  fun = .get_man_carbon,
-  arguments = list()),
-  "resource")
+  type = "raster"
+)
 
 
 .get_goldstein_url <- function(layer){

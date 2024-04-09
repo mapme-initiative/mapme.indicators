@@ -15,43 +15,44 @@
 #' pressure.
 #'
 #' @name humanfootprint
-#' @docType data
+#' @param years A numeric vector indicating the years for which to download
+#'   the human footprint data, defaults to \code{2000:2020}.
 #' @keywords resource
-#' @format A global tiled raster resource available for all land areas.
+#' @returns A function that returns a character vector of file paths.
 #' @references Mu, H., Li, X., Wen, Y. et al. A global record of annual
 #' terrestrial Human Footprint dataset from 2000 to 2018. Sci Data 9, 176 (2022).
-#' https://doi.org/10.1038/s41597-022-01284-8
+#' \doi{https://doi.org/10.1038/s41597-022-01284-8}
 #' @source \url{https://figshare.com/articles/figure/An_annual_global_terrestrial_Human_Footprint_dataset_from_2000_to_2018/16571064}
-NULL
+#' @importFrom mapme.biodiversity check_available_years download_or_skip unzip_and_remove
+#' @export
+get_humanfootprint <- function(years = 2000:2020) {
 
-
-#' @noRd
-#' @include zzz.R
-.get_hfp <- function(
-    x,
-    rundir = tempdir(),
-    verbose = TRUE) {
-
-  target_years <- attributes(x)$years
   available_years <- 2000:2020
-  target_years <- mapme.biodiversity:::.check_available_years(
-    target_years, available_years, "humanfootprint"
+  years <- check_available_years(
+    years, available_years, "humanfootprint"
   )
 
-  urls_df <- .get_hfp_url(target_years)
-  filenames <- file.path(rundir, urls_df[["filename"]])
-  if(attributes(x)[["testing"]]) return(filenames)
 
-  aria_bin <- attributes(x)$aria_bin
-  zips <- mapme.biodiversity:::.download_or_skip(
-    urls_df[["url"]],
-    filenames,
-    verbose,
-    check_existence = FALSE,
-    aria_bin)
+  function(
+  x,
+  name = "humanfootprint",
+  type = "raster",
+  outdir = mapme_options()[["outdir"]],
+  verbose = mapme_options()[["verbose"]],
+  testing = mapme_options()[["testing"]]) {
 
-  purrr::walk(zips, function(zip) mapme.biodiversity:::.unzip_and_remove(zip, rundir, remove = FALSE))
-  file.path(rundir, paste0(substring(basename(zips), 1, 8), "tif"))
+    urls_df <- .get_hfp_url(years)
+    filenames <- file.path(outdir, urls_df[["filename"]])
+    if(testing) return(filenames)
+
+    zips <- download_or_skip(
+      urls_df[["url"]],
+      filenames,
+      check_existence = FALSE)
+
+    purrr::walk(zips, function(zip) unzip_and_remove(zip, outdir, remove = FALSE))
+    file.path(outdir, paste0(substring(basename(zips), 1, 8), "tif"))
+  }
 }
 
 #' @noRd
@@ -66,11 +67,12 @@ NULL
   data[data[["year"]] %in% years, ]
 }
 
-.register(list(
+register_resource(
   name = "humanfootprint",
-  type = "raster",
+  description = "Time series on human pressures on natural ecosystems.",
+  licence = "CC BY 4.0",
   source = "https://figshare.com/articles/figure/An_annual_global_terrestrial_Human_Footprint_dataset_from_2000_to_2018/16571064",
-  fun = .get_hfp,
-  arguments = list()),
-  "resource")
+  type = "raster"
+)
+
 

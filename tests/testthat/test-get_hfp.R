@@ -5,8 +5,8 @@ test_that("get_hfp works", {
   aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
 
   outdir <- system.file("resources", package = "mapme.indicators")
-  aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
-  attributes(aoi)[["testing"]] <- TRUE
-  filenames <- .get_hfp(aoi, rundir = file.path(outdir, "humanfootprint"), verbose = TRUE)
+  mapme_options(outdir = outdir, testing = TRUE)
+  ghfp <- get_humanfootprint(years = 2010:2015)
+  filenames <- ghfp(aoi)
   expect_equal(basename(filenames), paste0("hfp", 2010:2015, ".zip"))
 })

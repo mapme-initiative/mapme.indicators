@@ -5,10 +5,9 @@ test_that("calc_ipbes_biomes works", {
   aoi <- suppressWarnings(st_cast(aoi, "POLYGON"))
   aoi <- aoi [5, ]
   outdir <- system.file("resources", package = "mapme.indicators")
-  aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
-  aoi <- get_resources(aoi, "ipbes_biome")
-
-  aoi <- calc_indicators(aoi, "ipbes_biome_stats")
+  mapme_options(outdir = outdir)
+  aoi <- get_resources(aoi, get_ipbes_biome())
+  aoi <- calc_indicators(aoi, calc_ipbes_biome())
   expect_true("ipbes_biome_stats" %in% names(aoi))
   expect_equal(class(aoi[["ipbes_biome_stats"]]), "list")
   expect_equal(names(aoi[["ipbes_biome_stats"]][[1]]),
@@ -24,10 +23,10 @@ test_that("calc_ipbes_anthrome works", {
   aoi <- aoi [5, ]
 
   outdir <- system.file("resources", package = "mapme.indicators")
-  aoi <- init_portfolio(aoi, years = 2010:2015, outdir = outdir)
-  aoi <- get_resources(aoi, "ipbes_anthrome")
+  mapme_options(outdir = outdir)
+  aoi <- get_resources(aoi, get_ipbes_anthrome())
 
-  aoi <- calc_indicators(aoi, "ipbes_anthrome_stats", anthrome = "both")
+  aoi <- calc_indicators(aoi, calc_ipbes_anthrome(anthrome = "both"))
   expect_true("ipbes_anthrome_stats" %in% names(aoi))
   expect_equal(class(aoi[["ipbes_anthrome_stats"]]), "list")
   expect_equal(names(aoi[["ipbes_anthrome_stats"]][[1]]),

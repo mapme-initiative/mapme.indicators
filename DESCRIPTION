@@ -1,6 +1,6 @@
 Package: mapme.indicators
 Title: Extension resources and indicators for mapme.biodiversity
-Version: 0.0.1.9000
+Version: 0.0.2
 Authors@R: 
     person("Darius A.", "Görgen", , "info@dariusgoergen.com", role = c("aut", "cre"))
 Description: Delivers a number of indicators used by the Legecy Landscape Fund
@@ -11,17 +11,6 @@ Imports: exactextractr, httr2, sf, purrr, terra, tibble
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
-Collate: 
-    'zzz.R'
-    'calc_carbon.R'
-    'calc_hfp.R'
-    'calc_ipbes.R'
-    'calc_iucn.R'
-    'get_carbon.R'
-    'get_hfp.R'
-    'get_ipbes.R'
-    'get_iucn.R'
-    'mapme.indicators.R'
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

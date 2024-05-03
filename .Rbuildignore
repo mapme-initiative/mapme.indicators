@@ -4,3 +4,6 @@
 ^data-raw$
 [.]gpkg$
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

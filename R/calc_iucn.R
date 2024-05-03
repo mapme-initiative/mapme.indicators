@@ -1,149 +1,112 @@
-#' Species richness - Mammals
+#' Species richness
 #'
-#' Species richness counts the number of species intersecting with a polygon
-#' grouped by the IUCN threat categorization.
+#' Species richness counts the number of potential species intersecting with a
+#' polygon grouped by the IUCN threat categorization. For each animal group,
+#' there is an indicator function which requires the availablity of the
+#' respctive resource.
 #'
 #' The required resources for this indicator are:
-#'  - [iucn_mammals]
+#'  - see the respective [species_ranges]
 #'
 #' @name sr_mammals
-#' @docType data
 #' @keywords indicator
-#' @format A tibble with columns for the code and full-text category as well
-#'   as the count of the number of respective species.
-NULL
-
-#' @noRd
-#' @include zzz.R
-.calc_sr_mammals <- function(
+#' @returns A function that returns a tibble with columns for the code and the
+#'   full-text threat category as well as the count of the number of respective species.
+#' @export
+calc_sr_mammals <- function() {
+  function(
     x,
     iucn_mammals,
-    verbose = TRUE,
-    ...) {
+    name = "sr_mammals",
+    mode = "asset",
+    verbose = mapme_options()[["verbose"]]) {
 
-  iucn_mammals <- iucn_mammals[[1]]
-  if(is.null(iucn_mammals)) return(NA)
-  .calc_sr(table(iucn_mammals[["category"]]), "sr_mammals")
+    iucn_mammals <- iucn_mammals[[1]]
+    if(is.null(iucn_mammals)) return(NA)
+    .calc_sr(table(iucn_mammals[["category"]]), "sr_mammals")
+  }
 }
 
-.register(list(
+register_indicator(
   name = "sr_mammals",
-  resources = list(iucn_mammals = "vector"),
-  fun = .calc_sr_mammals,
-  arguments = list(),
-  processing_mode = "asset"),
-  "indicator")
+  description = "Species richness count for mammals by threat category.",
+  resources = "iucn_mammals"
+)
 
-#' Species richness - Reptiles
-#'
-#' Species richness counts the number of species intersecting with a polygon
-#' grouped by the IUCN threat categorization.
-#'
-#' The required resources for this indicator are:
-#'  - [iucn_reptiles]
-#'
 #' @name sr_reptiles
-#' @docType data
 #' @keywords indicator
-#' @format A tibble with columns for the code and full-text category as well
-#'   as the count of the number of respective species.
-NULL
-
-#' @noRd
-#' @include zzz.R
-.calc_sr_reptiles <- function(
+#' @inherit sr_mammals title description details return
+#' @export
+calc_sr_reptiles <- function() {
+  function(
     x,
     iucn_reptiles,
-    verbose = TRUE,
-    ...) {
+    name = "sr_reptiles",
+    mode = "asset",
+    verbose = mapme_options()[["verbose"]]) {
 
-  iucn_reptiles <- iucn_reptiles[[1]]
-  if(is.null(iucn_reptiles)) return(NA)
-  .calc_sr(table(iucn_reptiles[["category"]]), "sr_reptiles")
+    iucn_reptiles <- iucn_reptiles[[1]]
+    if(is.null(iucn_reptiles)) return(NA)
+    .calc_sr(table(iucn_reptiles[["category"]]), "sr_reptiles")
+  }
 }
 
-.register(list(
+register_indicator(
   name = "sr_reptiles",
-  resources = list(iucn_reptiles = "vector"),
-  fun = .calc_sr_reptiles,
-  arguments = list(),
-  processing_mode = "asset"),
-  "indicator")
+  description = "Species richness count for reptiles by threat category.",
+  resources = "iucn_reptiles"
+)
 
-#' Species richness - Amphibians
-#'
-#' Species richness counts the number of species intersecting with a polygon
-#' grouped by the IUCN threat categorization.
-#'
-#' The required resources for this indicator are:
-#'  - [iucn_amphibians]
-#'
 #' @name sr_amphibians
-#' @docType data
 #' @keywords indicator
-#' @format A tibble with columns for the code and full-text category as well
-#'   as the count of the number of respective species.
-NULL
-
-#' @noRd
-#' @include zzz.R
-.calc_sr_amphibians <- function(
+#' @inherit sr_mammals title description details return
+#' @export
+calc_sr_amphibians <- function(){
+  function(
     x,
     iucn_amphibians,
-    verbose = TRUE,
-    ...) {
+    name = "sr_amphibians",
+    mode = "asset",
+    verbose = mapme_options()[["verbose"]]) {
 
-
-  iucn_amphibians <- iucn_amphibians[[1]]
-  if(is.null(iucn_amphibians)) return(NA)
-  .calc_sr(table(iucn_amphibians[["category"]]), "sr_mammals")
+    iucn_amphibians <- iucn_amphibians[[1]]
+    if(is.null(iucn_amphibians)) return(NA)
+    .calc_sr(table(iucn_amphibians[["category"]]), "sr_amphibians")
+  }
 }
 
-.register(list(
+register_indicator(
   name = "sr_amphibians",
-  resources = list(iucn_amphibians = "vector"),
-  fun = .calc_sr_amphibians,
-  arguments = list(),
-  processing_mode = "asset"),
-  "indicator")
+  description = "Species richness count for amphibians by threat category.",
+  resources = "iucn_amphibians"
+)
 
-#' Species richness - Birds
-#'
-#' Species richness counts the number of species intersecting with a polygon.
-#'
-#' The required resources for this indicator are:
-#'  - [birdlife]
-#'
+
 #' @name sr_birds
-#' @docType data
 #' @keywords indicator
-#' @format A tibble with a column for the number of bird species which ranges
-#'   intersect with a given polygon.
-NULL
-
-#' @noRd
-#' @include zzz.R
-.calc_sr_birds <- function(
+#' @inherit sr_mammals title description details return
+#' @export
+calc_sr_birds <- function() {
+  function(
     x,
     birdlife,
-    verbose = TRUE,
-    ...) {
+    name = "sr_birds",
+    mode = "asset",
+    verbose = mapme_options()[["verbose"]]) {
 
-
-  birdlife <- birdlife[[1]]
-  if(is.null(birdlife)) return(NA)
-  col_index <- grep("IUCN_Red_List_Category", names(birdlife))
-  names(birdlife)[col_index] <- "category"
-  .calc_sr(table(birdlife[["category"]]), "sr_birds")
+    birdlife <- birdlife[[1]]
+    if(is.null(birdlife)) return(NA)
+    col_index <- grep("IUCN_Red_List_Category", names(birdlife))
+    names(birdlife)[col_index] <- "category"
+    .calc_sr(table(birdlife[["category"]]), "sr_birds")
+  }
 }
 
-.register(list(
+register_indicator(
   name = "sr_birds",
-  resources = list(birdlife = "vector"),
-  fun = .calc_sr_birds,
-  arguments = list(),
-  processing_mode = "asset"),
-  "indicator")
+  description = "Species richness count for birds by threat category.",
+  resources = "birdlife"
+)
 
 
 .calc_sr <- function(cats, var = NULL) {

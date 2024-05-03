@@ -1,0 +1,32 @@
+url: https://mapme-initiative.github.io/mapme.indicators/
+destination: docs
+template:
+  bootstrap: 5
+  bslib:
+    fg: "#004658"
+    bg: "#ffffff"
+    primary: "#b7dede"
+    link-color: "#008c8d"
+    link-hover-color: "#de9433"
+
+home:
+  title: Extension resources and indicators for mapme.biodiversity
+  links:
+  - text: Learn more about MAPME
+    href: https://mapme-initiative.org/
+  - text: Read the Open Source Guide
+    href: https://github.com/mapme-initiative/mapme.osg
+
+reference:
+  - title: Resources
+    desc: Supported resources.
+  - contents:
+    - has_keyword("resource")
+  - title: Indicators
+    desc: Supported indicators.
+  - contents:
+    - has_keyword("indicator")
+
+authors:
+  Darius A. Görgen:
+    href: http://dariusgoergen.com/

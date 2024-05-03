@@ -1,6 +1,6 @@
 Package: mapme.indicators
 Title: Extension resources and indicators for mapme.biodiversity
-Version: 0.0.1.9000
+Version: 0.0.2
 Authors@R: 
     person("Darius A.", "Görgen", , "info@dariusgoergen.com", role = c("aut", "cre"))
 Description: Delivers a number of indicators used by the Legecy Landscape Fund

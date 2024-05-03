@@ -6,3 +6,4 @@ data-raw/irr_carbon
 data-raw/vul_carbon
 data-raw/man_carbon
 *.gpkg
+docs

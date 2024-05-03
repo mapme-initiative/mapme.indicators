@@ -23,3 +23,4 @@ The required resources for this indicator are:
 \item see the respective \link{species_ranges}
 }
 }
+\keyword{indicator}

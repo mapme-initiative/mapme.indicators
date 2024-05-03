@@ -34,6 +34,7 @@ register_indicator(
 )
 
 #' @name sr_reptiles
+#' @keywords indicator
 #' @inherit sr_mammals title description details return
 #' @export
 calc_sr_reptiles <- function() {
@@ -57,6 +58,7 @@ register_indicator(
 )
 
 #' @name sr_amphibians
+#' @keywords indicator
 #' @inherit sr_mammals title description details return
 #' @export
 calc_sr_amphibians <- function(){
@@ -81,6 +83,7 @@ register_indicator(
 
 
 #' @name sr_birds
+#' @keywords indicator
 #' @inherit sr_mammals title description details return
 #' @export
 calc_sr_birds <- function() {

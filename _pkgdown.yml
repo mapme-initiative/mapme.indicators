@@ -10,7 +10,7 @@ template:
     link-hover-color: "#de9433"
 
 home:
-  title: An R package adding resources and indicators to {mapme.biodiversity}
+  title: Extension resources and indicators for mapme.biodiversity
   links:
   - text: Learn more about MAPME
     href: https://mapme-initiative.org/

@@ -1,13 +1,17 @@
-#' Calculate irrecoverable carbon statistics
+#' Calculate carbon statistics
 #'
+#' These functions allow to calculated statistics based on the harmonized
+#' carbon layers for 2010 and 2018 by Noon et al. (2022).
+#'
+#' The required resources for these indicators are:
+#'  - [carbon_resources]
+#'
+#' @details
 #' Irrecoverable carbon is the amount of carbon that, if lost today, could not
 #' be recovered until 2050. It can be calculated for above- and below-ground
 #' carbon, the total amount of carbon, or for all layers.
 #'
-#' The required resources for this indicator are:
-#'  - [irr_carbon]
-#'
-#' @name irr_carbon_stats
+#' @name carbon_indicators
 #' @param type One of "total", "soil", "biomass", "all". Determines
 #'     for which data layer the statistics are calculated.
 #' @param engine The preferred processing functions from either one of "zonal",
@@ -31,8 +35,9 @@ calc_irr_carbon <- function(type = c("total", "soil", "biomass", "all"),
   function(
     x,
     irr_carbon,
-    name = "irr_carbon_stats",
+    name = "irr_carbon",
     mode = "asset",
+    aggregation = "stat",
     verbose = mapme_options()[["verbose"]]) {
 
     .calc_carbon_stats(
@@ -41,31 +46,26 @@ calc_irr_carbon <- function(type = c("total", "soil", "biomass", "all"),
       which_layer = type,
       stats = stats,
       engine = engine,
-      name = "irr_carbon_stats",
+      name = "irr_carbon",
       mode = "asset"
     )
   }
 }
 
 register_indicator(
-  name = "irr_carbon_stats",
+  name = "irr_carbon",
   description = "Statistics of irrecoverable carbon per polygon.",
   resources = "irr_carbon"
 )
 
-#' Calculate manageable carbon statistics
-#'
+#' @details
 #' Manageable carbon is the amount of carbon that, in principle, is manageable
 #' by human activities, e.g. its release to the atmosphere can be prevented.
 #' It can be calculated for above- and below-ground carbon, the total amount
 #' of carbon, or for all layers.
 #'
-#' The required resources for this indicator are:
-#'  - [man_carbon]
-#'
-#' @name man_carbon_stats
+#' @name carbon_indicators
 #' @keywords indicator
-#' @inherit irr_carbon_stats
 #' @export
 calc_man_carbon <- function(type = c("total", "soil", "biomass", "all"),
                             engine = "extract",
@@ -78,8 +78,9 @@ calc_man_carbon <- function(type = c("total", "soil", "biomass", "all"),
   function(
     x,
     man_carbon,
-    name = "man_carbon_stats",
+    name = "man_carbon",
     mode = "asset",
+    aggregation = "stat",
     verbose = mapme_options()[["verbose"]]) {
 
     .calc_carbon_stats(
@@ -88,31 +89,26 @@ calc_man_carbon <- function(type = c("total", "soil", "biomass", "all"),
       which_layer = type,
       stats = stats,
       engine = engine,
-      name = "man_carbon_stats",
+      name = "man_carbon",
       mode = "asset"
     )
   }
 }
 
 register_indicator(
-  name = "man_carbon_stats",
+  name = "man_carbon",
   description = "Statistics of manageable carbon per polygon.",
   resources = "man_carbon"
 )
 
-#' Calculate vulnerable carbon statistics
-#'
+#' @details
 #' Vulnerable carbon is the amount of carbon that would be released in a typical
 #' land conversion activity.
 #' It can be calculated for above- and below-ground carbon, the total amount
 #' of carbon, or for all layers.
 #'
-#' The required resources for this indicator are:
-#'  - [vul_carbon]
-#'
-#' @name vul_carbon_stats
+#' @name carbon_indicators
 #' @keywords indicator
-#' @inherit irr_carbon_stats
 #' @export
 calc_vul_carbon <- function(type = c("total", "soil", "biomass", "all"),
                             engine = "extract",
@@ -125,8 +121,9 @@ calc_vul_carbon <- function(type = c("total", "soil", "biomass", "all"),
   function(
     x,
     vul_carbon,
-    name = "vul_carbon_stats",
+    name = "vul_carbon",
     mode = "asset",
+    aggregation = "stat",
     verbose = mapme_options()[["verbose"]]) {
 
     .calc_carbon_stats(
@@ -135,14 +132,14 @@ calc_vul_carbon <- function(type = c("total", "soil", "biomass", "all"),
       which_layer = type,
       stats = stats,
       engine = engine,
-      name = "vul_carbon_stats",
+      name = "vul_carbon",
       mode = "asset"
     )
   }
 }
 
 register_indicator(
-  name = "vul_carbon_stats",
+  name = "vul_carbon",
   description = "Statistics of vulnerable carbon per polygon.",
   resources = "vul_carbon"
 )
@@ -157,8 +154,8 @@ register_indicator(
     engine = "extract",
     name = NULL,
     mode = "asset") {
-
-  if (is.null(layer)) return(NA)
+  stat <- NULL
+  if (is.null(layer)) return(NULL)
 
   if (which_layer == "all") which_layer <- c("total", "soil", "biomass")
   names(layer) <- tolower(names(layer))
@@ -178,5 +175,11 @@ register_indicator(
 
   result[["type"]] <- type
   result[["year"]] <- year
-  result
+  result <- tidyr::pivot_longer(result, cols = -c(type, year), names_to = "variable")
+  result <- dplyr::mutate(result,
+                stat = strsplit(variable, "_")[[1]][3],
+                variable = paste(name, type, stat, sep = "_"),
+                datetime = as.Date(paste0(year, "-01-01")),
+                unit = "Mg")
+  result[ ,c("datetime", "variable", "unit", "value")]
 }

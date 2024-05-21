@@ -5,4 +5,5 @@
 #' @import mapme.biodiversity sf terra
 #' @noRd
 #' @keywords internal
+globalVariables(c("datetime", "variable", "unit", "value"))
 NULL

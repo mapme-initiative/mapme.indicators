@@ -4,7 +4,7 @@
 
 This package is currently work-in-progress. It is going to be used to develop new resources/indicators while `{mapme.biodiversity}` is undergoing a number of functionality changes. To learn more about the ongoing changes and their current status, please visit the [announcement issue](https://github.com/mapme-initiative/mapme.biodiversity/issues/240).
 
-The branch you are seeing here links against `{mapme.biodiversity}` v0.6.0.
+The branch you are seeing here links against `{mapme.biodiversity}` v0.7.0.
 
 We will update the resource/indicator functions developed here once a new version is released.
 
@@ -15,7 +15,7 @@ After reaching all milestones in `{mapme.biodiversity}`, we will decide whether 
 Please run the following code to install the required packages:
 
 ```         
-remotes::install_version("mapme-initiative/mapme.biodiversity", version = "0.6.0")
+remotes::install_version("mapme-initiative/mapme.biodiversity", version = "0.7.0")
 remotes::install_github("mapme-initiative/mapme.indicators")
 ```
 
@@ -27,12 +27,11 @@ Once the package is loaded in your R session via `library(mapme.indicators)`, th
 
 The table below gives an overview of implemented and planned resources/indicators:
 
-| Name                                | Description                                                                                                             | Original Implementation                                         | New Implementation                                   | Data Source                                                                                                                                                                                                                                                  | Implemented |
-|------------|------------|------------|------------|------------|------------|
-| Manageable carbon                   | carbon stock that is primarily affected by human activities that either maintain, increase, or decrease its size        | aggregated to tons per grid cell, then mean per PA              | mean per PA                                          | [Zenodo](https://zenodo.org/records/4091029)                                                                                                                                                                                                                 | Yes         |
-| Vulnerable carbon                   | amount of manageable carbon that is likely to be released through typical land conversion in an ecosystem               | aggregated to tons per grid cell, then mean per PA              | mean per PA                                          | [Zenodo](https://zenodo.org/records/4091029)                                                                                                                                                                                                                 | Yes         |
-| Irrecoverable carbon                | amount of the vulnerable carbon which if it is lost through typical land conversion actions cannot be recovered by 2050 | aggregated to tons per grid cell, then mean per PA              | mean per PA                                          | [Zenodo](https://zenodo.org/records/4091029)                                                                                                                                                                                                                 | Yes         |
-| Human footprint                     | pressure on ecosystems by 8 variables of human impact                                                                   | aggregation to standard grid, mean per PA                       | mean calculation directly per PA                     | [Figshare](https://figshare.com/articles/figure/An_annual_global_terrestrial_Human_Footprint_dataset_from_2000_to_2018/16571064)                                                                                                                             | Yes         |
-| Species Richness                    | Number of distinct species                                                                                              | count of unique species within a PA per grid cell, mean over PA | crop polygons to PA and count unique species         | [BirdLife International](http://datazone.birdlife.org/species/requestdis) [IUCN](https://www.iucnredlist.org/resources/spatial-data-download), [Global Assessment of Reptile Distributions](https://datadryad.org/stash/dataset/doi:10.5061/dryad.9cnp5hqmb) | Yes         |
-| Biodiversity Intactness Index (BII) | Todays species abundance compared to modeled abundance in an intact ecosystem                                           | available as gridded product, mean per PA                       | mean calculation directly per PA                     | [NHM](https://data.nhm.ac.uk/dataset/global-map-of-the-biodiversity-intactness-index-from-newbold-et-al-2016-science)                                                                                                                                        | No          |
-| Landscapemetrics                    | Landscape and patch level metrics of landcape intactness                                                                | not originally included                                         | mean per PA based on yearly forest cover maps of GFW | [GFW](https://www.globalforestwatch.org/)                                                                                                                                                                                                                    | No          |
+| Name                    | Description                                                                                                             | Data Source                                                                                                                      |
+|------------------------|------------------------|------------------------|
+| Manageable carbon       | carbon stock that is primarily affected by human activities that either maintain, increase, or decrease its size        | [Zenodo](https://zenodo.org/records/4091029)                                                                                     |
+| Vulnerable carbon       | amount of manageable carbon that is likely to be released through typical land conversion in an ecosystem               | [Zenodo](https://zenodo.org/records/4091029)                                                                                     |
+| Irrecoverable carbon    | amount of the vulnerable carbon which if it is lost through typical land conversion actions cannot be recovered by 2050 | [Zenodo](https://zenodo.org/records/4091029)                                                                                     |
+| Human footprint         | pressure on ecosystems by 8 variables of human impact                                                                   | [Figshare](https://figshare.com/articles/figure/An_annual_global_terrestrial_Human_Footprint_dataset_from_2000_to_2018/16571064) |
+| IPBES Biomes            | Terrestrial and aquatic classification of biomes according to IPBES                                                     | [Zenodo](https://zenodo.org/records/3975694)                                                                                     |
+| Species Richness (IUCN) | Number of distinct species possibly by threat level                                                                     | [IUCN Redlist](https://www.iucnredlist.org/resources/other-spatial-downloads)                                                    |

@@ -47,34 +47,13 @@ get_ipbes_biomes <- function() {
     verbose = mapme_options()[["verbose"]],
     testing = mapme_options()[["testing"]]) {
 
-    biome_url <- "/vsicurl/https://zenodo.org/records/3975694/files/IPBES_UoA_biomes_JK.tif"
-    filename <- file.path(outdir, basename(biome_url))
-    if(file.exists(filename)) return(filename)
-    biome <- rast(biome_url)
-    levels(biome) <- .ipbes_biome_classes
-    writeRaster(biome, filename)
-    filename
+    url <- "/vsicurl/https://zenodo.org/records/3975694/files/IPBES_UoA_biomes_JK.tif"
+    make_footprints(
+      url,
+      what = "raster",
+      co = c("-co", "INTERLEAVE=BAND", "-co", "COMPRESS=LZW", "-ot", "Float32"))
   }
 }
-
-.ipbes_biome_classes <- data.frame(
-  class = c(1:15),
-  name = c("tropical and subtropical dry and humid forests",
-           "temperate and boreal forests and woodland",
-           "mediterranean forests woodlands and scrub",
-           "tundra and high mountain habitats",
-           "tropical and subtropical savannas and grasslands",
-           "temperate grassland",
-           "deserts and xeric shrubland",
-           "wetlands",
-           "urban and semi-urban areas",
-           "cultivated areas",
-           "cyrosphere",
-           "aquaculture areas",
-           "inland surface waters and water bodies",
-           "shelf ecosystems",
-           "open ocean pelagic systems")
-)
 
 register_resource(
   name = "ipbes_biomes",

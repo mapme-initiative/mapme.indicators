@@ -1,4 +1,4 @@
-#' Irrecoverable Carbon Layer
+#' Carbon Layers
 #'
 #' This resource is part of the publication by Noon et al. (2022) "Mapping the
 #' irrecoverable carbon in Earth’s ecosystems". This publication differentiates
@@ -6,11 +6,12 @@
 #' by humans. All three layers are available for above and below ground
 #' carbon, as well as a layer combining the two.
 #'
+#' @details
 #' Irrecoverable carbon is defined as the amount of carbon, that, if lost today,
 #' cannot be recovered until mid 21st century (so within 30 years, considering
 #' the publication date).
 #'
-#' @name irr_carbon
+#' @name carbon_resources
 #' @keywords resource
 #' @returns A function that returns a character vector of file paths.
 #' @references Noon, M.L., Goldstein, A., Ledezma, J.C. et al. Mapping the
@@ -49,26 +50,12 @@ register_resource(
   type = "raster"
 )
 
-#' Vulnerable Carbon Layer
-#'
-#' This resource is part of the publication by Noon et al. (2022) "Mapping the
-#' irrecoverable carbon in Earth’s ecosystems". This publication differentiates
-#' between 3 different kinds of carbon with varying degrees of manageability
-#' by humans. All three layers are available for above and below ground
-#' carbon, as well as a layer combining the two.
-#'
+#' @details
 #' Vulnerable carbon is defined as the amount of carbon that would be lost in a
 #' hypothetical but typical conversion event (without including information
 #' of the probability of such an event to be actually occurring).
 #'
-#' @name vul_carbon
-#' @keywords resource
-#' @returns A function that returns a character vector of file paths.
-#' @references Noon, M.L., Goldstein, A., Ledezma, J.C. et al. Mapping the
-#'   irrecoverable carbon in Earth’s ecosystems. Nat Sustain 5, 37–46 (2022).
-#'   https://doi.org/10.1038/s41893-021-00803-6
-#' @source \url{https://zenodo.org/records/4091029}
-#' @importFrom mapme.biodiversity download_or_skip unzip_and_remove
+#' @name carbon_resources
 #' @export
 get_vul_carbon <- function() {
   function(
@@ -100,27 +87,13 @@ register_resource(
 )
 
 
-#' Manageable Carbon Layer
-#'
-#' This resource is part of the publication by Noon et al. (2022) "Mapping the
-#' irrecoverable carbon in Earth’s ecosystems". This publication differentiates
-#' between 3 different kinds of carbon with varying degrees of manageability
-#' by humans. All three layers are available for above and below ground
-#' carbon, as well as a layer combining the two.
-#'
+#' @details
 #' Manageable carbon is defined as all land areas, expect cyrosols, because
 #' carbon loss is driven by direct land-use conversion which could be halted or
 #' because climate change impacts affecting the area can potentially be directly
 #' mitigated through adaptive management.
 #'
-#' @name man_carbon
-#' @keywords resource
-#' @returns A function that returns a character vector of file paths.
-#' @references Noon, M.L., Goldstein, A., Ledezma, J.C. et al. Mapping the
-#'   irrecoverable carbon in Earth’s ecosystems. Nat Sustain 5, 37–46 (2022).
-#'   https://doi.org/10.1038/s41893-021-00803-6
-#' @source \url{https://zenodo.org/records/4091029}
-#' @importFrom mapme.biodiversity download_or_skip unzip_and_remove
+#' @name carbon_resources
 #' @export
 get_man_carbon <- function() {
   function(

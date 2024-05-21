@@ -10,19 +10,23 @@
 #' Please find the available data under the source link given below.
 #'
 #' @name iucn
-#' @param path A character vector to the respective species range file in GTiff
-#'   format. Note, that the file has to be downloaded manually.
+#' @param paths A character vector to the respective species range files in GTiff
+#'   format. Note, that theses files have to be downloaded manually.
 #' @keywords resource
-#' @returns A function that returns a character vector of file paths.
+#' @returns A function that returns an `sf` footprint object.
 #' @references IUCN (2024). The IUCN Red List of Threatened Species.
 #'   https://www.iucnredlist.org. \doi{https://doi.org/10.1038/s41597-022-01284-8 }
 #' @source \url{https://www.iucnredlist.org/resources/other-spatial-downloads}
 #' @importFrom tools file_ext
 #' @export
-get_iucn <- function(path = NULL) {
+get_iucn <- function(paths = NULL) {
 
-  if(is.null(path) || !file.exists(path) || file_ext(path) == "tif") {
-    stop("Expecting path to point towards an existing GTiff file.")
+  if(is.null(paths) || !all(file.exists(paths)) || !all(file_ext(paths) == "tif")) {
+    stop("Expecting paths to point towards existing GTiff files.")
+  }
+
+  if (!all(grepl("_SR_", basename(paths)))) {
+    stop("Filenames do match expected schema for IUCN species richness rasters.")
   }
 
   function(
@@ -32,7 +36,10 @@ get_iucn <- function(path = NULL) {
     outdir = mapme_options()[["outdir"]],
     verbose = mapme_options()[["verbose"]],
     testing = mapme_options()[["testing"]]) {
-    path
+    make_footprints(
+      paths,
+      what = "raster",
+      co = c("-co", "INTERLEAVE=BAND", "-co", "COMPRESS=LZW", "-ot", "Int8"))
   }
 }
 

@@ -17,18 +17,13 @@
 #' @param stats Function to be applied to compute statistics for polygons either
 #'   one or multiple inputs as character. Supported statistics are: "mean",
 #'   "median", "sd", "min", "max", "sum" "var".
-#' @param variable A character used as the variable column output. Defaults to
-#'   `species_richness` but can be set to reflect the manually specified raster
-#'   file.
 #' @keywords indicator
-#' @returns A function that returns a tibble with statistics on the species
-#'   richness.
+#' @returns A function that returns an indicator tibble with IUCN layers with
+#'   specified statistics as variable and respective values as value.
 #' @export
-calc_species_richness <- function(engine = "extract", stats = "mean",
-                                  variable = "species_richness") {
+calc_species_richness <- function(engine = "extract", stats = "mean") {
   engine <- check_engine(engine)
   stats <- check_stats(stats)
-  stopifnot(is.character(variable) || length(variable) == 1)
 
   function(
     x,
@@ -49,12 +44,15 @@ calc_species_richness <- function(engine = "extract", stats = "mean",
       raster = iucn,
       stats = stats,
       engine = engine,
-      name = variable,
+      name = "",
       mode = "asset"
     )
-    datetime <- strsplit(names(iucn), "_")[[1]]
+
+    result <- tidyr::pivot_longer(result, names(result), names_to = "variable")
+    result[["variable"]] <- paste0(tolower(names(iucn)), result[["variable"]])
+    result[["value"]][is.na(result[["value"]])] <- 0
+    datetime <- strsplit(names(iucn)[1], "_")[[1]]
     result[["datetime"]] <-  as.Date(paste0(rev(datetime)[1], "-01-01"))
-    result <- tidyr::pivot_longer(result, cols = -datetime, names_to = "variable")
     result[["unit"]] <- "count"
     result[ ,c("datetime", "variable", "unit", "value")]
   }

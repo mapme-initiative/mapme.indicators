@@ -5,11 +5,7 @@
 \alias{calc_species_richness}
 \title{Species richness based on IUCN raster data}
 \usage{
-calc_species_richness(
-  engine = "extract",
-  stats = "mean",
-  variable = "species_richness"
-)
+calc_species_richness(engine = "extract", stats = "mean")
 }
 \arguments{
 \item{engine}{The preferred processing functions from either one of "zonal",
@@ -18,14 +14,10 @@ calc_species_richness(
 \item{stats}{Function to be applied to compute statistics for polygons either
 one or multiple inputs as character. Supported statistics are: "mean",
 "median", "sd", "min", "max", "sum" "var".}
-
-\item{variable}{A character used as the variable column output. Defaults to
-\code{species_richness} but can be set to reflect the manually specified raster
-file.}
 }
 \value{
-A function that returns a tibble with statistics on the species
-richness.
+A function that returns an indicator tibble with IUCN layers with
+specified statistics as variable and respective values as value.
 }
 \description{
 Species richness counts the number of potential species intersecting with a

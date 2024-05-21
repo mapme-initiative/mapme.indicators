@@ -8,7 +8,7 @@
 #' The required resources for this indicator are:
 #'  - [humanfootprint]
 #'
-#' @name hfp
+#' @name humanfootprint
 #' @param engine The preferred processing functions from either one of "zonal",
 #'   "extract" or "exactextract" as character.
 #' @param stats Function to be applied to compute statistics for polygons either
@@ -19,7 +19,7 @@
 #'   and a row for every requested year.
 #' @importFrom mapme.biodiversity check_engine check_stats select_engine
 #' @export
-calc_hfp <- function(engine = "extract", stats = "mean") {
+calc_humanfootprint <- function(engine = "extract", stats = "mean") {
 
   engine <- check_engine(engine)
   stats <- check_stats(stats)
@@ -27,12 +27,13 @@ calc_hfp <- function(engine = "extract", stats = "mean") {
   function(
     x,
     humanfootprint,
-    name = "hfp",
+    name = "humanfootprint",
     mode = "asset",
+    aggregation = "stat",
     verbose = mapme_options()[["verbose"]]) {
 
     if (is.null(humanfootprint)) {
-      return(NA)
+      return(NULL)
     }
 
     x <- st_transform(x, st_crs(humanfootprint))
@@ -41,16 +42,19 @@ calc_hfp <- function(engine = "extract", stats = "mean") {
       raster = humanfootprint,
       stats = stats,
       engine = engine,
-      name = "hfp",
+      name = "humanfootprint",
       mode = "asset"
     )
-    result[["year"]] <- as.numeric(substring(names(humanfootprint), 4, 7))
-    result
+    years <- as.numeric(substring(names(humanfootprint), 4, 7))
+    result[["datetime"]] <- as.Date(paste0(years, "-01-01"))
+    result <- tidyr::pivot_longer(result, cols = -datetime, names_to = "variable")
+    result[["unit"]] <- "unitless"
+    result[ ,c("datetime", "variable", "unit", "value")]
   }
 }
 
 register_indicator(
-  name = "hfp",
+  name = "humanfootprint",
   description = "Statistics of the human footprint data set per polygon.",
   resources = "humanfootprint"
 )

@@ -1,19 +1,20 @@
-library(LLFindicators)
+library(mapme.indicators)
 library(terra)
 library(sf)
 
-aoi <- st_read(system.file("shape/nc.shp", package="sf")) %>%
-  st_transform("EPSG:4326") %>%
-  st_cast("POLYGON") %>%
-  init_portfolio(years = c(2000:2020), outdir = "../data") %>%
-  get_resources("humanfootprint")
+x <- st_read(system.file("shape/nc.shp", package="sf"))
+x <- x[5, ]
+x <- st_transform(x, "EPSG:4326")
 
-tindex <- st_read(attr(aoi, "resources")["humanfootprint"])
-hfp <- rast(tindex[["location"]])
-hfp <- crop(hfp, st_transform(aoi, crs(hfp)))
+outdir <- tempfile()
+dir.create(outdir)
+mapme_options(outdir = outdir)
 
-outdir <- "inst/humanfootprint"
-dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
-writeRaster(hfp, file.path(outdir, paste0(names(hfp), ".tif")))
-file.create(file.path(outdir, paste0(names(hfp), ".zip")))
-
+get_resources(x, get_humanfootprint(years=2010:2015))
+hfp <- prep_resources(x)$humanfootprint
+writeRaster(hfp,
+            filename = file.path("inst/resources/humanfootprint/", paste0(names(hfp), ".tif")),
+            datatype = "FLT4S", gdal = c("COMPRESS=LZW"),
+            overwrite = TRUE)
+zips <- paste0(names(hfp), ".zip")
+file.create(file.path("inst/resources/humanfootprint/", zips))

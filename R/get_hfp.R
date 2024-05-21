@@ -43,7 +43,9 @@ get_humanfootprint <- function(years = 2000:2020) {
 
     urls_df <- .get_hfp_url(years)
     filenames <- file.path(outdir, urls_df[["filename"]])
-    if(testing) return(filenames)
+    if(testing) {
+      return(list.files(outdir, pattern = ".tif$", full.names = TRUE))
+    }
 
     zips <- download_or_skip(
       urls_df[["url"]],

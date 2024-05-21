@@ -38,6 +38,10 @@ calc_species_richness <- function(engine = "extract", stats = "mean",
     aggregation = "stat",
     verbose = mapme_options()[["verbose"]]) {
 
+    if (is.null(iucn)) {
+      return(NULL)
+    }
+
     x <- st_transform(x, st_crs(iucn))
 
     result <- select_engine(

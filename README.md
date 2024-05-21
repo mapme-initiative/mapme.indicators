@@ -4,7 +4,7 @@
 
 This package is currently work-in-progress. It is going to be used to develop new resources/indicators while `{mapme.biodiversity}` is undergoing a number of functionality changes. To learn more about the ongoing changes and their current status, please visit the [announcement issue](https://github.com/mapme-initiative/mapme.biodiversity/issues/240).
 
-The branch you are seeing here links against `{mapme.biodiversity}` v0.7.0.
+The branch you are seeing here links against `{mapme.biodiversity}` v0.8.0.
 
 We will update the resource/indicator functions developed here once a new version is released.
 

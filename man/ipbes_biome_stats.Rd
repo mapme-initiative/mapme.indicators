@@ -2,10 +2,10 @@
 % Please edit documentation in R/calc_ipbes.R
 \name{ipbes_biome_stats}
 \alias{ipbes_biome_stats}
-\alias{calc_ipbes_biome}
+\alias{calc_ipbes_biomes}
 \title{Calculate areal statistics for IBPES Biomes}
 \usage{
-calc_ipbes_biome()
+calc_ipbes_biomes()
 }
 \value{
 A function that returns a tibble with columns for the class name,

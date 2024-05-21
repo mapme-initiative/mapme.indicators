@@ -50,6 +50,13 @@ calc_gsw_time_series_yearly <- function(years = 1984:2021) {
       values = FALSE
     )
 
+    idx_yr <- as.numeric(gregexpr("yearlyClassification", names(gsw_time_series))) + 20
+    years_resource <- substr(names(gsw_time_series), idx_yr, idx_yr + 3)
+
+    if(!all(years %in% years_resource)) {
+      stop("Not all requested years are available in the resource.")
+    }
+
     names(gsw_time_series) <- years
     coverage_fractions <- exactextractr::exact_extract(gsw_time_series, x, "frac", coverage_area = TRUE)
     x_total_area <- as.numeric(st_area(x)) / 10000

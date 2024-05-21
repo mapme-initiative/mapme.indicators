@@ -14,6 +14,9 @@
 #' 0 and 50, with 50 representing the theoretical value of the highest human
 #' pressure.
 #'
+#' It may be required to increase the timeout option to successfully download
+#' theses layers from their source location via e.g. `options(timeout = 600)`.
+#'
 #' @name humanfootprint
 #' @param years A numeric vector indicating the years for which to download
 #'   the human footprint data, defaults to \code{2000:2020}.
@@ -23,7 +26,8 @@
 #' terrestrial Human Footprint dataset from 2000 to 2018. Sci Data 9, 176 (2022).
 #' \doi{https://doi.org/10.1038/s41597-022-01284-8}
 #' @source \url{https://figshare.com/articles/figure/An_annual_global_terrestrial_Human_Footprint_dataset_from_2000_to_2018/16571064}
-#' @importFrom mapme.biodiversity check_available_years download_or_skip unzip_and_remove
+#' @importFrom mapme.biodiversity check_available_years
+#' @importFrom utils unzip download.file
 #' @export
 get_humanfootprint <- function(years = 2000:2020) {
 
@@ -32,28 +36,46 @@ get_humanfootprint <- function(years = 2000:2020) {
     years, available_years, "humanfootprint"
   )
 
+  if (is.null(mapme_options()[["outdir"]])) {
+    warning(paste("humanfootprint layers must be downloaded from the source location",
+                  "irrespective if `outdir` was specified or not."))
+  }
 
   function(
-  x,
-  name = "humanfootprint",
-  type = "raster",
-  outdir = mapme_options()[["outdir"]],
-  verbose = mapme_options()[["verbose"]],
-  testing = mapme_options()[["testing"]]) {
+    x,
+    name = "humanfootprint",
+    type = "raster",
+    outdir = mapme_options()[["outdir"]],
+    verbose = mapme_options()[["verbose"]],
+    testing = mapme_options()[["testing"]]) {
 
-    urls_df <- .get_hfp_url(years)
-    filenames <- file.path(outdir, urls_df[["filename"]])
-    if(testing) {
-      return(list.files(outdir, pattern = ".tif$", full.names = TRUE))
+    files <- .get_hfp_url(years)
+
+    if (!is.null(outdir)){
+      filenames <- file.path(outdir, files[["filename"]])
+      filenames <- gsub("zip", "tif", filenames)
+      is_available <- purrr::map_lgl(filenames, spds_exists, what = "raster")
+      if (all(is_available)) {
+        return(make_footprints(filenames, what =  "raster"))
+      }
     }
 
-    zips <- download_or_skip(
-      urls_df[["url"]],
-      filenames,
-      check_existence = FALSE)
+    tmpdir <- tempfile()
+    dir.create(tmpdir)
+    filenames <- file.path(tmpdir, files[["filename"]])
 
-    purrr::walk(zips, function(zip) unzip_and_remove(zip, outdir, remove = FALSE))
-    file.path(outdir, paste0(substring(basename(zips), 1, 8), "tif"))
+    purrr::walk2(files[["url"]], filenames, function(src, filename) {
+      if (!file.exists(filename)) {
+        download.file(src, filename)
+      }
+      unzip(filename, junkpaths = TRUE, exdir = tmpdir)
+    })
+
+    tifs <- list.files(tmpdir, pattern = "*.tif$", recursive = TRUE, full.names = TRUE)
+    make_footprints(
+      tifs,
+      what = "raster",
+      co = c("-of", "COG", "-co", "COMPRESS=LZW", "-ot", "Float32"))
   }
 }
 

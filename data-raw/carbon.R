@@ -10,6 +10,7 @@ outdir <- tempfile()
 dir.create(outdir)
 mapme_options(outdir = outdir)
 
+options(timeout = 600)
 get_resources(x, get_irr_carbon(), get_vul_carbon(), get_man_carbon())
 resources <- prep_resources(x)
 tindex <- mapme.biodiversity:::.avail_resources()
@@ -21,8 +22,6 @@ writeRaster(resources$irr_carbon,
             file.path(outdir, basename(tindex$irr_carbon$location)),
             datatype = "INT2U", overwrite = TRUE,
             wopt = list(gdal=c("COMPRESS=LZW")))
-file.create(file.path(outdir, paste0("Irrecoverable_Carbon_", c(2010, 2018), ".zip")))
-
 
 outdir <- "inst/resources/vul_carbon"
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
@@ -30,7 +29,6 @@ writeRaster(resources$vul_carbon,
             file.path(outdir, basename(tindex$vul_carbon$location)),
             datatype = "INT2U", overwrite = TRUE,
             wopt = list(gdal=c("COMPRESS=LZW")))
-file.create(file.path(outdir, paste0("Vulnerable_Carbon_", c(2010, 2018), ".zip")))
 
 outdir <- "inst/resources/man_carbon"
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
@@ -38,4 +36,3 @@ writeRaster(resources$man_carbon,
             file.path(outdir, basename(tindex$man_carbon$location)),
             datatype = "INT2U", overwrite = TRUE,
             wopt = list(gdal=c("COMPRESS=LZW")))
-file.create(file.path(outdir, paste0("Manageable_Carbon_", c(2010, 2018), ".zip")))

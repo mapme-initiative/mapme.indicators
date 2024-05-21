@@ -8,14 +8,14 @@
 \url{https://www.iucnredlist.org/resources/other-spatial-downloads}
 }
 \usage{
-get_iucn(path = NULL)
+get_iucn(paths = NULL)
 }
 \arguments{
-\item{path}{A character vector to the respective species range file in GTiff
-format. Note, that the file has to be downloaded manually.}
+\item{paths}{A character vector to the respective species range files in GTiff
+format. Note, that theses files have to be downloaded manually.}
 }
 \value{
-A function that returns a character vector of file paths.
+A function that returns an \code{sf} footprint object.
 }
 \description{
 This resource is part of the spatial data set Red List of Threatened Species

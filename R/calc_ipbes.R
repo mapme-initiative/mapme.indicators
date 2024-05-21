@@ -52,3 +52,22 @@ register_indicator(
   description = "Area distibution of IBPES biomes within a polygon.",
   resources = "ipbes_biome"
 )
+
+.ipbes_biome_classes <- data.frame(
+  class = c(1:15),
+  name = c("tropical and subtropical dry and humid forests",
+           "temperate and boreal forests and woodland",
+           "mediterranean forests woodlands and scrub",
+           "tundra and high mountain habitats",
+           "tropical and subtropical savannas and grasslands",
+           "temperate grassland",
+           "deserts and xeric shrubland",
+           "wetlands",
+           "urban and semi-urban areas",
+           "cultivated areas",
+           "cyrosphere",
+           "aquaculture areas",
+           "inland surface waters and water bodies",
+           "shelf ecosystems",
+           "open ocean pelagic systems")
+)

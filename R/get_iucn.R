@@ -32,7 +32,10 @@ get_iucn <- function(path = NULL) {
     outdir = mapme_options()[["outdir"]],
     verbose = mapme_options()[["verbose"]],
     testing = mapme_options()[["testing"]]) {
-    path
+    make_footprints(
+      path,
+      what = "raster",
+      co = c("-co", "INTERLEAVE=BAND", "-co", "COMPRESS=LZW", "-ot", "Int8"))
   }
 }
 

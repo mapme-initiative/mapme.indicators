@@ -21,7 +21,7 @@ calc_ipbes_biomes <- function() {
     aggregation = "sum",
     verbose = mapme_options()[["verbose"]]) {
 
-    if (is.null(ipbes_biomes)) return(NA)
+    if (is.null(ipbes_biomes)) return(NULL)
     if (st_crs(x) != st_crs(ipbes_biomes)) {
       x <- st_transform(x, st_crs(ipbes_biomes))
     }

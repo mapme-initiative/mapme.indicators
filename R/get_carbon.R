@@ -6,6 +6,9 @@
 #' by humans. All three layers are available for above and below ground
 #' carbon, as well as a layer combining the two.
 #'
+#' It may be required to increase the timeout option to successfully download
+#' theses layers from their source location via e.g. `options(timeout = 600)`.
+#'
 #' @details
 #' Irrecoverable carbon is defined as the amount of carbon, that, if lost today,
 #' cannot be recovered until mid 21st century (so within 30 years, considering
@@ -18,9 +21,13 @@
 #'   irrecoverable carbon in Earth’s ecosystems. Nat Sustain 5, 37–46 (2022).
 #'   https://doi.org/10.1038/s41893-021-00803-6
 #' @source \url{https://zenodo.org/records/4091029}
-#' @importFrom mapme.biodiversity download_or_skip unzip_and_remove
 #' @export
 get_irr_carbon <- function() {
+
+  if (is.null(mapme_options()[["outdir"]])) {
+    warning(paste("Carbon layers must be downloaded from the source location",
+                  "irrespective if `outdir` was specified or not."))
+  }
 
   function(
     x,
@@ -30,15 +37,7 @@ get_irr_carbon <- function() {
     verbose = mapme_options()[["verbose"]],
     testing = mapme_options()[["testing"]]) {
 
-    files_df <- .get_goldstein_url("^Irrecoverable_Carbon_\\d{4}\\.zip$")
-    filenames <- file.path(outdir, files_df[["filename"]])
-    filenames <- download_or_skip(
-      urls = files_df[["url"]],
-      filenames = filenames,
-      check_existence = FALSE)
-
-    purrr::walk(filenames, function(x) unzip_and_remove(x, dir = outdir, remove = FALSE))
-    list.files(outdir, pattern = "*.tif$", recursive = TRUE, full.names = TRUE)
+    .fetch_carbon("Irrecoverable", outdir)
   }
 }
 
@@ -58,6 +57,12 @@ register_resource(
 #' @name carbon_resources
 #' @export
 get_vul_carbon <- function() {
+
+  if (is.null(mapme_options()[["outdir"]])) {
+    warning(paste("Carbon layers must be downloaded from the source location",
+                  "irrespective if `outdir` was specified or not."))
+  }
+
   function(
     x,
     name = "vul_carbon",
@@ -66,15 +71,7 @@ get_vul_carbon <- function() {
     verbose = mapme_options()[["verbose"]],
     testing = mapme_options()[["testing"]]) {
 
-    files_df <- .get_goldstein_url("^Vulnerable_Carbon_\\d{4}\\.zip$")
-    filenames <- file.path(outdir, files_df[["filename"]])
-    filenames <- download_or_skip(
-      urls = files_df[["url"]],
-      filenames = filenames,
-      check_existence = FALSE)
-
-    purrr::walk(filenames, function(x) unzip_and_remove(x, dir = outdir, remove = FALSE))
-    list.files(outdir, pattern = "*.tif$", recursive = TRUE, full.names = TRUE)
+    .fetch_carbon("Vulnerable", outdir)
   }
 }
 
@@ -96,6 +93,12 @@ register_resource(
 #' @name carbon_resources
 #' @export
 get_man_carbon <- function() {
+
+  if (is.null(mapme_options()[["outdir"]])) {
+    warning(paste("Carbon layers must be downloaded from the source location",
+                  "irrespective if `outdir` was specified or not."))
+  }
+
   function(
     x,
     name = "man_carbon",
@@ -104,15 +107,7 @@ get_man_carbon <- function() {
     verbose = mapme_options()[["verbose"]],
     testing = mapme_options()[["testing"]]) {
 
-    files_df <- .get_goldstein_url("^Manageable_Carbon_\\d{4}\\.zip$")
-    filenames <- file.path(outdir, files_df[["filename"]])
-    filenames <- download_or_skip(
-      urls = files_df[["url"]],
-      filenames = filenames,
-      check_existence = FALSE)
-
-    purrr::walk(filenames, function(x) unzip_and_remove(x, dir = outdir, remove = FALSE))
-    list.files(outdir, pattern = "*.tif$", recursive = TRUE, full.names = TRUE)
+    .fetch_carbon("Manageable", outdir)
   }
 }
 
@@ -125,10 +120,47 @@ register_resource(
 )
 
 
-.get_goldstein_url <- function(layer){
+#' @importFrom utils unzip download.file
+.fetch_carbon <- function(layer = NULL, outdir = NULL) {
+
+  layers <- c("%s_C_Biomass_%s.tif",
+              "%s_C_Soil_%s.tif",
+              "%s_C_Total_%s.tif")
+  layers <- c(sprintf(layers, layer, 2010), sprintf(layers, layer, 2018))
+
+  if (!is.null(outdir)){
+    filenames <- file.path(outdir, layers)
+    is_available <- purrr::map_lgl(filenames, spds_exists, what = "raster")
+    if (all(is_available)) {
+      return(make_footprints(filenames, what =  "raster"))
+    }
+  }
+
+  tmpdir <- tempfile()
+  dir.create(tmpdir)
+
+  files <- .get_goldstein_url(sprintf("^%s_Carbon_\\d{4}\\.zip$", layer))
+  filenames <- file.path(tmpdir, files[["filename"]])
+  purrr::walk2(files[["url"]], filenames, function(src, filename) {
+    if (!file.exists(filename)) {
+      download.file(src, filename)
+    }
+    unzip(filename, junkpaths = TRUE, exdir = tmpdir)
+  })
+  tifs <- list.files(tmpdir, pattern = "*.tif$", recursive = TRUE, full.names = TRUE)
+  make_footprints(
+    tifs,
+    what = "raster",
+    co = c("-of", "COG", "-co", "COMPRESS=LZW", "-ot", "UInt16"))
+}
+
+
+.get_goldstein_url <- function(layer) {
   baseurl <- "https://zenodo.org/api/records/4091029"
   cnt <- resp_body_json(req_perform(request(baseurl)))
   files_df <- lapply(cnt[["files"]], function(x) data.frame(filename = x[["key"]], url = x[["links"]][["self"]]))
   files_df <- do.call(rbind, files_df)
   files_df[grep(layer, files_df[["filename"]]), ]
 }
+
+

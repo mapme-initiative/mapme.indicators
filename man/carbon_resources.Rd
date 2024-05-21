@@ -27,6 +27,9 @@ by humans. All three layers are available for above and below ground
 carbon, as well as a layer combining the two.
 }
 \details{
+It may be required to increase the timeout option to successfully download
+theses layers from their source location via e.g. \code{options(timeout = 600)}.
+
 Irrecoverable carbon is defined as the amount of carbon, that, if lost today,
 cannot be recovered until mid 21st century (so within 30 years, considering
 the publication date).

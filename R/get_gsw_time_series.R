@@ -34,18 +34,18 @@ NULL
 #'
 #' @param x A sf portfolio object as returned by
 #' mapme.biodiversity::init_portfolio.
-#' @param vers_gsw_time_series Version of the data set to process. Default:
+#' @param version Version of the data set to process. Default:
 #' "LATEST".
 #' @param rundir A directory where intermediate files are written to. Default:
 #' tempdir().
 #' @param verbose Logical to control output verbosity. Default: TRUE.
 #' @noRd
-get_gsw_time_series <- function(years, vers_gsw_time_series = "LATEST") {
+get_gsw_time_series <- function(years, version = "LATEST") {
   available_versions = c("VER1-0", "VER2-0", "VER3-0", "VER4-0", "VER5-0",
                          "LATEST")
   available_years <- 1984:2021
-  years <- mapme.biodiversity::check_available_years(years, available_years, "gsw_time_series")
-  stopifnot(vers_gsw_time_series %in% available_versions)
+  years <- check_available_years(years, available_years, "gsw_time_series")
+  stopifnot(version %in% available_versions)
 
   function(x,
            name = "gsw_time_series",
@@ -55,10 +55,10 @@ get_gsw_time_series <- function(years, vers_gsw_time_series = "LATEST") {
            testing = mapme_options()[["testing"]]) {
     # make the gsw grid and construct urls for intersecting tiles
     baseurl <- sprintf(
-      "https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GSWE/YearlyClassification/%s/tiles/",
-      vers_gsw_time_series
+      "/vsicurl/https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GSWE/YearlyClassification/%s/tiles/",
+      version
     )
-    grid_gsw <- mapme.biodiversity::make_global_grid(
+    grid_gsw <- make_global_grid(
       xmin = -180, xmax = 180, dx = 10,
       ymin = -60, ymax = 80, dy = 10
     )
@@ -70,22 +70,20 @@ get_gsw_time_series <- function(years, vers_gsw_time_series = "LATEST") {
     }
     ids <- sapply(tile_ids, function(n) .get_gsw_ts_tile_id(grid_gsw[n, ]))
 
-    urls <- rep("", length(ids) * length(years))
-    idx = 1
-    for(tile_url_id in ids) {
-      for(year in years) {
+    source_combinations <- expand.grid(years = years, ids = ids)
+    urls <- purrr::map2_chr(source_combinations$years, source_combinations$ids, \(year, tile_url_id) {
         # Warning: file naming system is different for 2021
         separator <- ifelse(year == 2021, "_", "-")
-        urls [idx] <- sprintf(
+        sprintf(
           "%syearlyClassification%s/yearlyClassification%s%s%s.tif",
           baseurl, year, year, separator, tile_url_id
         )
-        idx <- idx + 1
-      }
-    }
-    fps <- grid_gsw[tile_ids, ]
+    })
+
+    fps <- grid_gsw[expand.grid(years, tile_ids = tile_ids)$tile_ids, ]
     fps[["source"]] <- urls
-    mapme.biodiversity::make_footprints(fps,
+    make_footprints(fps,
+      filenames = paste0(version, "_", basename(fps$source)),
       what = "raster",
       co = c("-co", "INTERLEAVE=BAND", "-co", "COMPRESS=LZW", "-ot", "Byte")
     )
@@ -93,8 +91,8 @@ get_gsw_time_series <- function(years, vers_gsw_time_series = "LATEST") {
 }
 
 .get_gsw_ts_tile_id <- function(tile) {
-  min_x <- sf::st_bbox(tile)[1]
-  max_y <- sf::st_bbox(tile)[4]
+  min_x <- st_bbox(tile)[1]
+  max_y <- st_bbox(tile)[4]
 
   x_idx <- which(seq(-180, 170, by = 10) == min_x) - 1
   y_idx <- which(seq(80, -50, by = -10) == max_y) - 1
@@ -108,7 +106,7 @@ get_gsw_time_series <- function(years, vers_gsw_time_series = "LATEST") {
   return(tile_id)
 }
 
-mapme.biodiversity::register_resource(
+register_resource(
   name = "gsw_time_series",
   description = "Global Surface Water - Yearly Time Series",
   licence = "https://global-surface-water.appspot.com/download",

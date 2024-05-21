@@ -17,90 +17,65 @@
 #' @name gsw_time_series_yearly
 #' @docType data
 #' @keywords indicator
-#' @format A tibble containing five columns; one for the year and one for each
-#' GSW class ("No Observations", "Not Water", "Seasonal Water" and "Permanent
-#' Water") in ha.
+#' @format A function returning a tibble with time series of global surface
+#' water data classes.
 NULL
 
 #' @noRd
-.calc_gsw_time_series_yearly <- function(years = 1984:2021,
-                                         vers_gsw_time_series) {
+calc_gsw_time_series_yearly <- function(years = 1984:2021) {
   check_namespace("exactextractr")
-  available_versions = c("VER1-0", "VER2-0", "VER3-0", "VER4-0", "VER5-0",
-                         "LATEST")
   available_years <- 1984:2021
-  years <- mapme.biodiversity::check_available_years(years, available_years, "gsw_time_series")
-  stopifnot(vers_gsw_time_series %in% available_versions)
+  years <- check_available_years(years, available_years, "gsw_time_series")
 
   function(x = NULL,
            gsw_time_series,
            name = "gsw_timeseries",
-           mode = "asset"
-           )
+           mode = "asset",
+           aggregation = "sum",
+           verbose = mapme_options()[["verbose"]]) {
 
-  if (base::is.null(gsw_time_series)) {
-    return(NULL)
+    if (is.null(gsw_time_series)) {
+      return(NULL)
+    }
+
+    gsw_time_series <- mask(
+      gsw_time_series,
+      x
+    )
+
+    gsw_time_series <- clamp(
+      gsw_time_series,
+      lower = 0,
+      upper = 3,
+      values = FALSE
+    )
+
+    names(gsw_time_series) <- years
+    coverage_fractions <- exactextractr::exact_extract(gsw_time_series, x, "frac", coverage_area = TRUE)
+    x_total_area <- as.numeric(st_area(x)) / 10000
+
+    results <- purrr::map_df(names(coverage_fractions), \(colname) {
+      year <- substr(colname, nchar(colname) - 3, nchar(colname))
+      variable <- switch(
+        substr(colname, 6, 6),
+        "0" = "No Observations",
+        "1" = "Not Water",
+        "2" = "Seasonal Water",
+        "3" = "Permanent Water"
+      )
+      tibble::tibble(
+        datetime = paste0(year, "-01-01"),
+        variable = variable,
+        unit = "ha",
+        value = coverage_fractions[[colname]] * x_total_area
+      )
+    })
+
+    return(results)
   }
-
-  gsw_time_series <- terra::crop(
-    gsw_time_series,
-    x
-  )
-
-  gsw_time_series <- terra::mask(
-    gsw_time_series,
-    x
-  )
-
-  gsw_time_series <- terra::clamp(
-    gsw_time_series,
-    lower = 0,
-    upper = 3,
-    values = FALSE
-  )
-
-  pixel_areas <- terra::cellSize(
-    gsw_time_series,
-    mask = TRUE,
-    unit = "ha"
-  )
-
-  ts_layer_ids <- seq_len(terra::nlyr(gsw_time_series))
-  res_zonal <- lapply(ts_layer_ids, function(lyr_id, gsw_time_series,
-                                             pixel_areas, layer_years) {
-    gsw_ts_i <- terra::subset(gsw_time_series, lyr_id)
-    res <- terra::zonal(
-      pixel_areas,
-      gsw_ts_i,
-      fun = "sum"
-    )
-    names(res) <- c("gsw_class", "area")
-    res_0 <- res$area [res$gsw_class == 0]
-    res_1 <- res$area [res$gsw_class == 1]
-    res_2 <- res$area [res$gsw_class == 2]
-    res_3 <- res$area [res$gsw_class == 3]
-
-    res <- data.frame(
-      year = layer_years [lyr_id],
-      gsw_no_observations_ha = ifelse(length(res_0) == 0, 0, res_0),
-      gsw_not_water_ha = ifelse(length(res_1) == 0, 0, res_1),
-      gsw_seasonal_water_ha = ifelse(length(res_2) == 0, 0, res_2),
-      gsw_permanent_water_ha = ifelse(length(res_3) == 0, 0, res_3)
-    )
-
-    return(res)
-  },
-  gsw_time_series = gsw_time_series,
-  pixel_areas = pixel_areas,
-  layer_years = attributes(x)$years
-  )
-  results <- do.call(rbind, res_zonal)
-  results <- tibble::tibble(results)
-
-  return(results)
 }
 
-mapme.biodiversity::register_indicator(
+register_indicator(
   name = "gsw_time_series_yearly",
   description = "Global Surface Water - Yearly Time Series",
   resources = "gsw_time_series"

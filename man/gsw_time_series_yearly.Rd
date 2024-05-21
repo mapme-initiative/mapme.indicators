@@ -5,9 +5,8 @@
 \alias{gsw_time_series_yearly}
 \title{Calculate Global Surface Water Time Series}
 \format{
-A tibble containing five columns; one for the year and one for each
-GSW class ("No Observations", "Not Water", "Seasonal Water" and "Permanent
-Water") in ha.
+A function returning a tibble with time series of global surface
+water data classes.
 }
 \description{
 This function calculates the total area of the global surface water time

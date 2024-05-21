@@ -55,6 +55,9 @@ The required resources for this indicator are:
 \itemize{
 \item \link{humanfootprint}
 }
+
+It may be required to increase the timeout option to successfully download
+theses layers from their source location via e.g. \code{options(timeout = 600)}.
 }
 \references{
 Mu, H., Li, X., Wen, Y. et al. A global record of annual

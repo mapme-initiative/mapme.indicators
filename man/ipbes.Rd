@@ -2,16 +2,13 @@
 % Please edit documentation in R/get_ipbes.R
 \name{ipbes}
 \alias{ipbes}
-\alias{get_ipbes_biome}
-\alias{get_ipbes_anthrome}
-\title{Terrestrial and Aquatic Biomes and Anthromes}
+\alias{get_ipbes_biomes}
+\title{Terrestrial and Aquatic Biomes}
 \source{
 \url{https://zenodo.org/records/3975694}
 }
 \usage{
-get_ipbes_biome()
-
-get_ipbes_anthrome()
+get_ipbes_biomes()
 }
 \value{
 A function that returns a character vector of file paths.
@@ -44,9 +41,6 @@ Aquatic biomes include:
 \item Shelf ecosystems (neritic and intertidal/littoral zone)
 \item Open ocean pelagic systems (euphotic zone)
 }
-
-Anthromes are differentiated between two classes,
-which are built-up (urbanized) areas and cultivated areas.
 }
 \references{
 IPBES (2019): Summary for policymakers of the global assessment

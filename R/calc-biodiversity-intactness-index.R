@@ -3,7 +3,7 @@
 #' This function calculates the mean biodiversity intactness index for a region.
 #'
 #' The required resources for this indicator are:
-#'  - [bii]
+#'  - [biodiversity_intactness_index]
 #'
 #' @name biodiversity_intactness_index
 #' @docType data
@@ -14,23 +14,20 @@ NULL
 
 #' @noRd
 calc_biodiversity_intactness_index <- function() {
+  check_namespace("exactextractr")
   function(x = NULL,
-           bii,
+           biodiversity_intactness_index,
            name = "biodiversity_intactness_index",
            mode = "asset",
            aggregation = "mean",
            verbose = mapme_options()[["verbose"]]) {
 
-    if (is.null(bii)) {
+    if (is.null(biodiversity_intactness_index)) {
       return(NULL)
     }
 
-    bii <- mask(
-      bii,
-      x
-    )
+    mean_bii <- exactextractr::exact_extract(biodiversity_intactness_index, x, fun = "mean")
 
-    mean_bii <- mean(values(bii), na.rm = TRUE)
     results <- tibble::tibble(
       datetime = "2016-01-01",
       variable = "Biodiversity intactness index (mean)",
@@ -45,5 +42,5 @@ calc_biodiversity_intactness_index <- function() {
 register_indicator(
   name = "biodiversity_intactness_index",
   description = "Biodiversity intactness index (mean)",
-  resources = "bii"
+  resources = "biodiversity_intactness_index"
 )

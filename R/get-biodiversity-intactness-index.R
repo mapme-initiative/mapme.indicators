@@ -9,7 +9,7 @@
 #' global data set and point towards the file path on your local machine.
 #' Please find the available data under the source link given below.
 #'
-#' @name bii
+#' @name biodiversity_intactness_index
 #' @param path A character vector to the biodiversity intactness index tif file.
 #'   Note, that the file has to be downloaded manually.
 #' @keywords resource
@@ -25,7 +25,7 @@ get_biodiversity_intactness_index <- function(path = NULL) {
 
   function(
     x,
-    name = "bii",
+    name = "biodiversity_intactness_index",
     type = "raster",
     outdir = mapme_options()[["outdir"]],
     verbose = mapme_options()[["verbose"]],
@@ -38,7 +38,7 @@ get_biodiversity_intactness_index <- function(path = NULL) {
 }
 
 register_resource(
-  name = "bii",
+  name = "biodiversity_intactness_index",
   description = "Biodiversity Intactness Index",
   licence = "CC-BY-4.0",
   source = "https://data.nhm.ac.uk/dataset/global-map-of-the-biodiversity-intactness-index-from-newbold-et-al-2016-science",

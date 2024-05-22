@@ -9,18 +9,15 @@ test_that("calc_irr_carbon works", {
   x <- calc_indicators(
     x,
     calc_irr_carbon(
-      type = "all",
-      stats = c("mean", "min", "max", "sd"),
+      type = "biomass",
+      stats = c("mean", "min"),
       engine = "extract")
   )
 
   expect_true("irr_carbon" %in% names(x))
   expect_equal(class(x[["irr_carbon"]]), "list")
-  vars <- c("irr_carbon_biomass_mean",
-            "irr_carbon_soil_mean",
-            "irr_carbon_total_mean")
-  expect_equal(unique(x[["irr_carbon"]][[1]][["variable"]]),
-               vars)
+  vars <- c("irr_carbon_biomass_mean", "irr_carbon_biomass_min")
+  expect_equal(unique(x[["irr_carbon"]][[1]][["variable"]]), vars)
   expect_snapshot(x[["irr_carbon"]][[1]][["value"]])
 })
 
@@ -36,18 +33,15 @@ test_that("calc_vul_carbon works", {
   x <- calc_indicators(
     x,
     calc_vul_carbon(
-      type = "all",
-      stats = c("mean", "min", "max", "sd"),
+      type = "total",
+      stats = c("min", "mean"),
       engine = "extract")
   )
 
   expect_true("vul_carbon" %in% names(x))
   expect_equal(class(x[["vul_carbon"]]), "list")
-  vars <- c("vul_carbon_biomass_mean",
-            "vul_carbon_soil_mean",
-            "vul_carbon_total_mean")
-  expect_equal(unique(x[["vul_carbon"]][[1]][["variable"]]),
-               vars)
+  vars <- c("vul_carbon_total_mean", "vul_carbon_total_min")
+  expect_equal(unique(x[["vul_carbon"]][[1]][["variable"]]), vars)
   expect_snapshot(x[["vul_carbon"]][[1]][["value"]])
 })
 
@@ -62,17 +56,14 @@ test_that("calc_man_carbon works", {
   x <- calc_indicators(
     x,
     calc_man_carbon(
-      type = "all",
-      stats = c("mean", "min", "max", "sd"),
+      type = "soil",
+      stats = c("max", "sd"),
       engine = "extract")
   )
 
   expect_true("man_carbon" %in% names(x))
   expect_equal(class(x[["man_carbon"]]), "list")
-  vars <- c("man_carbon_biomass_mean",
-            "man_carbon_soil_mean",
-            "man_carbon_total_mean")
-  expect_equal(unique(x[["man_carbon"]][[1]][["variable"]]),
-               vars)
+  vars <- c("man_carbon_soil_max", "man_carbon_soil_sd")
+  expect_equal(unique(x[["man_carbon"]][[1]][["variable"]]), vars)
   expect_snapshot(x[["man_carbon"]][[1]][["value"]])
 })

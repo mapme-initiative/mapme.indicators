@@ -14,11 +14,6 @@ x <- read_sf(
 ) %>%
 get_resources(get_gsw_time_series(years = years))
 
-res <- x %>%
-  calc_indicators(
-    calc_gsw_time_series_yearly(years)
-  )
-
 gsw_time_series <- prep_resources(x) %>%
   extract2(1)
 

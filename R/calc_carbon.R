@@ -178,7 +178,7 @@ register_indicator(
   result <- tidyr::pivot_longer(result, cols = -c(type, year), names_to = "variable")
   result <- dplyr::mutate(result,
                 stat = strsplit(variable, "_")[[1]][3],
-                variable = paste(name, type, stat, sep = "_"),
+                variable = paste(name, type, stats, sep = "_"),
                 datetime = as.Date(paste0(year, "-01-01")),
                 unit = "Mg")
   result[ ,c("datetime", "variable", "unit", "value")]

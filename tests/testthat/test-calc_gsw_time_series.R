@@ -6,7 +6,7 @@ test_that("gsw time series works", {
   )
 
   outdir <- system.file("resources", package = "mapme.indicators")
-  mapme_options(outdir = outdir)
+  mapme_options(outdir = outdir, verbose = FALSE)
 
   years <- 2000:2001
   aoi <- aoi %>%

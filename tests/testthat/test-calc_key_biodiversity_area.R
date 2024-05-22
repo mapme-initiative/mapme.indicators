@@ -1,4 +1,4 @@
-test_that("biodiversity intactness index works", {
+test_that("key biodiversity area works", {
   aoi <- read_sf(
     system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
                 package = "mapme.biodiversity"
@@ -6,37 +6,37 @@ test_that("biodiversity intactness index works", {
   )
 
   outdir <- system.file("resources", package = "mapme.indicators")
-  mapme_options(outdir = outdir, verboase = FALSE)
+  mapme_options(outdir = outdir, verbose = FALSE)
 
-  fname_bii <- system.file("resources/biodiversity_intactness_index/bii.tif", package = "mapme.indicators")
+  fname_kbas <- system.file("resources/key_biodiversity_areas/kbas.gpkg", package = "mapme.indicators")
   aoi <- aoi %>%
-    get_resources(get_biodiversity_intactness_index(fname_bii))
+    get_resources(get_key_biodiversity_areas(fname_kbas))
 
   res <- aoi %>%
     calc_indicators(
-      calc_biodiversity_intactness_index()
+      calc_key_biodiversity_area()
     )
 
-  res <- res$biodiversity_intactness_index [[1]]
+  res <- res$key_biodiversity_areas [[1]]
 
   expect_equal(
     res$datetime,
-    "2016-01-01"
+    "2024-01-01"
   )
 
   expect_equal(
     res$variable,
-    "Biodiversity intactness index (mean)"
+    "Key biodiversity area"
   )
 
   expect_equal(
     res$unit,
-    NA
+    "ha"
   )
 
   expect_equal(
     res$value,
-    0.917,
+    101.2097,
     tolerance = 0.01
   )
 })

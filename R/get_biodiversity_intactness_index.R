@@ -14,7 +14,7 @@
 #'   Note, that the file has to be downloaded manually.
 #' @keywords resource
 #' @returns A function that returns a character vector of file paths.
-#' @references Tim Newbold; Lawrence Hudson; Andy Arnell; Sara Contu et al. (2016). Global map of the Biodiversity Intactness Index, from Newbold et al. (2016) Science [Data set]. Natural History Museum. \doi{https://doi.org/10.5519/0009936}
+#' @references Tim Newbold; Lawrence Hudson; Andy Arnell; Sara Contu et al. (2016). Global map of the Biodiversity Intactness Index, from Newbold et al. (2016) Science \[Data set\]. Natural History Museum. \doi{https://doi.org/10.5519/0009936}
 #' @source \url{https://data.nhm.ac.uk/dataset/global-map-of-the-biodiversity-intactness-index-from-newbold-et-al-2016-science}
 #' @export
 get_biodiversity_intactness_index <- function(path = NULL) {

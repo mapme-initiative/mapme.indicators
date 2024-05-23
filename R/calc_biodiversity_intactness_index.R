@@ -10,9 +10,7 @@
 #' @keywords indicator
 #' @format A function returning a tibble with the aggregated biodiversity
 #' intactness index.
-NULL
-
-#' @noRd
+#' @export
 calc_biodiversity_intactness_index <- function() {
   check_namespace("exactextractr")
   function(x = NULL,

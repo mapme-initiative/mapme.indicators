@@ -8,9 +8,9 @@
 #' Please find the available data under the source link given below.
 #'
 #' @name key_biodiversity_areas
+#' @keywords resource
 #' @param path A character vector to the key biodiversity areas gpkg file.
 #'   Note, that the file has to be downloaded manually.
-#' @keywords resource
 #' @returns A function that returns a character vector of file paths.
 #' @references BirdLife International (2024). The World Database of Key Biodiversity Areas. Developed by the KBA Partnership: BirdLife International, International Union for the Conservation of Nature, Amphibian Survival Alliance, Conservation International, Critical Ecosystem Partnership Fund, Global Environment Facility, Re:wild, NatureServe, Rainforest Trust, Royal Society for the Protection of Birds, Wildlife Conservation Society and World Wildlife Fund. Available at www.keybiodiversityareas.org.
 #' @source \url{https://www.keybiodiversityareas.org/kba-data}

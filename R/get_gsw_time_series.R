@@ -1,7 +1,9 @@
-#' Global Surface Water - Yearly Time Series
+#' Helper function to download Global Surface Water (GSW) yearly time series
+#' data
 #'
-#' This resource is part of the JRC Global Surface Water dataset. It provides
-#' yearly categorical raster data on terrestrial surface water classes.
+#' This function constructs  the necessary data URLs for a given data set,
+#' version and polygon and downloads them for further processing with the
+#' mapme.biodiversity package.
 #'
 #' @details
 #' The available surface water classes for a given pixel are the following:
@@ -15,37 +17,28 @@
 #' - No Water: No Water was detected.
 #'
 #' @name gsw_time_series
-#' @docType data
 #' @keywords resource
-#' @format A global tiled raster resource available for all terrestrial areas, available yearly for 1984 -- 2021.
+#' @returns A function that returns a character vector of file paths.
 #' @references
 #' * Global Surface Water Explorer: \url{https://global-surface-water.appspot.com/}
 #' * Data Users Guide: \url{https://storage.cloud.google.com/global-surface-water/downloads_ancillary/DataUsersGuidev2021.pdf}
 #' * Research Article: \url{https://www.nature.com/articles/nature20584}
 #' @source Raw Data: \url{https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GSWE/YearlyClassification/LATEST/tiles/}
-NULL
-
-#' Helper function to download Global Surface Water (GSW) yearly time series
-#' data
-#'
-#' This function constructs for a given dataset version and polygon extent the
-#' needed data URLs and downloads them for further processing with the
-#' mapme.biodiversity package.
-#'
-#' @param x A sf portfolio object as returned by
-#' mapme.biodiversity::init_portfolio.
-#' @param version Version of the data set to process. Default:
-#' "LATEST".
-#' @param rundir A directory where intermediate files are written to. Default:
-#' tempdir().
-#' @param verbose Logical to control output verbosity. Default: TRUE.
-#' @noRd
+#' @param years Numeric vector of years to process between 1984 and 2021.
+#' Default: `1984:2021`.
+#' @param version Version of the data set to process. Available options are
+#' (`VER1-0`, `VER2-0`, `VER3-0`, `VER4-0`, `VER5-0` and `LATEST`) Default:
+#' `LATEST`. Choosing `LATEST` will result in the latest available version.
+#' @export
 get_gsw_time_series <- function(years, version = "LATEST") {
   available_versions = c("VER1-0", "VER2-0", "VER3-0", "VER4-0", "VER5-0",
                          "LATEST")
   available_years <- 1984:2021
   years <- check_available_years(years, available_years, "gsw_time_series")
   stopifnot(version %in% available_versions)
+  if(version == "LATEST") {
+    version <- "VER5-0"
+  }
 
   function(x,
            name = "gsw_time_series",
@@ -62,7 +55,7 @@ get_gsw_time_series <- function(years, version = "LATEST") {
       xmin = -180, xmax = 180, dx = 10,
       ymin = -60, ymax = 80, dy = 10
     )
-    tile_ids <- unique(unlist(st_intersects(x, grid_gsw)))
+    tile_ids <- unique(unlist(sf::st_intersects(x, grid_gsw)))
     if (length(tile_ids) == 0) {
       stop("The extent of the portfolio does not intersect with the GSW grid.",
            call. = FALSE

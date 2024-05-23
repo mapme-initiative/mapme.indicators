@@ -6,7 +6,7 @@ test_that("biodiversity intactness index works", {
   )
 
   outdir <- system.file("resources", package = "mapme.indicators")
-  mapme_options(outdir = outdir, verboase = FALSE)
+  mapme_options(outdir = outdir, verbose = FALSE)
 
   fname_bii <- system.file("resources/biodiversity_intactness_index/bii.tif", package = "mapme.indicators")
   aoi <- aoi %>%

@@ -4,6 +4,7 @@
 \docType{data}
 \name{biodiversity_intactness_index}
 \alias{biodiversity_intactness_index}
+\alias{calc_biodiversity_intactness_index}
 \alias{get_biodiversity_intactness_index}
 \title{Calculate Biodiversity Intactness Index}
 \format{
@@ -14,6 +15,8 @@ intactness index.
 \url{https://data.nhm.ac.uk/dataset/global-map-of-the-biodiversity-intactness-index-from-newbold-et-al-2016-science}
 }
 \usage{
+calc_biodiversity_intactness_index()
+
 get_biodiversity_intactness_index(path = NULL)
 }
 \arguments{

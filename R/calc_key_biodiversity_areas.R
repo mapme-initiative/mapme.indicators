@@ -10,9 +10,7 @@
 #' @docType data
 #' @keywords indicator
 #' @format A function returning a tibble with the key biodiversity area overlap
-NULL
-
-#' @noRd
+#' @export
 calc_key_biodiversity_area <- function() {
   function(x = NULL,
            key_biodiversity_areas,

@@ -15,13 +15,12 @@
 #'  - [gsw_time_series]
 #'
 #' @name gsw_time_series_yearly
-#' @docType data
 #' @keywords indicator
+#' @param years Numeric vector of years to process between 1984 and 2021.
+#' Default: `1984:2021`.
 #' @format A function returning a tibble with time series of global surface
 #' water data classes.
-NULL
-
-#' @noRd
+#' @export
 calc_gsw_time_series_yearly <- function(years = 1984:2021) {
   check_namespace("exactextractr")
   available_years <- 1984:2021

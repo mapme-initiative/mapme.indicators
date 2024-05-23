@@ -4,6 +4,7 @@
 \docType{data}
 \name{key_biodiversity_areas}
 \alias{key_biodiversity_areas}
+\alias{calc_key_biodiversity_area}
 \alias{get_key_biodiversity_areas}
 \title{Calculate Key Biodiversity Areas}
 \format{
@@ -13,6 +14,8 @@ A function returning a tibble with the key biodiversity area overlap
 \url{https://www.keybiodiversityareas.org/kba-data}
 }
 \usage{
+calc_key_biodiversity_area()
+
 get_key_biodiversity_areas(path = NULL)
 }
 \arguments{

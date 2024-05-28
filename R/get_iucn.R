@@ -21,7 +21,7 @@
 #' @export
 get_iucn <- function(path = NULL) {
 
-  if(is.null(path) || !file.exists(path) || file_ext(path) == "tif") {
+  if(is.null(path) || !file.exists(path) || !file_ext(path) == "tif") {
     stop("Expecting path to point towards an existing GTiff file.")
   }
 

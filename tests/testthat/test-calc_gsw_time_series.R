@@ -7,6 +7,15 @@ test_that("gsw time series works", {
 
   outdir <- system.file("resources", package = "mapme.indicators")
   mapme_options(outdir = outdir, verbose = FALSE)
+  outdir_gsw <- file.path(outdir, "gsw_time_series")
+
+  gsw_fnames_short <- dir(outdir_gsw, pattern = ".tif$")
+  gsw_fnames_long <- sub("v5_", "VER5-0_yearlyClassification", gsw_fnames_short)
+
+  file.copy(
+    file.path(outdir_gsw, gsw_fnames_short),
+    file.path(outdir_gsw, gsw_fnames_long)
+  )
 
   years <- 2000:2001
   aoi <- aoi %>%
@@ -16,8 +25,11 @@ test_that("gsw time series works", {
     calc_indicators(
       calc_gsw_time_series(years)
     )
-
   res <- res$gsw_timeseries [[1]]
+
+  file_delete(
+    file.path(outdir_gsw, gsw_fnames_long)
+  )
 
   expect_equal(
     res$datetime,

@@ -1,5 +1,4 @@
 library(dplyr)
-library(magrittr)
 library(mapme.indicators)
 library(sf)
 
@@ -14,7 +13,7 @@ x <- read_sf(
 get_resources(get_key_biodiversity_areas("kbas.gpkg"))
 
 kbas <- prep_resources(x) %>%
-  extract2(1)
+kbas <- kbas [[1]]
 
 outdir <- "inst/resources/key_biodiversity_areas"
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)

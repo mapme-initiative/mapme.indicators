@@ -31,7 +31,7 @@ test_that("biodiversity intactness index works", {
 
   expect_equal(
     res$unit,
-    NA
+    "unitless"
   )
 
   expect_equal(

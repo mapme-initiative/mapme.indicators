@@ -1,4 +1,3 @@
-library(magrittr)
 library(mapme.indicators)
 library(terra)
 
@@ -12,8 +11,8 @@ x <- read_sf(
 ) %>%
 get_resources(get_biodiversity_intactness_index("bii.tif"))
 
-bii <- prep_resources(x) %>%
-  extract2(1)
+bii <- prep_resources(x)
+bii <- bii [[1]]
 
 outdir <- "inst/resources/biodiversity_intactness_index"
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)

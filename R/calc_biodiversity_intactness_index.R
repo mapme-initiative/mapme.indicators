@@ -29,7 +29,7 @@ calc_biodiversity_intactness_index <- function() {
     results <- tibble::tibble(
       datetime = "2016-01-01",
       variable = "Biodiversity intactness index (mean)",
-      unit = NA,
+      unit = "unitless",
       value = mean_bii
     )
 

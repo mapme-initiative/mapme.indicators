@@ -1,5 +1,4 @@
 library(dplyr)
-library(magrittr)
 library(mapme.indicators)
 library(terra)
 
@@ -14,8 +13,8 @@ x <- read_sf(
 ) %>%
 get_resources(get_gsw_time_series(years = years))
 
-gsw_time_series <- prep_resources(x) %>%
-  extract2(1)
+gsw_time_series <- prep_resources(x)
+gsw_time_series <- gsw_time_series [[1]]
 
 outdir <- "inst/resources/gsw_time_series"
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
@@ -24,6 +23,7 @@ gsw_time_series <- mask(gsw_time_series, x)
 
 for(lyr_id in seq_len(nlyr(gsw_time_series))) {
   lyr_name <- names(gsw_time_series) [lyr_id]
+  lyr_name <- sub("VER5-0_yearlyClassification", "v5_", lyr_name)
   fname <- paste0(file.path(outdir, lyr_name), ".tif")
   gsw_time_series %>%
     subset(lyr_id) %>%

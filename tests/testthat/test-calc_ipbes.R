@@ -3,7 +3,7 @@ test_that("calc_ipbes_biomes works", {
   x <- x [5, ]
   x <- st_transform(x, "EPSG:4326")
   outdir <- system.file("resources", package = "mapme.indicators")
-  mapme_options(outdir = outdir)
+  mapme_options(outdir = outdir, verbose = FALSE)
   get_resources(x, get_ipbes_biomes())
   ind <- calc_indicators(x, calc_ipbes_biomes())
   expect_true("ipbes_biomes" %in% names(ind))

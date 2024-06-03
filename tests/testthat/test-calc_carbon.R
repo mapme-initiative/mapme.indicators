@@ -4,7 +4,7 @@ test_that("calc_irr_carbon works", {
   x <- st_transform(x, "EPSG:4326")
 
   outdir <- system.file("resources", package = "mapme.indicators")
-  mapme_options(outdir = outdir)
+  mapme_options(outdir = outdir, verbose = FALSE)
   x <- get_resources(x, get_irr_carbon())
   x <- calc_indicators(
     x,

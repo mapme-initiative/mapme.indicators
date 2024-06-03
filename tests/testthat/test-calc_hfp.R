@@ -4,7 +4,7 @@ test_that("calc_hfp works", {
   x <- st_transform(x, "EPSG:4326")
 
   outdir <- system.file("resources", package = "mapme.indicators")
-  mapme_options(outdir = outdir, testing = TRUE)
+  mapme_options(outdir = outdir, testing = TRUE, verbose = FALSE)
   x <- get_resources(x, get_humanfootprint(years = 2010:2015))
   x <- calc_indicators(x,
                        calc_humanfootprint(

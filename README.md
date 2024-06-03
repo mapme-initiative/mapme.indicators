@@ -15,7 +15,7 @@ After reaching all milestones in `{mapme.biodiversity}`, we will decide whether 
 Please run the following code to install the required packages:
 
 ```         
-remotes::install_version("mapme-initiative/mapme.biodiversity", version = "0.7.0")
+remotes::install_version("mapme.biodiversity", version = "0.7.0")
 remotes::install_github("mapme-initiative/mapme.indicators")
 ```
 
@@ -28,7 +28,7 @@ Once the package is loaded in your R session via `library(mapme.indicators)`, th
 The table below gives an overview of implemented and planned resources/indicators:
 
 | Name                    | Description                                                                                                             | Data Source                                                                                                                      |
-|-------------------------|-------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+|---------------|----------------------------|------------------------------|
 | Manageable carbon       | carbon stock that is primarily affected by human activities that either maintain, increase, or decrease its size        | [Zenodo](https://zenodo.org/records/4091029)                                                                                     |
 | Vulnerable carbon       | amount of manageable carbon that is likely to be released through typical land conversion in an ecosystem               | [Zenodo](https://zenodo.org/records/4091029)                                                                                     |
 | Irrecoverable carbon    | amount of the vulnerable carbon which if it is lost through typical land conversion actions cannot be recovered by 2050 | [Zenodo](https://zenodo.org/records/4091029)                                                                                     |

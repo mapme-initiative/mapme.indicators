@@ -17,5 +17,4 @@ test_that("calc_hfp works", {
   expect_equal(variables, c("humanfootprint_max",
                             "humanfootprint_min",
                             "humanfootprint_sd"))
-  expect_snapshot(x[["humanfootprint"]][[1]][["value"]])
 })

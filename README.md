@@ -4,7 +4,7 @@
 
 This package is currently work-in-progress. It is going to be used to develop new resources/indicators while `{mapme.biodiversity}` is undergoing a number of functionality changes. To learn more about the ongoing changes and their current status, please visit the [announcement issue](https://github.com/mapme-initiative/mapme.biodiversity/issues/240).
 
-The branch you are seeing here links against `{mapme.biodiversity}` v0.8.0.
+The branch you are seeing here links against `{mapme.biodiversity}` `dev` branch.
 
 We will update the resource/indicator functions developed here once a new version is released.
 
@@ -15,8 +15,8 @@ After reaching all milestones in `{mapme.biodiversity}`, we will decide whether 
 Please run the following code to install the required packages:
 
 ```         
-remotes::install_version("mapme.biodiversity", version = "0.7.0")
-remotes::install_github("mapme-initiative/mapme.indicators")
+remotes::install_github("mapme-initiative/mapme.biodiversity", ref = "dev")
+remotes::install_github("mapme-initiative/mapme.indicators", ref = "dev")
 ```
 
 ## Resources and Indicators

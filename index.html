@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">mapme.indicators</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,7 @@
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This package is currently work-in-progress. It is going to be used to develop new resources/indicators while <a href="https://mapme-initiative.github.io/mapme.biodiversity/index.html" class="external-link">mapme.biodiversity</a> is undergoing a number of functionality changes. To learn more about the ongoing changes and their current status, please visit the <a href="https://github.com/mapme-initiative/mapme.biodiversity/issues/240" class="external-link">announcement issue</a>.</p>
-<p>The branch you are seeing here links against <a href="https://mapme-initiative.github.io/mapme.biodiversity/index.html" class="external-link">mapme.biodiversity</a> v0.6.0.</p>
+<p>The branch you are seeing here links against <a href="https://mapme-initiative.github.io/mapme.biodiversity/index.html" class="external-link">mapme.biodiversity</a> v0.7.0.</p>
 <p>We will update the resource/indicator functions developed here once a new version is released.</p>
 <p>After reaching all milestones in <a href="https://mapme-initiative.github.io/mapme.biodiversity/index.html" class="external-link">mapme.biodiversity</a>, we will decide whether to move the resources/indicators developed here into the main package or if the resources/indicators will be moved here.</p>
 </div>
@@ -65,7 +65,7 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Please run the following code to install the required packages:</p>
-<pre><code><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_version</span><span class="op">(</span><span class="st">"mapme-initiative/mapme.biodiversity"</span>, version <span class="op">=</span> <span class="st">"0.6.0"</span><span class="op">)</span></span>
+<pre><code><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_version</span><span class="op">(</span><span class="st">"mapme.biodiversity"</span>, version <span class="op">=</span> <span class="st">"0.7.0"</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"mapme-initiative/mapme.indicators"</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="section level2">
@@ -76,79 +76,45 @@
 <p>The table below gives an overview of implemented and planned resources/indicators:</p>
 <table style="width:100%;" class="table">
 <colgroup>
-<col width="16%">
-<col width="16%">
-<col width="16%">
-<col width="16%">
-<col width="16%">
-<col width="16%">
+<col width="20%">
+<col width="38%">
+<col width="41%">
 </colgroup>
 <thead><tr class="header">
 <th>Name</th>
 <th>Description</th>
-<th>Original Implementation</th>
-<th>New Implementation</th>
 <th>Data Source</th>
-<th>Implemented</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td>Manageable carbon</td>
 <td>carbon stock that is primarily affected by human activities that either maintain, increase, or decrease its size</td>
-<td>aggregated to tons per grid cell, then mean per PA</td>
-<td>mean per PA</td>
 <td><a href="https://zenodo.org/records/4091029" class="external-link">Zenodo</a></td>
-<td>Yes</td>
 </tr>
 <tr class="even">
 <td>Vulnerable carbon</td>
 <td>amount of manageable carbon that is likely to be released through typical land conversion in an ecosystem</td>
-<td>aggregated to tons per grid cell, then mean per PA</td>
-<td>mean per PA</td>
 <td><a href="https://zenodo.org/records/4091029" class="external-link">Zenodo</a></td>
-<td>Yes</td>
 </tr>
 <tr class="odd">
 <td>Irrecoverable carbon</td>
 <td>amount of the vulnerable carbon which if it is lost through typical land conversion actions cannot be recovered by 2050</td>
-<td>aggregated to tons per grid cell, then mean per PA</td>
-<td>mean per PA</td>
 <td><a href="https://zenodo.org/records/4091029" class="external-link">Zenodo</a></td>
-<td>Yes</td>
 </tr>
 <tr class="even">
 <td>Human footprint</td>
 <td>pressure on ecosystems by 8 variables of human impact</td>
-<td>aggregation to standard grid, mean per PA</td>
-<td>mean calculation directly per PA</td>
 <td><a href="https://figshare.com/articles/figure/An_annual_global_terrestrial_Human_Footprint_dataset_from_2000_to_2018/16571064" class="external-link">Figshare</a></td>
-<td>Yes</td>
 </tr>
 <tr class="odd">
-<td>Species Richness</td>
-<td>Number of distinct species</td>
-<td>count of unique species within a PA per grid cell, mean over PA</td>
-<td>crop polygons to PA and count unique species</td>
-<td>
-<a href="http://datazone.birdlife.org/species/requestdis" class="external-link">BirdLife International</a> <a href="https://www.iucnredlist.org/resources/spatial-data-download" class="external-link">IUCN</a>, <a href="https://datadryad.org/stash/dataset/doi:10.5061/dryad.9cnp5hqmb" class="external-link">Global Assessment of Reptile Distributions</a>
-</td>
-<td>Yes</td>
+<td>IPBES Biomes</td>
+<td>Terrestrial and aquatic classification of biomes according to IPBES</td>
+<td><a href="https://zenodo.org/records/3975694" class="external-link">Zenodo</a></td>
 </tr>
 <tr class="even">
-<td>Biodiversity Intactness Index (BII)</td>
-<td>Todays species abundance compared to modeled abundance in an intact ecosystem</td>
-<td>available as gridded product, mean per PA</td>
-<td>mean calculation directly per PA</td>
-<td><a href="https://data.nhm.ac.uk/dataset/global-map-of-the-biodiversity-intactness-index-from-newbold-et-al-2016-science" class="external-link">NHM</a></td>
-<td>No</td>
-</tr>
-<tr class="odd">
-<td>Landscapemetrics</td>
-<td>Landscape and patch level metrics of landcape intactness</td>
-<td>not originally included</td>
-<td>mean per PA based on yearly forest cover maps of GFW</td>
-<td><a href="https://www.globalforestwatch.org/" class="external-link">GFW</a></td>
-<td>No</td>
+<td>Species Richness (IUCN)</td>
+<td>Number of distinct species possibly by threat level</td>
+<td><a href="https://www.iucnredlist.org/resources/other-spatial-downloads" class="external-link">IUCN Redlist</a></td>
 </tr>
 </tbody>
 </table>

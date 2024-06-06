@@ -16,7 +16,10 @@
     <loc>https://mapme-initiative.github.io/mapme.indicators/index.html</loc>
   </url>
   <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/hfp.html</loc>
+    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/carbon_indicators.html</loc>
+  </url>
+  <url>
+    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/carbon_resources.html</loc>
   </url>
   <url>
     <loc>https://mapme-initiative.github.io/mapme.indicators/reference/humanfootprint.html</loc>
@@ -28,42 +31,12 @@
     <loc>https://mapme-initiative.github.io/mapme.indicators/reference/ipbes.html</loc>
   </url>
   <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/ipbes_anthrome_stats.html</loc>
-  </url>
-  <url>
     <loc>https://mapme-initiative.github.io/mapme.indicators/reference/ipbes_biome_stats.html</loc>
   </url>
   <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/irr_carbon.html</loc>
+    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/iucn.html</loc>
   </url>
   <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/irr_carbon_stats.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/man_carbon.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/man_carbon_stats.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/species_ranges.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/sr_amphibians.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/sr_birds.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/sr_mammals.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/sr_reptiles.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/vul_carbon.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/vul_carbon_stats.html</loc>
+    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/species_richness.html</loc>
   </url>
 </urlset>

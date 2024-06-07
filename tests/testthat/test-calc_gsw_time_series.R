@@ -27,7 +27,7 @@ test_that("gsw time series works", {
     )
   res <- res$gsw_timeseries [[1]]
 
-  file_delete(
+  file.remove(
     file.path(outdir_gsw, gsw_fnames_long)
   )
 

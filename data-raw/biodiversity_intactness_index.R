@@ -8,7 +8,7 @@ x <- read_sf(
               package = "mapme.biodiversity"
   )
 ) %>%
-get_resources(get_biodiversity_intactness_index("../mapme.pipelines/raw/lbii.asc"))
+get_resources(get_biodiversity_intactness_index("lbii.asc"))
 
 bii <- prep_resources(x)
 bii <- bii [[1]]

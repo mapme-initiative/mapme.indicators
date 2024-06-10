@@ -5,15 +5,15 @@ test_that("biodiversity intactness index works", {
   aoi <- read_sf(fname_aoi)
 
   outdir <- system.file("resources", package = "mapme.indicators")
-  mapme_options(outdir = outdir, verbose = FALSE)
+  mapme_options(outdir = NULL, verbose = FALSE)
 
   expect_error(get_biodiversity_intactness_index(),
                "Expecting path to point towards an existing file.")
   expect_error(get_biodiversity_intactness_index(fname_aoi),
-               "Unexpected file extension: path must point towards a tif file.")
+               "Unexpected file extension: path must point towards a '.asc' file.")
 
 
-  fname_bii <- system.file("resources/biodiversity_intactness_index/bii.tif",
+  fname_bii <- system.file("resources/biodiversity_intactness_index/lbii.asc",
                            package = "mapme.indicators"
     )
   aoi <- aoi %>%

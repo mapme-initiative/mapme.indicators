@@ -20,10 +20,7 @@ calc_biodiversity_intactness_index()
 get_biodiversity_intactness_index(path = NULL)
 }
 \arguments{
-\item{path}{A character vector to the biodiversity intactness index tif file.
-Note, that the file has to be downloaded manually and converted from ASCII
-to tif. You can do so by using e.g.
-\code{terra::writeRaster(terra::rast("bii.asc"), "bii.tif")}.}
+\item{path}{A character vector to the biodiversity intactness index ASCII file.}
 }
 \value{
 A function that returns a character vector of file paths.

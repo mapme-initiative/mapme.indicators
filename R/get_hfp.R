@@ -46,8 +46,7 @@ get_humanfootprint <- function(years = 2000:2020) {
     name = "humanfootprint",
     type = "raster",
     outdir = mapme_options()[["outdir"]],
-    verbose = mapme_options()[["verbose"]],
-    testing = mapme_options()[["testing"]]) {
+    verbose = mapme_options()[["verbose"]]) {
 
     files <- .get_hfp_url(years)
 

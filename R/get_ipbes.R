@@ -44,8 +44,7 @@ get_ipbes_biomes <- function() {
     name = "ipbes_biomes",
     type = "raster",
     outdir = mapme_options()[["outdir"]],
-    verbose = mapme_options()[["verbose"]],
-    testing = mapme_options()[["testing"]]) {
+    verbose = mapme_options()[["verbose"]]) {
 
     url <- "/vsicurl/https://zenodo.org/records/3975694/files/IPBES_UoA_biomes_JK.tif"
     make_footprints(

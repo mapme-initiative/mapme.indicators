@@ -26,8 +26,7 @@ get_key_biodiversity_areas <- function(path = NULL) {
     name = "key_biodiversity_areas",
     type = "vector",
     outdir = mapme_options()[["outdir"]],
-    verbose = mapme_options()[["verbose"]],
-    testing = mapme_options()[["testing"]]) {
+    verbose = mapme_options()[["verbose"]]) {
 
     bbox <- c(xmin = -180.0, ymin = -90.0, xmax = 180.0, ymax = 90.0)
     tile <- st_as_sf(st_as_sfc(st_bbox(bbox, crs = "EPSG:4326")))

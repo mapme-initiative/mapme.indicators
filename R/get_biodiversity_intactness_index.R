@@ -30,8 +30,7 @@ get_biodiversity_intactness_index <- function(path = NULL) {
     name = "biodiversity_intactness_index",
     type = "raster",
     outdir = mapme_options()[["outdir"]],
-    verbose = mapme_options()[["verbose"]],
-    testing = mapme_options()[["testing"]]) {
+    verbose = mapme_options()[["verbose"]]) {
     filename <- gsub("asc", "tif", basename(path))
     fps <- make_footprints(
       path,

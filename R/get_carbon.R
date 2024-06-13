@@ -34,8 +34,7 @@ get_irr_carbon <- function() {
     name = "irr_carbon",
     type = "raster",
     outdir = mapme_options()[["outdir"]],
-    verbose = mapme_options()[["verbose"]],
-    testing = mapme_options()[["testing"]]) {
+    verbose = mapme_options()[["verbose"]]) {
 
     .fetch_carbon("Irrecoverable", outdir)
   }
@@ -68,8 +67,7 @@ get_vul_carbon <- function() {
     name = "vul_carbon",
     type = "raster",
     outdir = mapme_options()[["outdir"]],
-    verbose = mapme_options()[["verbose"]],
-    testing = mapme_options()[["testing"]]) {
+    verbose = mapme_options()[["verbose"]]) {
 
     .fetch_carbon("Vulnerable", outdir)
   }
@@ -104,8 +102,7 @@ get_man_carbon <- function() {
     name = "man_carbon",
     type = "raster",
     outdir = mapme_options()[["outdir"]],
-    verbose = mapme_options()[["verbose"]],
-    testing = mapme_options()[["testing"]]) {
+    verbose = mapme_options()[["verbose"]]) {
 
     .fetch_carbon("Manageable", outdir)
   }

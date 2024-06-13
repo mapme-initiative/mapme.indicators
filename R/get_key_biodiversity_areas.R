@@ -26,8 +26,7 @@ get_key_biodiversity_areas <- function(path = NULL) {
     name = "key_biodiversity_areas",
     type = "vector",
     outdir = mapme_options()[["outdir"]],
-    verbose = mapme_options()[["verbose"]],
-    testing = mapme_options()[["testing"]]) {
+    verbose = mapme_options()[["verbose"]]) {
     make_footprints(
       path,
       what = "vector")

@@ -44,8 +44,7 @@ get_gsw_time_series <- function(years, version = "LATEST") {
            name = "gsw_time_series",
            type = "raster",
            outdir = mapme_options()[["outdir"]],
-           verbose = mapme_options()[["verbose"]],
-           testing = mapme_options()[["testing"]]) {
+           verbose = mapme_options()[["verbose"]]) {
     # make the gsw grid and construct urls for intersecting tiles
     baseurl <- sprintf(
       "/vsicurl/https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GSWE/YearlyClassification/%s/tiles/",

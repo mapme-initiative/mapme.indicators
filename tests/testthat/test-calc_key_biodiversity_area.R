@@ -8,7 +8,8 @@ test_that("key biodiversity area works", {
   outdir <- system.file("resources", package = "mapme.indicators")
   mapme_options(outdir = outdir, verbose = FALSE)
 
-  fname_kbas <- system.file("resources/key_biodiversity_areas/kbas.gpkg", package = "mapme.indicators")
+  fname_kbas <- system.file("resources", "key_biodiversity_areas",
+                            "kbas.gpkg", package = "mapme.indicators")
   aoi <- aoi %>%
     get_resources(get_key_biodiversity_areas(fname_kbas))
 

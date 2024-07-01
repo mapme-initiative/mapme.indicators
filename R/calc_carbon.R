@@ -180,6 +180,7 @@ register_indicator(
                 stat = strsplit(variable, "_")[[1]][3],
                 variable = paste(name, type, stats, sep = "_"),
                 datetime = as.Date(paste0(year, "-01-01")),
-                unit = "Mg")
+                unit = "Mg",
+                value = sapply(value, function(x) ifelse(is.infinite(x) || is.nan(x), NA, x)))
   result[ ,c("datetime", "variable", "unit", "value")]
 }

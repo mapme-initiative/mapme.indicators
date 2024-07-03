@@ -60,13 +60,13 @@ calc_gsw_time_series <- function(years = 1984:2021) {
       year <- substr(colname, nchar(colname) - 3, nchar(colname))
       variable <- switch(
         substr(colname, 6, 6),
-        "0" = "No Observations",
-        "1" = "Not Water",
-        "2" = "Seasonal Water",
-        "3" = "Permanent Water"
+        "0" = "no_observations",
+        "1" = "not_water",
+        "2" = "seasonal_water",
+        "3" = "permanent_water"
       )
       tibble::tibble(
-        datetime = paste0(year, "-01-01"),
+        datetime = as.POSIXct(paste0(year, "-01-01T00:00:00Z")),
         variable = variable,
         unit = "ha",
         value = coverage_fractions[[colname]] * x_total_area
@@ -79,6 +79,6 @@ calc_gsw_time_series <- function(years = 1984:2021) {
 
 register_indicator(
   name = "gsw_time_series",
-  description = "Global Surface Water - Yearly Time Series",
+  description = "Global Surface Water - Yearly Time Series area estimation of water classes.",
   resources = "gsw_time_series"
 )

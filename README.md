@@ -15,7 +15,7 @@ After reaching all milestones in `{mapme.biodiversity}`, we will decide whether 
 Please run the following code to install the required packages:
 
 ```         
-remotes::install_version("mapme.biodiversity", version = "0.7.0")
+remotes::install_version("mapme.biodiversity", version = "0.8.0")
 remotes::install_github("mapme-initiative/mapme.indicators")
 ```
 

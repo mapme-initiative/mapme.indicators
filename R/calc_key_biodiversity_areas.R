@@ -16,11 +16,11 @@ calc_key_biodiversity_area <- function() {
            key_biodiversity_areas,
            name = "key_biodiversity_areas",
            mode = "asset",
-           aggregation = "sum",
+           aggregation = "mean",
            verbose = mapme_options()[["verbose"]]) {
 
     key_biodiversity_areas <- key_biodiversity_areas[[1]]
-    if (is.null(key_biodiversity_areas)) {
+    if (is.null(key_biodiversity_areas) | nrow(key_biodiversity_areas) == 0) {
       return(NULL)
     }
 
@@ -28,8 +28,8 @@ calc_key_biodiversity_area <- function() {
     int_area_ha <- as.numeric(sum(st_area(int_area), na.rm = TRUE) / 10000)
 
     results <- tibble::tibble(
-      datetime = "2024-01-01",
-      variable = "Key biodiversity area",
+      datetime = as.POSIXct("2024-01-01T00:00:00Z"),
+      variable = "key_biodiversity_area",
       unit = "ha",
       value = int_area_ha
     )
@@ -40,6 +40,6 @@ calc_key_biodiversity_area <- function() {
 
 register_indicator(
   name = "key_biodiversity_areas",
-  description = "Key Biodiversity Areas",
+  description = "Area estimation of intersection with key biodiversity areas.",
   resources = "key_biodiversity_areas"
 )

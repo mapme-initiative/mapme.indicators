@@ -53,7 +53,7 @@ calc_species_richness <- function(engine = "extract", stats = "mean") {
     result[["variable"]] <- paste0(tolower(result[["variable"]]), result[["stats"]])
     result[["value"]][is.na(result[["value"]])] <- 0
     datetime <- strsplit(names(iucn)[1], "_")[[1]]
-    result[["datetime"]] <-  as.Date(paste0(rev(datetime)[1], "-01-01"))
+    result[["datetime"]] <-  as.POSIXct(paste0(rev(datetime)[1], "-01-01T00:00:00Z"))
     result[["unit"]] <- "count"
     result[ ,c("datetime", "variable", "unit", "value")]
   }

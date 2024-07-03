@@ -46,7 +46,7 @@ calc_humanfootprint <- function(engine = "extract", stats = "mean") {
       mode = "asset"
     )
     years <- as.numeric(substring(names(humanfootprint), 4, 7))
-    result[["datetime"]] <- as.Date(paste0(years, "-01-01"))
+    result[["datetime"]] <- as.POSIXct(paste0(years, "-01-01T00:00:00Z"))
     result <- tidyr::pivot_longer(result, cols = -datetime, names_to = "variable")
     result[["value"]] <- sapply(result[["value"]], function(value)
       ifelse(is.infinite(value) || is.nan(value), NA, value))

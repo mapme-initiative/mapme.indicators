@@ -38,7 +38,7 @@ get_iucn <- function(paths = NULL) {
     make_footprints(
       paths,
       what = "raster",
-      co = c("-co", "INTERLEAVE=BAND", "-co", "COMPRESS=LZW", "-ot", "Int8"))
+      co = c("-co", "INTERLEAVE=BAND", "-co", "COMPRESS=LZW", "-ot", "Int16"))
   }
 }
 

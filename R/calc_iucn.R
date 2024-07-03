@@ -48,8 +48,9 @@ calc_species_richness <- function(engine = "extract", stats = "mean") {
       mode = "asset"
     )
 
-    result <- tidyr::pivot_longer(result, names(result), names_to = "variable")
-    result[["variable"]] <- paste0(tolower(names(iucn)), result[["variable"]])
+    result[["variable"]] <- names(iucn)
+    result <- tidyr::pivot_longer(result, -variable, names_to = "stats")
+    result[["variable"]] <- paste0(tolower(result[["variable"]]), result[["stats"]])
     result[["value"]][is.na(result[["value"]])] <- 0
     datetime <- strsplit(names(iucn)[1], "_")[[1]]
     result[["datetime"]] <-  as.Date(paste0(rev(datetime)[1], "-01-01"))

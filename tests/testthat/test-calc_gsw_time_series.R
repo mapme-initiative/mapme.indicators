@@ -33,12 +33,12 @@ test_that("gsw time series works", {
 
   expect_equal(
     res$datetime,
-    rep(c("2000-01-01", "2001-01-01"), 4)
+    rep(as.POSIXct(c("2000-01-01T00:00:00Z", "2001-01-01T00:00:00Z")), 4)
   )
 
   expect_equal(
     res$variable,
-    rep(c("No Observations", "Not Water", "Seasonal Water", "Permanent Water"), each = 2)
+    rep(c("no_observations", "not_water", "seasonal_water", "permanent_water"), each = 2)
   )
 
   expect_equal(

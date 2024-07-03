@@ -37,7 +37,7 @@ calc_ipbes_biomes <- function() {
           value = as.numeric(class_area))
         result[["variable"]] <- class_df[["name"]][result[["variable"]]]
         result[["variable"]] <- gsub(" ", "_", result[["variable"]])
-        result[["datetime"]] <- as.Date("2019-01-01")
+        result[["datetime"]] <- as.POSIXct("2019-01-01T00:00:00Z")
         result[ ,c("datetime", "variable", "unit", "value")]
 
       }, class_df = .ipbes_biome_classes, coverage_area = TRUE, summarize_df = TRUE)

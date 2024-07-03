@@ -28,12 +28,12 @@ test_that("biodiversity intactness index works", {
 
   expect_equal(
     res$datetime,
-    "2016-01-01"
+    as.POSIXct("2016-01-01T00:00:00Z")
   )
 
   expect_equal(
     res$variable,
-    "Biodiversity intactness index (mean)"
+    "biodiversity_intactness_index"
   )
 
   expect_equal(

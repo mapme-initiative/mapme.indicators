@@ -27,8 +27,8 @@ calc_biodiversity_intactness_index <- function() {
     mean_bii <- exactextractr::exact_extract(biodiversity_intactness_index, x, fun = "mean")
 
     results <- tibble::tibble(
-      datetime = "2016-01-01",
-      variable = "Biodiversity intactness index (mean)",
+      datetime = as.POSIXct("2016-01-01T00:00:00Z"),
+      variable = "biodiversity_intactness_index",
       unit = "unitless",
       value = mean_bii
     )
@@ -39,6 +39,6 @@ calc_biodiversity_intactness_index <- function() {
 
 register_indicator(
   name = "biodiversity_intactness_index",
-  description = "Biodiversity intactness index (mean)",
+  description = "Averaged biodiversity intactness index.",
   resources = "biodiversity_intactness_index"
 )

@@ -22,12 +22,12 @@ test_that("key biodiversity area works", {
 
   expect_equal(
     res$datetime,
-    "2024-01-01"
+    as.POSIXct("2024-01-01T00:00:00Z")
   )
 
   expect_equal(
     res$variable,
-    "Key biodiversity area"
+    "key_biodiversity_area"
   )
 
   expect_equal(

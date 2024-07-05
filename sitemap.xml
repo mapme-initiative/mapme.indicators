@@ -16,10 +16,16 @@
     <loc>https://mapme-initiative.github.io/mapme.indicators/index.html</loc>
   </url>
   <url>
+    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/biodiversity_intactness_index.html</loc>
+  </url>
+  <url>
     <loc>https://mapme-initiative.github.io/mapme.indicators/reference/carbon_indicators.html</loc>
   </url>
   <url>
     <loc>https://mapme-initiative.github.io/mapme.indicators/reference/carbon_resources.html</loc>
+  </url>
+  <url>
+    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/gsw_time_series.html</loc>
   </url>
   <url>
     <loc>https://mapme-initiative.github.io/mapme.indicators/reference/humanfootprint.html</loc>
@@ -35,6 +41,9 @@
   </url>
   <url>
     <loc>https://mapme-initiative.github.io/mapme.indicators/reference/iucn.html</loc>
+  </url>
+  <url>
+    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/key_biodiversity_areas.html</loc>
   </url>
   <url>
     <loc>https://mapme-initiative.github.io/mapme.indicators/reference/species_richness.html</loc>

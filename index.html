@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">mapme.indicators</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,7 @@
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This package is currently work-in-progress. It is going to be used to develop new resources/indicators while <a href="https://mapme-initiative.github.io/mapme.biodiversity/index.html" class="external-link">mapme.biodiversity</a> is undergoing a number of functionality changes. To learn more about the ongoing changes and their current status, please visit the <a href="https://github.com/mapme-initiative/mapme.biodiversity/issues/240" class="external-link">announcement issue</a>.</p>
-<p>The branch you are seeing here links against <a href="https://mapme-initiative.github.io/mapme.biodiversity/index.html" class="external-link">mapme.biodiversity</a> v0.7.0.</p>
+<p>The branch you are seeing here links against <a href="https://mapme-initiative.github.io/mapme.biodiversity/index.html" class="external-link">mapme.biodiversity</a> v0.8.0.</p>
 <p>We will update the resource/indicator functions developed here once a new version is released.</p>
 <p>After reaching all milestones in <a href="https://mapme-initiative.github.io/mapme.biodiversity/index.html" class="external-link">mapme.biodiversity</a>, we will decide whether to move the resources/indicators developed here into the main package or if the resources/indicators will be moved here.</p>
 </div>
@@ -65,7 +65,7 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Please run the following code to install the required packages:</p>
-<pre><code><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_version</span><span class="op">(</span><span class="st">"mapme.biodiversity"</span>, version <span class="op">=</span> <span class="st">"0.7.0"</span><span class="op">)</span></span>
+<pre><code><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_version</span><span class="op">(</span><span class="st">"mapme.biodiversity"</span>, version <span class="op">=</span> <span class="st">"0.8.0"</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"mapme-initiative/mapme.indicators"</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="section level2">
@@ -74,11 +74,11 @@
 <p>The package adds new resources and indicators. It is ready-to-use in a workflow based on <a href="https://mapme-initiative.github.io/mapme.biodiversity/index.html" class="external-link">mapme.biodiversity</a>.</p>
 <p>Once the package is loaded in your R session via <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library(mapme.indicators)</a></code>, the new resources and associated indicators are registered and available for your workflows.</p>
 <p>The table below gives an overview of implemented and planned resources/indicators:</p>
-<table style="width:100%;" class="table">
+<table class="table">
 <colgroup>
-<col width="20%">
+<col width="25%">
+<col width="36%">
 <col width="38%">
-<col width="41%">
 </colgroup>
 <thead><tr class="header">
 <th>Name</th>
@@ -115,6 +115,21 @@
 <td>Species Richness (IUCN)</td>
 <td>Number of distinct species possibly by threat level</td>
 <td><a href="https://www.iucnredlist.org/resources/other-spatial-downloads" class="external-link">IUCN Redlist</a></td>
+</tr>
+<tr class="odd">
+<td>Biodiversity Intactness Index</td>
+<td>Modeled average abundance of originally-present species, relative to their abundance in an intact ecosystem</td>
+<td><a href="https://data.nhm.ac.uk/dataset/global-map-of-the-biodiversity-intactness-index-from-newbold-et-al-2016-science" class="external-link">NHM Data Portal</a></td>
+</tr>
+<tr class="even">
+<td>Key Biodiversity Areas</td>
+<td>Sites with specific importance for nature conservation effort</td>
+<td><a href="https://www.keybiodiversityareas.org/kba-data" class="external-link">KBA</a></td>
+</tr>
+<tr class="odd">
+<td>Global Surface Water</td>
+<td>Time series data of global surface water between 1984 – 2021</td>
+<td><a href="https://global-surface-water.appspot.com/download" class="external-link">JRC</a></td>
 </tr>
 </tbody>
 </table>

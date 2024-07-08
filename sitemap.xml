@@ -1,51 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/404.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/biodiversity_intactness_index.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/carbon_indicators.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/carbon_resources.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/gsw_time_series.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/humanfootprint.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/ipbes.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/ipbes_biome_stats.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/iucn.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/key_biodiversity_areas.html</loc>
-  </url>
-  <url>
-    <loc>https://mapme-initiative.github.io/mapme.indicators/reference/species_richness.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://mapme-initiative.github.io/mapme.indicators/404.html</loc></url>
+<url><loc>https://mapme-initiative.github.io/mapme.indicators/LICENSE-text.html</loc></url>
+<url><loc>https://mapme-initiative.github.io/mapme.indicators/LICENSE.html</loc></url>
+<url><loc>https://mapme-initiative.github.io/mapme.indicators/authors.html</loc></url>
+<url><loc>https://mapme-initiative.github.io/mapme.indicators/index.html</loc></url>
+<url><loc>https://mapme-initiative.github.io/mapme.indicators/reference/biodiversity_intactness_index.html</loc></url>
+<url><loc>https://mapme-initiative.github.io/mapme.indicators/reference/carbon_indicators.html</loc></url>
+<url><loc>https://mapme-initiative.github.io/mapme.indicators/reference/carbon_resources.html</loc></url>
+<url><loc>https://mapme-initiative.github.io/mapme.indicators/reference/gsw_time_series.html</loc></url>
+<url><loc>https://mapme-initiative.github.io/mapme.indicators/reference/humanfootprint.html</loc></url>
+<url><loc>https://mapme-initiative.github.io/mapme.indicators/reference/index.html</loc></url>
+<url><loc>https://mapme-initiative.github.io/mapme.indicators/reference/ipbes.html</loc></url>
+<url><loc>https://mapme-initiative.github.io/mapme.indicators/reference/ipbes_biome_stats.html</loc></url>
+<url><loc>https://mapme-initiative.github.io/mapme.indicators/reference/iucn.html</loc></url>
+<url><loc>https://mapme-initiative.github.io/mapme.indicators/reference/key_biodiversity_areas.html</loc></url>
+<url><loc>https://mapme-initiative.github.io/mapme.indicators/reference/species_richness.html</loc></url>
 </urlset>
+

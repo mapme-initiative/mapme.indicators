@@ -34,7 +34,7 @@ for which data layer the statistics are calculated.}
 
 \item{stats}{Function to be applied to compute statistics for polygons either
 one or multiple inputs as character. Supported statistics are: "mean",
-"median", "sd", "min", "max", "sum" "var".}
+"median", "sd", "min", "max", "sum", and "var".}
 }
 \value{
 A function that returns a tibble with a column for each statistic

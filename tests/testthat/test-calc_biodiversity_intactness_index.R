@@ -28,7 +28,7 @@ test_that("biodiversity intactness index works", {
 
   expect_equal(
     res$datetime,
-    as.POSIXct("2016-01-01T00:00:00Z")
+    as.POSIXct("2005-01-01T00:00:00Z")
   )
 
   expect_equal(

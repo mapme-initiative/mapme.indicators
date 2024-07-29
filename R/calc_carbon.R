@@ -18,7 +18,7 @@
 #'   "extract" or "exactextract" as character.
 #' @param stats Function to be applied to compute statistics for polygons either
 #'   one or multiple inputs as character. Supported statistics are: "mean",
-#'   "median", "sd", "min", "max", "sum" "var".
+#'   "median", "sd", "min", "max", "sum", and "var".
 #' @keywords indicator
 #' @returns A function that returns a tibble with a column for each statistic
 #'   and rows for every year and type of carbon.
@@ -160,10 +160,11 @@ register_indicator(
   if (which_layer == "all") which_layer <- c("total", "soil", "biomass")
   names(layer) <- tolower(names(layer))
   layer <- layer[[grep(paste(which_layer, collapse = "|"), names(layer))]]
+  area_r <- terra::cellSize(layer, unit = "ha")
 
   result <- select_engine(
     x = x,
-    raster = layer,
+    raster = layer * area_r,
     stats = stats,
     engine = engine,
     name = name,

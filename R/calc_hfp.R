@@ -9,17 +9,16 @@
 #'  - [humanfootprint]
 #'
 #' @name humanfootprint
-#' @param engine The preferred processing functions from either one of "zonal",
-#'   "extract" or "exactextract" as character.
 #' @param stats Function to be applied to compute statistics for polygons either
 #'   one or multiple inputs as character. Supported statistics are: "mean",
 #'   "median", "sd", "min", "max", "sum" "var".
+#' @param engine Deprecated. Will be removed in a future release.
 #' @keywords indicator
 #' @returns A function that returns a tibble with a column for each statistic
 #'   and a row for every requested year.
 #' @importFrom mapme.biodiversity check_engine check_stats select_engine
 #' @export
-calc_humanfootprint <- function(engine = "extract", stats = "mean") {
+calc_humanfootprint <- function(stats = "mean", engine = NULL) {
 
   engine <- check_engine(engine)
   stats <- check_stats(stats)

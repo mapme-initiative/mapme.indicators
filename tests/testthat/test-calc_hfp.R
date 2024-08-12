@@ -8,13 +8,12 @@ test_that("calc_hfp works", {
   x <- get_resources(x, get_humanfootprint(years = 2010:2015))
   x <- calc_indicators(x,
                        calc_humanfootprint(
-                         engine = "extract",
-                         stats = c("min", "max", "sd"))
+                         stats = c("min", "max", "stdev"))
   )
   expect_true("humanfootprint" %in% names(x))
   expect_equal(class(x[["humanfootprint"]]), "list")
   variables <- unique(x[["humanfootprint"]][[1]][["variable"]])
   expect_equal(variables, c("humanfootprint_max",
                             "humanfootprint_min",
-                            "humanfootprint_sd"))
+                            "humanfootprint_stdev"))
 })

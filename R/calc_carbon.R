@@ -14,19 +14,18 @@
 #' @name carbon_indicators
 #' @param type One of "total", "soil", "biomass", "all". Determines
 #'     for which data layer the statistics are calculated.
-#' @param engine The preferred processing functions from either one of "zonal",
-#'   "extract" or "exactextract" as character.
 #' @param stats Function to be applied to compute statistics for polygons either
 #'   one or multiple inputs as character. Supported statistics are: "mean",
 #'   "median", "sd", "min", "max", "sum", and "var".
+#' @param engine Deprecated. Will be removed in a future release.
 #' @keywords indicator
 #' @returns A function that returns a tibble with a column for each statistic
 #'   and rows for every year and type of carbon.
 #' @importFrom mapme.biodiversity check_engine check_stats
 #' @export
 calc_irr_carbon <- function(type = c("total", "soil", "biomass", "all"),
-                            engine = "extract",
-                            stats = "mean") {
+                            stats = "mean",
+                            engine = NULL) {
 
   type <- match.arg(type)
   engine <- check_engine(engine)
@@ -68,8 +67,8 @@ register_indicator(
 #' @keywords indicator
 #' @export
 calc_man_carbon <- function(type = c("total", "soil", "biomass", "all"),
-                            engine = "extract",
-                            stats = "mean") {
+                            stats = "mean",
+                            engine = NULL) {
 
   type <- match.arg(type)
   engine <- check_engine(engine)
@@ -111,8 +110,8 @@ register_indicator(
 #' @keywords indicator
 #' @export
 calc_vul_carbon <- function(type = c("total", "soil", "biomass", "all"),
-                            engine = "extract",
-                            stats = "mean") {
+                            stats = "mean",
+                            engine = NULL) {
 
   type <- match.arg(type)
   engine <- check_engine(engine)
@@ -151,7 +150,7 @@ register_indicator(
     layer,
     which_layer = c("total", "soil", "biomass", "all"),
     stats = "mean",
-    engine = "extract",
+    engine = NULL,
     name = NULL,
     mode = "asset") {
   stat <- NULL

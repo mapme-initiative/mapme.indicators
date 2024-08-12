@@ -12,16 +12,15 @@
 #'  - [iucn]
 #'
 #' @name species_richness
-#' @param engine The preferred processing functions from either one of "zonal",
-#'   "extract" or "exactextract" as character.
 #' @param stats Function to be applied to compute statistics for polygons either
 #'   one or multiple inputs as character. Supported statistics are: "mean",
 #'   "median", "sd", "min", "max", "sum" "var".
+#' @param engine Deprecated. Will be removed in a future release.
 #' @keywords indicator
 #' @returns A function that returns an indicator tibble with IUCN layers with
 #'   specified statistics as variable and respective values as value.
 #' @export
-calc_species_richness <- function(engine = "extract", stats = "mean") {
+calc_species_richness <- function(stats = "mean", engine = NULL) {
   engine <- check_engine(engine)
   stats <- check_stats(stats)
 

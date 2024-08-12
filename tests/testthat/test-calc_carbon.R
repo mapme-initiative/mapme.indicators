@@ -10,8 +10,7 @@ test_that("calc_irr_carbon works", {
     x,
     calc_irr_carbon(
       type = "biomass",
-      stats = c("mean", "min"),
-      engine = "extract")
+      stats = c("mean", "min"))
   )
 
   expect_true("irr_carbon" %in% names(x))
@@ -33,13 +32,12 @@ test_that("calc_vul_carbon works", {
     x,
     calc_vul_carbon(
       type = "total",
-      stats = c("min", "mean"),
-      engine = "extract")
+      stats = c("min", "mean"))
   )
 
   expect_true("vul_carbon" %in% names(x))
   expect_equal(class(x[["vul_carbon"]]), "list")
-  vars <- c("vul_carbon_total_mean", "vul_carbon_total_min")
+  vars <- c("vul_carbon_total_min", "vul_carbon_total_mean")
   expect_equal(unique(x[["vul_carbon"]][[1]][["variable"]]), vars)
 })
 
@@ -55,12 +53,11 @@ test_that("calc_man_carbon works", {
     x,
     calc_man_carbon(
       type = "soil",
-      stats = c("max", "sd"),
-      engine = "extract")
+      stats = c("max", "stdev"))
   )
 
   expect_true("man_carbon" %in% names(x))
   expect_equal(class(x[["man_carbon"]]), "list")
-  vars <- c("man_carbon_soil_max", "man_carbon_soil_sd")
+  vars <- c("man_carbon_soil_max", "man_carbon_soil_stdev")
   expect_equal(unique(x[["man_carbon"]][[1]][["variable"]]), vars)
 })

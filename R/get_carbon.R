@@ -120,31 +120,35 @@ register_resource(
 #' @importFrom utils unzip download.file
 .fetch_carbon <- function(layer = NULL, outdir = NULL) {
 
-  layers <- c("%s_C_Biomass_%s.tif",
+  tifs <- c("%s_C_Biomass_%s.tif",
               "%s_C_Soil_%s.tif",
               "%s_C_Total_%s.tif")
-  layers <- c(sprintf(layers, layer, 2010), sprintf(layers, layer, 2018))
-
-  if (!is.null(outdir)){
-    filenames <- file.path(outdir, layers)
-    is_available <- purrr::map_lgl(filenames, spds_exists, what = "raster")
-    if (all(is_available)) {
-      return(make_footprints(filenames, what =  "raster"))
-    }
-  }
-
+  tifs <- c(sprintf(tifs, layer, 2010), sprintf(tifs, layer, 2018))
+  has_outdir <- !is.null(outdir)
   tmpdir <- tempfile()
   dir.create(tmpdir)
 
-  files <- .get_goldstein_url(sprintf("^%s_Carbon_\\d{4}\\.zip$", layer))
-  filenames <- file.path(tmpdir, files[["filename"]])
-  purrr::walk2(files[["url"]], filenames, function(src, filename) {
-    if (!file.exists(filename)) {
-      download.file(src, filename)
-    }
-    unzip(filename, junkpaths = TRUE, exdir = tmpdir)
+  if (has_outdir) {
+    tifs <- file.path(outdir, tifs)
+  } else {
+    tifs <- file.path(tmpdir, tifs)
+  }
+
+  is_available <- purrr::map_lgl(tifs, spds_exists, what = "raster")
+  if (all(is_available)) {
+    return(make_footprints(tifs, what =  "raster"))
+  }
+
+  srcs <- .get_goldstein_url(sprintf("^%s_Carbon_\\d{4}\\.zip$", layer))
+  srcs$filename <- file.path(tmpdir, srcs[["filename"]])
+
+  purrr::walk2(srcs$url, srcs$filename, function(src, dst) {
+    download.file(src, dst, mode = ifelse(Sys.info()["sysname"] == "Windows", "wb", "w"))
+    unzip(dst, junkpaths = TRUE, exdir = tmpdir)
   })
+
   tifs <- list.files(tmpdir, pattern = "*.tif$", recursive = TRUE, full.names = TRUE)
+  tifs <- grep(layer, tifs, value = TRUE)
   make_footprints(
     tifs,
     what = "raster",

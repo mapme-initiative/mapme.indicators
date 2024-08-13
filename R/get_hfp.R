@@ -48,31 +48,32 @@ get_humanfootprint <- function(years = 2000:2020) {
     outdir = mapme_options()[["outdir"]],
     verbose = mapme_options()[["verbose"]]) {
 
-    files <- .get_hfp_url(years)
-
-    if (!is.null(outdir)){
-      filenames <- file.path(outdir, files[["filename"]])
-      filenames <- gsub("zip", "tif", filenames)
-      is_available <- purrr::map_lgl(filenames, spds_exists, what = "raster")
-      if (all(is_available)) {
-        return(make_footprints(filenames, what =  "raster"))
-      }
+    srcs <- .get_hfp_url(years)
+    has_outdir <- !is.null(outdir)
+    if (has_outdir) {
+      dsts <- file.path(outdir, srcs[["filename"]])
+    } else {
+      dsts <- file.path(tempdir(), srcs[["filename"]])
+    }
+    dsts <- gsub("zip", "tif", dsts)
+    is_available <- purrr::map_lgl(dsts, spds_exists, what = "raster")
+    if (all(is_available)) {
+      return(make_footprints(dsts, what = "raster"))
     }
 
-    tmpdir <- tempfile()
-    dir.create(tmpdir)
-    filenames <- file.path(tmpdir, files[["filename"]])
-
-    purrr::walk2(files[["url"]], filenames, function(src, filename) {
-      if (!file.exists(filename)) {
-        download.file(src, filename)
+    dsts <- purrr::map2_chr(srcs[["url"]], dsts, function(src, dst) {
+      if (!spds_exists(dst, what = "raster")) {
+        tmp <- file.path(tempdir(), gsub(".tif", ".zip", basename(dst)))
+        download.file(src, tmp, mode = ifelse(Sys.info()["sysname"] == "Windows", "wb", "w"))
+        unzip(tmp, exdir = tempdir())
+        return(file.path(tempdir(), basename(dst)))
+      } else {
+        return(dst)
       }
-      unzip(filename, junkpaths = TRUE, exdir = tmpdir)
     })
 
-    tifs <- list.files(tmpdir, pattern = "*.tif$", recursive = TRUE, full.names = TRUE)
     make_footprints(
-      tifs,
+      dsts,
       what = "raster",
       co = c("-of", "COG", "-co", "COMPRESS=LZW", "-ot", "Float32"))
   }

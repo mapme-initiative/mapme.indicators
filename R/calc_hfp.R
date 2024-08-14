@@ -36,6 +36,10 @@ calc_humanfootprint <- function(engine = "extract", stats = "mean") {
       return(NULL)
     }
 
+    if (all(unlist(global(noNA(humanfootprint), fun = "sum")) == 0)) {
+      return(NULL)
+    }
+
     x <- st_transform(x, st_crs(humanfootprint))
     result <- select_engine(
       x = x,

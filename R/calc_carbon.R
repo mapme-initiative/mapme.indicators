@@ -160,8 +160,12 @@ register_indicator(
   if (which_layer == "all") which_layer <- c("total", "soil", "biomass")
   names(layer) <- tolower(names(layer))
   layer <- layer[[grep(paste(which_layer, collapse = "|"), names(layer))]]
-  area_r <- terra::cellSize(layer, unit = "ha")
 
+  if (all(unlist(global(noNA(layer), fun = "sum")) == 0)) {
+    return(NULL)
+  }
+
+  area_r <- terra::cellSize(layer, unit = "ha")
   result <- select_engine(
     x = x,
     raster = layer * area_r,
@@ -172,7 +176,7 @@ register_indicator(
   )
 
   type <- sapply(strsplit(names(layer), "_"), function(x) x[3])
-  year <- sapply(strsplit(names(layer), "_"), function(x) as.numeric(x[4]))
+  year <- as.numeric(gsub("\\D", "", names(layer)))
 
   result[["type"]] <- type
   result[["year"]] <- year

@@ -37,6 +37,10 @@ calc_species_richness <- function(engine = "extract", stats = "mean") {
       return(NULL)
     }
 
+    if (all(unlist(global(noNA(iucn), fun = "sum")) == 0)) {
+      return(NULL)
+    }
+
     x <- st_transform(x, st_crs(iucn))
 
     result <- select_engine(
@@ -48,12 +52,12 @@ calc_species_richness <- function(engine = "extract", stats = "mean") {
       mode = "asset"
     )
 
-    result[["variable"]] <- names(iucn)
+    result[["variable"]] <- gsub(".tif", "", names(iucn))
     result <- tidyr::pivot_longer(result, -variable, names_to = "stats")
     result[["variable"]] <- paste0(tolower(result[["variable"]]), result[["stats"]])
     result[["value"]][is.na(result[["value"]])] <- 0
-    datetime <- strsplit(names(iucn)[1], "_")[[1]]
-    result[["datetime"]] <-  as.POSIXct(paste0(rev(datetime)[1], "-01-01T00:00:00Z"))
+    year <- as.numeric(gsub("\\D", "", names(iucn)))
+    result[["datetime"]] <-  as.POSIXct(paste0(year, "-01-01T00:00:00Z"))
     result[["unit"]] <- "count"
     result[ ,c("datetime", "variable", "unit", "value")]
   }

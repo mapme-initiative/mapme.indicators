@@ -1,13 +1,11 @@
-library(mapme.indicators)
+library(mapme.biodiversity)
 library(terra)
 
 mapme_options(outdir = NULL)
 
 x <- read_sf(
   system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
-              package = "mapme.biodiversity"
-  )
-) %>%
+              package = "mapme.biodiversity")) %>%
 get_resources(get_biodiversity_intactness_index("lbii.asc"))
 
 bii <- prep_resources(x)

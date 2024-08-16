@@ -8,11 +8,40 @@
 #' @name biodiversity_intactness_index
 #' @docType data
 #' @keywords indicator
-#' @format A function returning a tibble with the aggregated biodiversity
-#' intactness index.
+#' @format  A function that returns an indicator tibble with variable
+#'   biodiversity_intactness_index and corresponding values (unitless) as value.
 #' @export
+#' @examples
+#' \dontshow{
+#' mapme.biodiversity:::.copy_resource_dir(file.path(tempdir(), "mapme-data"))
+#' }
+#' \dontrun{
+#' library(sf)
+#' library(mapme.biodiversity)
+#'
+#' outdir <- file.path(tempdir(), "mapme-data")
+#' dir.create(outdir, showWarnings = FALSE)
+#'
+#' mapme_options(
+#'   outdir = outdir,
+#'   verbose = FALSE
+#' )
+#'
+#' lbii <- system.file("resources", "biodiversity_intactness_index", "lbii.asc",
+#' package = "mapme.biodiversity")
+#'
+#' aoi <- system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
+#'   package = "mapme.biodiversity"
+#' ) %>%
+#'   read_sf() %>%
+#'   get_resources(get_biodiversity_intactness_index(lbii)) %>%
+#'   calc_indicators(calc_biodiversity_intactness_index()) %>%
+#'   portfolio_long()
+#'
+#' aoi
+#' }
 calc_biodiversity_intactness_index <- function() {
-  check_namespace("exactextractr")
+
   function(x = NULL,
            biodiversity_intactness_index,
            name = "biodiversity_intactness_index",

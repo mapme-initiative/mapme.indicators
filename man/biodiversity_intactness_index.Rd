@@ -8,8 +8,8 @@
 \alias{get_biodiversity_intactness_index}
 \title{Calculate Biodiversity Intactness Index}
 \format{
-A function returning a tibble with the aggregated biodiversity
-intactness index.
+A function that returns an indicator tibble with variable
+biodiversity_intactness_index and corresponding values (unitless) as value.
 }
 \source{
 \url{https://data.nhm.ac.uk/dataset/global-map-of-the-biodiversity-intactness-index-from-newbold-et-al-2016-science}
@@ -23,7 +23,7 @@ get_biodiversity_intactness_index(path = NULL)
 \item{path}{A character vector to the biodiversity intactness index ASCII file.}
 }
 \value{
-A function that returns a character vector of file paths.
+A function that returns an \code{sf} footprints object.
 }
 \description{
 This function calculates the mean biodiversity intactness index for a region.
@@ -43,8 +43,41 @@ To use this data in mapme workflows, you will have to manually download the
 global data set and point towards the file path on your local machine.
 Please find the available data under the source link given below.
 }
+\examples{
+\dontshow{
+mapme.biodiversity:::.copy_resource_dir(file.path(tempdir(), "mapme-data"))
+}
+\dontrun{
+library(sf)
+library(mapme.biodiversity)
+
+outdir <- file.path(tempdir(), "mapme-data")
+dir.create(outdir, showWarnings = FALSE)
+
+mapme_options(
+  outdir = outdir,
+  verbose = FALSE
+)
+
+lbii <- system.file("resources", "biodiversity_intactness_index", "lbii.asc",
+package = "mapme.biodiversity")
+
+aoi <- system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
+  package = "mapme.biodiversity"
+) \%>\%
+  read_sf() \%>\%
+  get_resources(get_biodiversity_intactness_index(lbii)) \%>\%
+  calc_indicators(calc_biodiversity_intactness_index()) \%>\%
+  portfolio_long()
+
+aoi
+}
+}
 \references{
-Tim Newbold; Lawrence Hudson; Andy Arnell; Sara Contu et al. (2016). Global map of the Biodiversity Intactness Index, from Newbold et al. (2016) Science [Data set]. Natural History Museum. \doi{https://doi.org/10.5519/0009936}
+Tim Newbold; Lawrence Hudson; Andy Arnell; Sara Contu et al.
+(2016). Global map of the Biodiversity Intactness Index, from Newbold et al.
+(2016) Science [Data set]. Natural History Museum.
+\doi{https://doi.org/10.5519/0009936}
 }
 \keyword{indicator}
 \keyword{resource}

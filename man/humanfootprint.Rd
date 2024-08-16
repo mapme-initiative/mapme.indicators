@@ -25,10 +25,10 @@ one or multiple inputs as character. Supported statistics are: "mean",
 the human footprint data, defaults to \code{2000:2020}.}
 }
 \value{
-A function that returns a tibble with a column for each statistic
-and a row for every requested year.
+A function that returns an indicator tibble the \code{humanfootprint}
+as variable and the associated value (unitless) per year.
 
-A function that returns a character vector of file paths.
+A function that returns an \code{sf} footprint object.
 }
 \description{
 Human footprint data measures the pressure imposed on the natural environment
@@ -58,6 +58,33 @@ The required resources for this indicator are:
 
 It may be required to increase the timeout option to successfully download
 theses layers from their source location via e.g. \code{options(timeout = 600)}.
+}
+\examples{
+\dontshow{
+mapme.biodiversity:::.copy_resource_dir(file.path(tempdir(), "mapme-data"))
+}
+\dontrun{
+library(sf)
+library(mapme.biodiversity)
+
+outdir <- file.path(tempdir(), "mapme-data")
+dir.create(outdir, showWarnings = FALSE)
+
+mapme_options(
+  outdir = outdir,
+  verbose = FALSE
+)
+
+aoi <- system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
+  package = "mapme.biodiversity"
+) \%>\%
+  read_sf() \%>\%
+  get_resources(get_humanfootprint(years = 2010)) \%>\%
+  calc_indicators(calc_humanfootprint(stats = "median")) \%>\%
+  portfolio_long()
+
+aoi
+}
 }
 \references{
 Mu, H., Li, X., Wen, Y. et al. A global record of annual

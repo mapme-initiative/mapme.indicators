@@ -15,10 +15,36 @@
 #'   one or multiple inputs as character. Supported statistics are: "mean",
 #'   "median", "sd", "min", "max", "sum" "var".
 #' @keywords indicator
-#' @returns A function that returns a tibble with a column for each statistic
-#'   and a row for every requested year.
+#' @returns A function that returns an indicator tibble the `humanfootprint`
+#' as variable and the associated value (unitless) per year.
 #' @importFrom mapme.biodiversity check_engine check_stats select_engine
 #' @export
+#' @examples
+#' \dontshow{
+#' mapme.biodiversity:::.copy_resource_dir(file.path(tempdir(), "mapme-data"))
+#' }
+#' \dontrun{
+#' library(sf)
+#' library(mapme.biodiversity)
+#'
+#' outdir <- file.path(tempdir(), "mapme-data")
+#' dir.create(outdir, showWarnings = FALSE)
+#'
+#' mapme_options(
+#'   outdir = outdir,
+#'   verbose = FALSE
+#' )
+#'
+#' aoi <- system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
+#'   package = "mapme.biodiversity"
+#' ) %>%
+#'   read_sf() %>%
+#'   get_resources(get_humanfootprint(years = 2010)) %>%
+#'   calc_indicators(calc_humanfootprint(stats = "median")) %>%
+#'   portfolio_long()
+#'
+#' aoi
+#' }
 calc_humanfootprint <- function(engine = "extract", stats = "mean") {
 
   engine <- check_engine(engine)

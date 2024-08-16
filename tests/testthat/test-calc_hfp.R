@@ -1,20 +1,19 @@
 test_that("calc_hfp works", {
-  x <- read_sf(system.file("shape/nc.shp", package="sf"))
-  x <- x [5, ]
-  x <- st_transform(x, "EPSG:4326")
+  skip_on_cran()
+  x <- read_sf(system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
+                           package = "mapme.biodiversity"))
+  .clear_resources()
+  outdir <- file.path(tempdir(), "mapme.data")
+  .copy_resource_dir(outdir)
+  mapme_options(outdir = outdir, verbose = FALSE)
 
-  outdir <- system.file("resources", package = "mapme.indicators")
-  mapme_options(outdir = outdir, testing = TRUE, verbose = FALSE)
-  x <- get_resources(x, get_humanfootprint(years = 2010:2015))
-  x <- calc_indicators(x,
-                       calc_humanfootprint(
-                         engine = "extract",
-                         stats = c("min", "max", "sd"))
-  )
-  expect_true("humanfootprint" %in% names(x))
-  expect_equal(class(x[["humanfootprint"]]), "list")
-  variables <- unique(x[["humanfootprint"]][[1]][["variable"]])
-  expect_equal(variables, c("humanfootprint_max",
-                            "humanfootprint_min",
-                            "humanfootprint_sd"))
+  get_resources(x, get_humanfootprint(years=2010))
+  hfp <- prep_resources(x)[["humanfootprint"]]
+  hf <- calc_humanfootprint(stats = c("mean", "median"))
+
+  expect_silent(result <- hf(x, hfp))
+  expect_silent(.check_single_asset(result))
+  expect_equal(nrow(result), 2)
+  expect_equal(result$variable, c("humanfootprint_mean", "humanfootprint_median"))
+  expect_equal(result$value, c(2.87, 2.62), tolerance = 0.01)
 })

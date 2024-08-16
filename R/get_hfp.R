@@ -21,13 +21,13 @@
 #' @param years A numeric vector indicating the years for which to download
 #'   the human footprint data, defaults to \code{2000:2020}.
 #' @keywords resource
-#' @returns A function that returns a character vector of file paths.
+#' @returns A function that returns an `sf` footprint object.
 #' @references Mu, H., Li, X., Wen, Y. et al. A global record of annual
 #' terrestrial Human Footprint dataset from 2000 to 2018. Sci Data 9, 176 (2022).
 #' \doi{https://doi.org/10.1038/s41597-022-01284-8}
 #' @source \url{https://figshare.com/articles/figure/An_annual_global_terrestrial_Human_Footprint_dataset_from_2000_to_2018/16571064}
-#' @importFrom mapme.biodiversity check_available_years
 #' @importFrom utils unzip download.file
+#' @include register.R
 #' @export
 get_humanfootprint <- function(years = 2000:2020) {
 

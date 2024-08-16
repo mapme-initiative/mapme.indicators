@@ -23,9 +23,9 @@
 #' - Shelf ecosystems (neritic and intertidal/littoral zone)
 #' - Open ocean pelagic systems (euphotic zone)
 #'
-#' @name ipbes
+#' @name ipbes_biomes
 #' @keywords resource
-#' @returns A function that returns a character vector of file paths.
+#' @returns A function that returns an `sf` footprint object.
 #' @references IPBES (2019): Summary for policymakers of the global assessment
 #' report on biodiversity and ecosystem services of the Intergovernmental
 #' Science-Policy Platform on Biodiversity and Ecosystem Services. S. Díaz, J.
@@ -37,6 +37,7 @@
 #'  Zayas (eds.). IPBES secretariat, Bonn, Germany. 56 pages.
 #'  https://doi.org/10.5281/zenodo.3553579
 #' @source \url{https://zenodo.org/records/3975694}
+#' @include register.R
 #' @export
 get_ipbes_biomes <- function() {
   function(

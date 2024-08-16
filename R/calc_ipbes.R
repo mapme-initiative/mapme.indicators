@@ -8,9 +8,35 @@
 #'
 #' @name ipbes_biome_stats
 #' @keywords indicator
-#' @returns A function that returns a tibble with columns for the class name,
-#'   its absolute and relative coverage within an asset.
+#' @returns A function that returns an indicator tibble with the biome class
+#' as variable and the respective area (in ha) as value.
 #' @export
+#' @examples
+#' \dontshow{
+#' mapme.biodiversity:::.copy_resource_dir(file.path(tempdir(), "mapme-data"))
+#' }
+#' \dontrun{
+#' library(sf)
+#' library(mapme.biodiversity)
+#'
+#' outdir <- file.path(tempdir(), "mapme-data")
+#' dir.create(outdir, showWarnings = FALSE)
+#'
+#' mapme_options(
+#'   outdir = outdir,
+#'   verbose = FALSE
+#' )
+#'
+#' aoi <- system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
+#'   package = "mapme.biodiversity"
+#' ) %>%
+#'   read_sf() %>%
+#'   get_resources(get_ipbes_biomes()) %>%
+#'   calc_indicators(calc_ipbes_biomes()) %>%
+#'   portfolio_long()
+#'
+#' aoi
+#' }
 calc_ipbes_biomes <- function() {
 
   function(

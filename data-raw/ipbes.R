@@ -1,10 +1,10 @@
-library(mapme.indicators)
+library(mapme.biodiversity)
 library(terra)
 library(sf)
 
-x <- st_read(system.file("shape/nc.shp", package="sf"))
-x <- x[5, ]
-x <- st_transform(x, "EPSG:4326")
+aoi <- system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
+                   package = "mapme.biodiversity") %>%
+  read_sf()
 
 outdir <- tempfile()
 dir.create(outdir)

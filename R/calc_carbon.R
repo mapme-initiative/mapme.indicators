@@ -20,10 +20,40 @@
 #'   one or multiple inputs as character. Supported statistics are: "mean",
 #'   "median", "sd", "min", "max", "sum", and "var".
 #' @keywords indicator
-#' @returns A function that returns a tibble with a column for each statistic
-#'   and rows for every year and type of carbon.
-#' @importFrom mapme.biodiversity check_engine check_stats
+#' @returns A function that returns an indicator tibble with `(type)_carbon_(stat)`
+#'   as variable and the respective statistic (in Mg) as value.
 #' @export
+#' @examples
+#' \dontshow{
+#' mapme.biodiversity:::.copy_resource_dir(file.path(tempdir(), "mapme-data"))
+#' }
+#' \dontrun{
+#' library(sf)
+#' library(mapme.biodiversity)
+#'
+#' outdir <- file.path(tempdir(), "mapme-data")
+#' dir.create(outdir, showWarnings = FALSE)
+#'
+#' mapme_options(
+#'   outdir = outdir,
+#'   verbose = FALSE
+#' )
+#'
+#' aoi <- system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
+#'                    package = "mapme.biodiversity") %>%
+#'  read_sf() %>%
+#'  get_resources(
+#'    get_man_carbon(),
+#'    get_vul_carbon(),
+#'    get_irr_carbon()) %>%
+#'  calc_indicators(
+#'    calc_man_carbon(stats = "sum"),
+#'    calc_vul_carbon(stats = "sum"),
+#'    calc_irr_carbon(stats = "sum")) %>%
+#'  portfolio_long()
+#'
+#'  aoi
+#' }
 calc_irr_carbon <- function(type = c("total", "soil", "biomass", "all"),
                             engine = "extract",
                             stats = "mean") {
@@ -144,8 +174,6 @@ register_indicator(
   resources = "vul_carbon"
 )
 
-
-#' @importFrom mapme.biodiversity select_engine
 .calc_carbon_stats <- function(
     x,
     layer,
@@ -182,10 +210,10 @@ register_indicator(
   result[["year"]] <- year
   result <- tidyr::pivot_longer(result, cols = -c(type, year), names_to = "variable")
   result <- dplyr::mutate(result,
-                stat = strsplit(variable, "_")[[1]][3],
-                variable = paste(name, type, stats, sep = "_"),
-                datetime = as.POSIXct(paste0(year, "-01-01T00:00:00Z")),
-                unit = "Mg",
-                value = sapply(value, function(x) ifelse(is.infinite(x) || is.nan(x), NA, x)))
+                          stat = strsplit(variable, "_")[[1]][3],
+                          variable = paste(name, type, stats, sep = "_"),
+                          datetime = as.POSIXct(paste0(year, "-01-01T00:00:00Z")),
+                          unit = "Mg",
+                          value = sapply(value, function(x) ifelse(is.infinite(x) || is.nan(x), NA, x)))
   result[ ,c("datetime", "variable", "unit", "value")]
 }

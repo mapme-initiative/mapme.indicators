@@ -37,8 +37,8 @@ one or multiple inputs as character. Supported statistics are: "mean",
 "median", "sd", "min", "max", "sum", and "var".}
 }
 \value{
-A function that returns a tibble with a column for each statistic
-and rows for every year and type of carbon.
+A function that returns an indicator tibble with \verb{(type)_carbon_(stat)}
+as variable and the respective statistic (in Mg) as value.
 }
 \description{
 These functions allow to calculated statistics based on the harmonized
@@ -63,5 +63,37 @@ Vulnerable carbon is the amount of carbon that would be released in a typical
 land conversion activity.
 It can be calculated for above- and below-ground carbon, the total amount
 of carbon, or for all layers.
+}
+\examples{
+\dontshow{
+mapme.biodiversity:::.copy_resource_dir(file.path(tempdir(), "mapme-data"))
+}
+\dontrun{
+library(sf)
+library(mapme.biodiversity)
+
+outdir <- file.path(tempdir(), "mapme-data")
+dir.create(outdir, showWarnings = FALSE)
+
+mapme_options(
+  outdir = outdir,
+  verbose = FALSE
+)
+
+aoi <- system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
+                   package = "mapme.biodiversity") \%>\%
+ read_sf() \%>\%
+ get_resources(
+   get_man_carbon(),
+   get_vul_carbon(),
+   get_irr_carbon()) \%>\%
+ calc_indicators(
+   calc_man_carbon(stats = "sum"),
+   calc_vul_carbon(stats = "sum"),
+   calc_irr_carbon(stats = "sum")) \%>\%
+ portfolio_long()
+
+ aoi
+}
 }
 \keyword{indicator}

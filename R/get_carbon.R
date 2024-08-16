@@ -1,6 +1,6 @@
 #' Carbon Layers
 #'
-#' This resource is part of the publication by Noon et al. (2022) "Mapping the
+#' These resources are from the publication by Noon et al. (2022) "Mapping the
 #' irrecoverable carbon in Earth’s ecosystems". This publication differentiates
 #' between 3 different kinds of carbon with varying degrees of manageability
 #' by humans. All three layers are available for above and below ground
@@ -16,11 +16,12 @@
 #'
 #' @name carbon_resources
 #' @keywords resource
-#' @returns A function that returns a character vector of file paths.
+#' @returns A function that returns an `sf` footprint object.
 #' @references Noon, M.L., Goldstein, A., Ledezma, J.C. et al. Mapping the
 #'   irrecoverable carbon in Earth’s ecosystems. Nat Sustain 5, 37–46 (2022).
 #'   https://doi.org/10.1038/s41893-021-00803-6
 #' @source \url{https://zenodo.org/records/4091029}
+#' @include register.R
 #' @export
 get_irr_carbon <- function() {
 
@@ -54,6 +55,7 @@ register_resource(
 #' of the probability of such an event to be actually occurring).
 #'
 #' @name carbon_resources
+#' @include register.R
 #' @export
 get_vul_carbon <- function() {
 
@@ -89,6 +91,7 @@ register_resource(
 #' mitigated through adaptive management.
 #'
 #' @name carbon_resources
+#' @include register.R
 #' @export
 get_man_carbon <- function() {
 
@@ -156,6 +159,8 @@ register_resource(
 }
 
 
+#' @noRd
+#' @importFrom httr2 request req_perform resp_body_json
 .get_goldstein_url <- function(layer) {
   baseurl <- "https://zenodo.org/api/records/4091029"
   cnt <- resp_body_json(req_perform(request(baseurl)))

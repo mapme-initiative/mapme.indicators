@@ -1,10 +1,10 @@
-library(mapme.indicators)
+library(mapme.biodiversity)
 library(terra)
 library(sf)
 
-x <- st_read(system.file("shape/nc.shp", package="sf"))
-x <- x[5, ]
-x <- st_transform(x, "EPSG:4326")
+x <- system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
+                   package = "mapme.biodiversity") %>%
+  read_sf()
 
 outdir <- tempfile()
 dir.create(outdir)
@@ -17,22 +17,21 @@ tindex <- mapme.biodiversity:::.avail_resources()
 
 outdir <- "inst/resources/irr_carbon"
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
-irr_carbon <- resources$irr_carbon
 writeRaster(resources$irr_carbon,
-            file.path(outdir, basename(tindex$irr_carbon$location)),
+            file.path(outdir, tindex$irr_carbon$filename),
             datatype = "INT2U", overwrite = TRUE,
             wopt = list(gdal=c("COMPRESS=LZW")))
 
 outdir <- "inst/resources/vul_carbon"
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
 writeRaster(resources$vul_carbon,
-            file.path(outdir, basename(tindex$vul_carbon$location)),
+            file.path(outdir, tindex$vul_carbon$filename),
             datatype = "INT2U", overwrite = TRUE,
             wopt = list(gdal=c("COMPRESS=LZW")))
 
 outdir <- "inst/resources/man_carbon"
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
 writeRaster(resources$man_carbon,
-            file.path(outdir, basename(tindex$man_carbon$location)),
+            file.path(outdir, tindex$man_carbon$filename),
             datatype = "INT2U", overwrite = TRUE,
             wopt = list(gdal=c("COMPRESS=LZW")))

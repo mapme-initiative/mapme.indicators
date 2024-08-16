@@ -17,10 +17,10 @@ get_vul_carbon()
 get_man_carbon()
 }
 \value{
-A function that returns a character vector of file paths.
+A function that returns an \code{sf} footprint object.
 }
 \description{
-This resource is part of the publication by Noon et al. (2022) "Mapping the
+These resources are from the publication by Noon et al. (2022) "Mapping the
 irrecoverable carbon in Earth’s ecosystems". This publication differentiates
 between 3 different kinds of carbon with varying degrees of manageability
 by humans. All three layers are available for above and below ground

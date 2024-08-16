@@ -18,11 +18,36 @@
 #' @keywords indicator
 #' @param years Numeric vector of years to process between 1984 and 2021.
 #' Default: `1984:2021`.
-#' @format A function returning a tibble with time series of global surface
-#' water data classes.
+#' @format A function returning an indicator tibble with the classes as
+#' variable and the respective area (in ha) as value.
 #' @export
+#' @examples
+#' \dontshow{
+#' mapme.biodiversity:::.copy_resource_dir(file.path(tempdir(), "mapme-data"))
+#' }
+#' \dontrun{
+#' library(sf)
+#' library(mapme.biodiversity)
+#'
+#' outdir <- file.path(tempdir(), "mapme-data")
+#' dir.create(outdir, showWarnings = FALSE)
+#'
+#' mapme_options(
+#'   outdir = outdir,
+#'   verbose = FALSE
+#' )
+#'
+#' aoi <- system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
+#'   package = "mapme.biodiversity"
+#' ) %>%
+#'   read_sf() %>%
+#'   get_resources(get_gsw_timeseries(years = 2000:2001)) %>%
+#'   calc_indicators(calc_gsw_time_series()) %>%
+#'   portfolio_long()
+#'
+#' aoi
+#' }
 calc_gsw_time_series <- function(years = 1984:2021) {
-  check_namespace("exactextractr")
   available_years <- 1984:2021
   years <- check_available_years(years, available_years, "gsw_time_series")
 

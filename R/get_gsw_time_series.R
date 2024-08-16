@@ -1,9 +1,7 @@
-#' Helper function to download Global Surface Water (GSW) yearly time series
-#' data
+#' Global Surface Water (GSW) yearly time series by the Joint Research Centre
 #'
-#' This function constructs  the necessary data URLs for a given data set,
-#' version and polygon and downloads them for further processing with the
-#' mapme.biodiversity package.
+#' This resource represents raster layers indicating surface water pixels
+#' between 1984 and 2021.
 #'
 #' @details
 #' The available surface water classes for a given pixel are the following:
@@ -18,7 +16,7 @@
 #'
 #' @name gsw_time_series
 #' @keywords resource
-#' @returns A function that returns a character vector of file paths.
+#' @returns A function that returns an `sf` footprint object.
 #' @references
 #' * Global Surface Water Explorer: \url{https://global-surface-water.appspot.com/}
 #' * Data Users Guide: \url{https://storage.cloud.google.com/global-surface-water/downloads_ancillary/DataUsersGuidev2021.pdf}
@@ -27,8 +25,9 @@
 #' @param years Numeric vector of years to process between 1984 and 2021.
 #' Default: `1984:2021`.
 #' @param version Version of the data set to process. Available options are
-#' (`VER1-0`, `VER2-0`, `VER3-0`, `VER4-0`, `VER5-0` and `LATEST`) Default:
+#' `VER1-0`, `VER2-0`, `VER3-0`, `VER4-0`, `VER5-0` and `LATEST` Default:
 #' `LATEST`. Choosing `LATEST` will result in the latest available version.
+#' @include register.R
 #' @export
 get_gsw_time_series <- function(years, version = "LATEST") {
   available_versions = c("VER1-0", "VER2-0", "VER3-0", "VER4-0", "VER5-0",

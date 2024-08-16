@@ -6,8 +6,8 @@
 \alias{get_gsw_time_series}
 \title{Calculate Global Surface Water Time Series}
 \format{
-A function returning a tibble with time series of global surface
-water data classes.
+A function returning an indicator tibble with the classes as
+variable and the respective area (in ha) as value.
 }
 \source{
 Raw Data: \url{https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GSWE/YearlyClassification/LATEST/tiles/}
@@ -22,19 +22,18 @@ get_gsw_time_series(years, version = "LATEST")
 Default: \code{1984:2021}.}
 
 \item{version}{Version of the data set to process. Available options are
-(\code{VER1-0}, \code{VER2-0}, \code{VER3-0}, \code{VER4-0}, \code{VER5-0} and \code{LATEST}) Default:
+\code{VER1-0}, \code{VER2-0}, \code{VER3-0}, \code{VER4-0}, \code{VER5-0} and \code{LATEST} Default:
 \code{LATEST}. Choosing \code{LATEST} will result in the latest available version.}
 }
 \value{
-A function that returns a character vector of file paths.
+A function that returns an \code{sf} footprint object.
 }
 \description{
 This function calculates the total area of the global surface water time
 series data, separated by the following classes:
 
-This function constructs  the necessary data URLs for a given data set,
-version and polygon and downloads them for further processing with the
-mapme.biodiversity package.
+This resource represents raster layers indicating surface water pixels
+between 1984 and 2021.
 }
 \details{
 \itemize{
@@ -61,6 +60,33 @@ latitudes).
 combination of permanent and no observation.
 \item Seasonal Water: Water and no water was detected.
 \item No Water: No Water was detected.
+}
+}
+\examples{
+\dontshow{
+mapme.biodiversity:::.copy_resource_dir(file.path(tempdir(), "mapme-data"))
+}
+\dontrun{
+library(sf)
+library(mapme.biodiversity)
+
+outdir <- file.path(tempdir(), "mapme-data")
+dir.create(outdir, showWarnings = FALSE)
+
+mapme_options(
+  outdir = outdir,
+  verbose = FALSE
+)
+
+aoi <- system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
+  package = "mapme.biodiversity"
+) \%>\%
+  read_sf() \%>\%
+  get_resources(get_gsw_timeseries(years = 2000:2001)) \%>\%
+  calc_indicators(calc_gsw_time_series()) \%>\%
+  portfolio_long()
+
+aoi
 }
 }
 \references{

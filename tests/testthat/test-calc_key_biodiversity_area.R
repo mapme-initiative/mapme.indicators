@@ -1,43 +1,21 @@
 test_that("key biodiversity area works", {
-  aoi <- read_sf(
-    system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
-                package = "mapme.biodiversity"
-    )
-  )
-
-  outdir <- system.file("resources", package = "mapme.indicators")
+  x <- read_sf(system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
+                package = "mapme.biodiversity"))
+  .clear_resources()
+  outdir <- tempfile()
+  dir.create(outdir)
   mapme_options(outdir = outdir, verbose = FALSE)
+  kbas <- system.file("resources", "key_biodiversity_areas", "kbas.gpkg",
+                      package = "mapme.indicators")
+  get_resources(x, get_key_biodiversity_areas(path = kbas))
+  kbas <- prep_resources(x)[["key_biodiversity_areas"]]
 
-  fname_kbas <- system.file("resources", "key_biodiversity_areas",
-                            "kbas.gpkg", package = "mapme.indicators")
-  aoi <- aoi %>%
-    get_resources(get_key_biodiversity_areas(fname_kbas))
-
-  res <- aoi %>%
-    calc_indicators(
-      calc_key_biodiversity_area()
-    )
-
-  res <- res$key_biodiversity_areas [[1]]
-
-  expect_equal(
-    res$datetime,
-    as.POSIXct("2024-01-01T00:00:00Z")
-  )
-
-  expect_equal(
-    res$variable,
-    "key_biodiversity_area"
-  )
-
-  expect_equal(
-    res$unit,
-    "ha"
-  )
-
-  expect_equal(
-    res$value,
-    101.2097,
-    tolerance = 0.01
-  )
+  kb <- calc_key_biodiversity_area()
+  result <- kb(x, kbas)
+  expect_silent(.check_single_asset(result))
+  expect_equal(result$value, 101.2097, tolerance = 0.01)
+  # check NULL is returned for 0-length tibbles
+  st_geometry(x) <- st_geometry(x) + 5
+  st_crs(x) <- st_crs(4326)
+  expect_equal(kb(x, kbas), NULL)
 })

@@ -17,11 +17,11 @@
 #' @references IUCN (2024). The IUCN Red List of Threatened Species.
 #'   https://www.iucnredlist.org. \doi{https://doi.org/10.1038/s41597-022-01284-8 }
 #' @source \url{https://www.iucnredlist.org/resources/other-spatial-downloads}
-#' @importFrom tools file_ext
+#' @include register.R
 #' @export
 get_iucn <- function(paths = NULL) {
 
-  if(is.null(paths) || !all(file.exists(paths)) || !all(file_ext(paths) == "tif")) {
+  if(is.null(paths) || !all(file.exists(paths)) || !all(endsWith(paths, ".tif"))) {
     stop("Expecting paths to point towards existing GTiff files.")
   }
 

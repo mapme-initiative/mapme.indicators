@@ -17,7 +17,8 @@ one or multiple inputs as character. Supported statistics are: "mean",
 }
 \value{
 A function that returns an indicator tibble with IUCN layers with
-specified statistics as variable and respective values as value.
+specified statistics as variable and respective species richness (count)
+as value.
 }
 \description{
 Species richness counts the number of potential species intersecting with a
@@ -32,6 +33,36 @@ supplied raster file.
 The required resources for this indicator are:
 \itemize{
 \item \link{iucn}
+}
+}
+\examples{
+if (FALSE) {
+  \dontshow{
+  mapme.biodiversity:::.copy_resource_dir(file.path(tempdir(), "mapme-data"))
+  }
+  \dontrun{
+  library(sf)
+  library(mapme.biodiversity)
+
+  outdir <- file.path(tempdir(), "mapme-data")
+  dir.create(outdir, showWarnings = FALSE)
+
+  mapme_options(
+    outdir = outdir,
+    verbose = FALSE
+  )
+
+  sr_rasters <- list.files("iucn", pattern = "*_SR_*", full.names = TRUE)
+
+  aoi <- system.file("extdata", "shell_beach_protected_area_41057_B.gpkg",
+    package = "mapme.biodiversity") \%>\%
+    read_sf() \%>\%
+    get_resources(get_iucn(sr_rasters)) \%>\%
+    calc_indicators(calc_species_richness(stats = "median")) \%>\%
+    portfolio_long()
+
+  aoi
+ }
 }
 }
 \keyword{indicator}
